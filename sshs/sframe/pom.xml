@@ -9,7 +9,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>sshs-sframe</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>sframe Maven Webapp</name>
 	<url>http://maven.apache.org</url>
@@ -22,19 +21,19 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>5.0.0.RELEASE</version>
+			<version>4.3.11.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>5.0.0.RELEASE</version>
+			<version>4.3.11.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.0.0.RELEASE</version>
+			<version>4.3.11.RELEASE</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
