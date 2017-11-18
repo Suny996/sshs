@@ -37,6 +37,7 @@ public abstract class BaseTag extends TagSupport {
 		}
 		return super.doStartTag();
 	}
+
 	/**
 	 * 处理公共部分开始
 	 * 
@@ -46,11 +47,13 @@ public abstract class BaseTag extends TagSupport {
 		StringBuffer text = new StringBuffer();
 		text.append("<div class=\"" + getColumnsClass(columns) + " form-inline\">\n");
 		text.append("<div class=\"form-group\">\n");
-		text.append("<label for=\"" + id + "\" class=\"control-label\"	style=\"white-space:nowrap;\">" + label
-				+ ":</label>\n");
+		if (StringUtils.isNotEmpty(label)) {
+			text.append("<label for=\"" + id + "\" class=\"control-label\"	style=\"white-space:nowrap;\">" + label
+					+ ":</label>\n");
+		}
 		return text.toString();
 	}
-	 
+
 	/**
 	 * 处理公共部分结束
 	 * 

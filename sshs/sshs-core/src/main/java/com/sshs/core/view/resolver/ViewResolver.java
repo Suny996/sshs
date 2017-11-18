@@ -57,7 +57,7 @@ public class ViewResolver {
 	 */
 	private static String resolveBody(Element body, String cachedJs) {
 		StringBuffer text = new StringBuffer();
-		//text.append("<" + body.tagName() + body.attributes() + ">\n");
+		// text.append("<" + body.tagName() + body.attributes() + ">\n");
 		if (StringUtils.isNotEmpty(cachedJs)) {
 			text.append(cachedJs);
 		}
@@ -66,7 +66,7 @@ public class ViewResolver {
 		for (Element e : elements) {
 			text.append(resolveElement(e));
 		}
-		//text.append("</" + body.tagName() + ">");
+		// text.append("</" + body.tagName() + ">");
 		return text.toString();
 	}
 
@@ -90,7 +90,9 @@ public class ViewResolver {
 		StringBuffer text = new StringBuffer();
 		String name = element.tagName();
 		String type = element.attr("type");
-
+		if (StringUtils.isEmpty(type) && "input".equalsIgnoreCase(name)) {
+			type = "text";
+		}
 		Object bean = SpringUtil.getComponent(name + ReflectHelper.capitalName(type));
 		Component component = null;
 		// start
@@ -142,30 +144,32 @@ public class ViewResolver {
 		// Arrays.asList(superFields).addAll(Arrays.asList(fields));
 		for (Field field : fields) {
 			String name = field.getName();
+			Object value = "";
 			if (element.hasAttr(name)) {
+				value = element.attr(name);
+			}
+			try {
+				Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(name),
+						element.attr(name).getClass());
 				try {
-					Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(name),
-							element.attr(name).getClass());
-					try {
-						method.invoke(component, element.attr(name));
-						e.removeAttr(name);
-					} catch (IllegalAccessException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IllegalArgumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} catch (NoSuchMethodException e1) {
+					method.invoke(component, value);
+					e.removeAttr(name);
+				} catch (IllegalAccessException e1) {
 					// TODO Auto-generated catch block
-					logger.debug(e1.getMessage());
-				} catch (SecurityException e1) {
+					e1.printStackTrace();
+				} catch (IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
-					logger.debug(e1.getMessage());
+					e1.printStackTrace();
+				} catch (InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+			} catch (NoSuchMethodException e1) {
+				// TODO Auto-generated catch block
+				logger.debug(e1.getMessage());
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				logger.debug(e1.getMessage());
 			}
 		}
 		return e;
