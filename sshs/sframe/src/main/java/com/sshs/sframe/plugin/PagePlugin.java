@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import javax.xml.bind.PropertyException;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.executor.statement.BaseStatementHandler;

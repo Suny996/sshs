@@ -17,7 +17,7 @@
 	</bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="ShiroRealm" class="com.afcac.shiro.realms.ShiroRealm"></bean>
+	<bean id="ShiroRealm" class="com.sshs.shiro.realms.ShiroRealm"></bean>
 
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -44,5 +44,4 @@
 			</value>
 		</property>
 	</bean>
-
 </beans>

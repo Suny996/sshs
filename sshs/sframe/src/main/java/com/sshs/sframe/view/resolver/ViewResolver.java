@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -45,8 +45,8 @@ public class ViewResolver {
 				bodyText.append(resolveBody(e, cachedJs));
 			}
 		}
-		text = viewTemplate.replace("${_PageHeader}", headText).replace("${_PageBody}", bodyText)
-				.replace("${_PageFooter}", "").replace("${_PageException}", "");
+		text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
+				.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
 		return text;
 	}
 

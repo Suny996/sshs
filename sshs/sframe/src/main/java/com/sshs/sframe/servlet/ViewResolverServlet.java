@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -46,8 +46,8 @@ public class ViewResolverServlet extends HttpServlet {
 	/**
 	 * html view模板文件
 	 */
-	private static String viewHtmlTemplate = "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><base href=\"${_BasePath}\">"
-			+ "${_PageHeader} </head> ${_PageBody} </html> ${_PageFooter} ${_PageException}";
+	private static String viewHtmlTemplate = "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><base href=\"<!--_BasePath-->\">"
+			+ "<!--_PageHeader--> </head> <!--_PageBody--> </html> <!--_PageFooter--> <!--_PageException-->";
 
 	/**
 	 * jsp view模板文件
@@ -62,7 +62,7 @@ public class ViewResolverServlet extends HttpServlet {
 	/**
 	 * view文件后缀名
 	 */
-	private static String viewPattern = ".view.xml";
+	private static String viewPattern = ".w.xml";
 
 	/**
 	 * 
@@ -91,10 +91,10 @@ public class ViewResolverServlet extends HttpServlet {
 			viewCacheFlag = false;
 		}
 		InputStream htmlTemplate = config.getServletContext().getResourceAsStream(
-				Configure.getProperty("view.html.template.path", "/META-INF/w3c-html5-template.html"));
+				Configure.getProperty("view.html.template.path", "/template/view/w3c-html5-template.html"));
 		if (htmlTemplate == null) {
 			htmlTemplate = this.getClass().getResourceAsStream(
-					Configure.getProperty("view.html.template.path", "/META-INF/w3c-html5-template.html"));
+					Configure.getProperty("view.html.template.path", "/template/view/w3c-html5-template.html"));
 		}
 		if (htmlTemplate != null) {
 			try {
@@ -138,7 +138,7 @@ public class ViewResolverServlet extends HttpServlet {
 		if (basePath == null) {
 			basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath() + "/";
-			viewHtmlTemplate = viewHtmlTemplate.replaceAll("\\$\\{\\_BasePath\\}", basePath);
+			viewHtmlTemplate = viewHtmlTemplate.replaceAll("\\<\\!--\\_BasePath\\--\\>", basePath);
 		}
 
 		// TODO Auto-generated method stub

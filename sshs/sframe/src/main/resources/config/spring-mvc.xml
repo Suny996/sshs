@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 	<!-- 注解扫描包 -->
-	<context:component-scan base-package="com.afcac.*" />
+	<context:component-scan base-package="com.sshs.*" />
 
 	<!-- 开启注解 -->
 	<mvc:annotation-driven>
@@ -38,6 +38,6 @@
 	</bean>
 	
 	  <!-- 全局异常配置 -->
-    <bean id="exceptionHandler" class="com.afcac.aframe.handler.ExceptionHandler" />
+    <bean id="exceptionHandler" class="com.sshs.sframe.handler.ExceptionHandler" />
 	
 </beans>

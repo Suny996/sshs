@@ -8,7 +8,7 @@
 	<uri>/ahTags</uri>
 	<tag>
 		<name>input</name>
-		<tag-class>com.afcac.aframe.view.component.taglib.InputTextTag</tag-class>
+		<tag-class>com.sshs.sframe.view.component.taglib.InputTextTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>id</name>
@@ -56,7 +56,7 @@
 
 	<tag>
 		<name>date</name>
-		<tag-class>com.afcac.aframe.view.component.taglib.InputDateTag</tag-class>
+		<tag-class>com.sshs.sframe.view.component.taglib.InputDateTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>id</name>

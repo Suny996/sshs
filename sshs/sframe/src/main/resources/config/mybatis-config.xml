@@ -10,14 +10,14 @@
 	<!-- 实体类,简称 -设置别名 -->
 	<typeAliases>
 		<!-- 分页 -->
-		<typeAlias type="com.afcac.aframe.page.Page" alias="Page" />
-		<package name="com.afcac" />
+		<typeAlias type="com.sshs.sframe.page.Page" alias="Page" />
+		<package name="com.sshs" />
 	</typeAliases>
 
 	<plugins>
-		<plugin interceptor="com.afcac.aframe.plugin.PagePlugin">
+		<plugin interceptor="com.sshs.sframe.plugin.PagePlugin">
 			<property name="dialect"
-				value="com.afcac.aframe.plugin.dialect.Oracle10gDialect" />
+				value="com.sshs.sframe.plugin.dialect.Oracle10gDialect" />
 			<property name="pageSqlId" value=".*PageList.*" />
 		</plugin>
 	<!-- 	<plugin interceptor="com.github.abel533.mapper.MapperInterceptor">
@@ -34,10 +34,4 @@
 			<property name="ORDER" value="AFTER"/>
 		</plugin> -->
 	</plugins>
-
-	<!-- 实体接口映射资源 -->
-	<!-- 说明：如果xxMapper.xml配置文件放在和xxMapper.java统一目录下，mappers也可以省略，因为org.mybatis.spring.mapper.MapperFactoryBean默认会去查找与xxMapper.java相同目录和名称的xxMapper.xml -->
-	<mappers>
-	</mappers>
-
 </configuration>  
