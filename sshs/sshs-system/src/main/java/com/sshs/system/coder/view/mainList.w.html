@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<div xmlns="http://www.w3.org/1999/xhtml" xid="window" class="window" component="$UI/system/components/justep/window/window"
+  design="device:pc">  
+  <div component="$UI/system/components/justep/model/model" xid="model" style="top:9px;left:10px;height:auto;"> 
+    <div component="$UI/system/components/justep/data/baasData" autoLoad="true"
+      xid="tableListData" idColumn="tableName" tableName="USER_TABLES" url="${Sys.baasServer}/coder"
+      queryAction="getTableList.do" orderBy="table_Name"> 
+      <column label="表名" name="tableName" type="String" xid="column1"/>  
+      <column label="表描述" name="tableComment" type="String" xid="column2"/>  
+      <column label="是否已生成代码" name="coderFlag" type="String" xid="column3"/> 
+      <column label="操作" name="handle" type="String" xid="column4"/> 
+    <master xid="default1"></master></div> 
+  </div> 
+<form action="" method="post" xid="queryForm" style="height:44px;" name="queryForm"><div component="$UI/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 col-xs-12 col-sm-6 col-md-4 col-lg-3" xid="labelEdit1">
+   <label class="x-label" xid="label1" style="text-align:right;"><![CDATA[表名：]]></label>
+   <input component="$UI/system/components/justep/input/input" class="form-control x-edit" xid="tableName"></input></div><div component="$UI/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 col-xs-12 col-sm-6 col-md-4 col-lg-3" xid="labelEdit2">
+   <label class="x-label" xid="label2" style="text-align:right;"><![CDATA[表描述：]]></label>
+   <input component="$UI/system/components/justep/input/input" class="form-control x-edit" xid="tableComment"></input></div>
+  <div component="$UI/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 col-xs-12 col-sm-6 col-md-4 col-lg-3" xid="labelEdit4">
+   <label class="x-label" xid="label4" style="text-align:right;"><![CDATA[代码已生成：]]></label>
+   <select component="$UI/system/components/justep/select/select" class="form-control x-edit" xid="coderFlag" bind-options='Dict.getDictItems("YN")' bind-optionsValue="dictCode" bind-optionsLabel="dictName" bind-optionsCaption="全部"></select></div>
+  <div component="$UI/system/components/justep/button/buttonGroup" class="btn-group col-xs-6 col-sm-4 col-md-3 col-lg-2" tabbed="true" xid="buttonGroup1">
+   <a component="$UI/system/components/justep/button/button" class="btn btn-default" label="查询" xid="btnQuery" icon="linear linear-magnifier" onClick="btnQueryClick">
+    <i xid="i1" class="linear linear-magnifier"></i>
+    <span xid="span1">查询</span></a> 
+   <a component="$UI/system/components/justep/button/button" class="btn btn-default" label="重置" xid="btnReset" icon="linear linear-cross">
+    <i xid="i2" class="linear linear-cross"></i>
+    <span xid="span8">重置</span></a> </div></form>
+  <div component="$UI/system/components/justep/dataTables/dataTables" flexibleWidth="true" responsive="true" rowActiveClass="active" class="table table-hover table-striped" xid="dataTablesList" data="tableListData" showRowNumber="true" onCellRender="dataTablesListCellRender" onRowClick="dataTablesListRowClick">
+   <columns xid="columns"><column name="tableName" xid="column4" label="表名"></column>
+  <column name="tableComment" xid="column5" label="表描述"></column>
+  <column name="coderFlag" xid="column6" label="是否已生成代码" orderable="true" format='Dict.getDictItems("YN")'></column>
+  <column name="handle" xid="column7" label="操作" orderable="false"></column></columns></div>
+  <div component="$UI/system/components/justep/pagerBar/pagerBar" class="x-pagerbar container-fluid" xid="pagerBar1" data="tableListData">
+   <div class="row" xid="div3">
+    <div class="col-sm-3" xid="div4">
+     <div class="x-pagerbar-length" xid="div5">
+      <label component="$UI/system/components/justep/pagerLimitSelect/pagerLimitSelect" class="x-pagerlimitselect" xid="pagerLimitSelect1">
+       <span xid="span2">显示</span>
+       <select component="$UI/system/components/justep/select/select" class="form-control input-sm" xid="select2">
+        <option value="5" xid="default1">5</option>
+        <option value="10" xid="default2">10</option>
+        <option value="20" xid="default3">20</option>
+        <option value="50" xid="default4">50</option>
+        <option value="100" xid="default5">100</option></select> 
+       <span xid="span3">条</span></label> </div> </div> 
+    <div class="col-sm-3" xid="div6">
+     <div class="x-pagerbar-info" xid="div7">当前显示0条，共0条</div></div> 
+    <div class="col-sm-6" xid="div8">
+     <div class="x-pagerbar-pagination" xid="div9">
+      <ul class="pagination" component="$UI/system/components/bootstrap/pagination/pagination" xid="pagination1">
+       <li class="prev" xid="li1">
+        <a href="#" xid="a1">
+         <span aria-hidden="true" xid="span4">«</span>
+         <span class="sr-only" xid="span5">Previous</span></a> </li> 
+       <li class="next" xid="li2">
+        <a href="#" xid="a2">
+         <span aria-hidden="true" xid="span6">»</span>
+         <span class="sr-only" xid="span7">Next</span></a> </li> </ul> </div> </div> </div> </div>
+  </div>

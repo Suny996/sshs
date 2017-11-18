@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classes>
+	<clazz>
+		<packageName>model</packageName>
+		<className>${coder.className}.java</className>
+		<template>model.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>dao</packageName>
+		<className>${coder.className}Dao.java</className>
+		<template>dao.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>service</packageName>
+		<className>I${coder.className}Service.java</className>
+		<template>service.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>service.impl</packageName>
+		<className>${coder.className}ServiceImpl.java</className>
+		<template>serviceImpl.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>controller</packageName>
+		<className>${coder.className}Controller.java</className>
+		<template>controller.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>mapper</packageName>
+		<className>${coder.className}Mapper.oracle.xml</className>
+		<template>mapper.oracle.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>ddl.oracle</packageName>
+		<className>${coder.className}.oracle.sql</className>
+		<template>ddl.oracle.ftl</template>
+	</clazz>
+
+	<clazz>
+		<packageName>view</packageName>
+		<className>${coder.className}Manage.view.xml</className>
+		<template>view-template.vm</template>
+	</clazz>
+</classes>

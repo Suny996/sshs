@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.afcac.system.dictionary.dao.DictionaryDao">
+	<!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->
+	<select id="findById" parameterType="int" resultType="Dictionary">
+		select
+		user_id id,user_name userName,user_age age from t_user where
+		user_id=#{id}
+	</select>
+	<!-- 初始化字典项 -->
+	<select id="findByDictCode" parameterType="String"
+		resultType="Dictionary">
+		SELECT
+		DICT_ID,
+		PARENT_ID,
+		DICT_TYPE,
+		DICT_CODE,
+		DICT_NAME,
+		DICT_NAME_EN,
+		DICT_DESC,
+		STATUS,
+		SORT_NO,
+		LEGAL_ORG,
+		IS_SYSTEM,
+		CRT_DATE,
+		MODULE
+		FROM SYS_DICTIONARIES WHERE DICT_TYPE='0' AND DICT_CODE=#{dictCode}
+	</select>
+	
+	<!-- 初始化字典项 -->
+	<select id="findByParentId" parameterType="java.lang.String"
+		resultType="Dictionary">
+		SELECT
+		DICT_ID,
+		PARENT_ID,
+		DICT_TYPE,
+		DICT_CODE,
+		DICT_NAME,
+		DICT_NAME_EN,
+		DICT_DESC,
+		STATUS,
+		SORT_NO,
+		LEGAL_ORG,
+		IS_SYSTEM,
+		CRT_DATE,
+		MODULE
+		FROM SYS_DICTIONARIES WHERE PARENT_ID=#{parentId} order by sort_no asc
+	</select>
+	
+	<select id="findAll" resultType="Dictionary">
+		select user_id id,user_name
+		userName,user_age age from t_user
+	</select>
+
+	<select id="findForPageList" parameterType="Page" resultType="Dictionary">
+		select
+		user_id id,user_name userName,user_sex as sex,user_post as
+		post,entry_date as entryDate,user_remark as remark
+		,user_age age from
+		t_user where 1=1
+		<if test="params.userName != null and params.userName != ''">
+			and user_name like CONCAT('%',#{params.userName}, '%')
+		</if>
+		<if test="params.age != null and params.age != ''">
+			and user_age=#{params.age}
+		</if>
+		<if test="params.sex != null and params.sex != ''">
+			and user_sex=#{params.sex}
+		</if>
+		<if test="params.post != null and params.post != ''">
+			and user_post=#{params.post}
+		</if>
+		<if test="sort != null and sort != ''">
+			order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>
