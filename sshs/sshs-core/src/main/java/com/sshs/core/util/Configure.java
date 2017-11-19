@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class Configure {
@@ -23,8 +24,16 @@ public class Configure {
 		try {
 			/* 第一种，通过类加载器进行获取properties文件流- */
 			in = Configure.class.getClassLoader().getResourceAsStream("config/configure.properties");
-			/* 第二种，通过类进行获取properties文件流 */
 			props.load(in);
+
+			String runMode = props.getProperty("core.runMode");
+			if (StringUtils.isNotEmpty(runMode)) {
+				in = Configure.class.getClassLoader()
+						.getResourceAsStream("config/configure-" + runMode.toLowerCase() + ".properties");
+				if (in != null) {
+					props.load(in);
+				}
+			}
 		} catch (FileNotFoundException e) {
 			logger.error("jdbc.properties文件未找到");
 		} catch (IOException e) {
@@ -62,7 +71,8 @@ public class Configure {
 	 * @return
 	 */
 	public static String getClasspath() {
-		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../").replaceAll("file:/", "").replaceAll("%20", " ").trim();
+		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../")
+				.replaceAll("file:/", "").replaceAll("%20", " ").trim();
 		if (path.indexOf(":") != 1) {
 			path = File.separator + path;
 		}
@@ -75,7 +85,8 @@ public class Configure {
 	 * @return
 	 */
 	public static String getClassResources() {
-		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""))).replaceAll("file:/", "").replaceAll("%20", " ").trim();
+		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")))
+				.replaceAll("file:/", "").replaceAll("%20", " ").trim();
 		if (path.indexOf(":") != 1) {
 			path = File.separator + path;
 		}
@@ -90,8 +101,8 @@ public class Configure {
 	 */
 	public static URL getClassPathFileUrl(String fileName) {
 		/**
-		 * getResource()方法会去classpath下找这个文件，获取到url resource,
-		 * 得到这个资源后，调用url.getFile获取到 文件 的绝对路径
+		 * getResource()方法会去classpath下找这个文件，获取到url resource, 得到这个资源后，调用url.getFile获取到 文件
+		 * 的绝对路径
 		 */
 		URL url = Configure.class.getResource(fileName);
 		return url;

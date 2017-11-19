@@ -3,6 +3,8 @@ package com.sshs.core.view.component.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.sshs.core.view.component.Component;
 
 /**
@@ -12,7 +14,6 @@ import com.sshs.core.view.component.Component;
  * @date 2017-10-17
  * 
  */
-@org.springframework.stereotype.Component("input.date")
 public class InputDateTag extends BaseTag implements Component {
 
 	/**
@@ -29,7 +30,7 @@ public class InputDateTag extends BaseTag implements Component {
 
 	public String forStartTag() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	/**
@@ -39,19 +40,14 @@ public class InputDateTag extends BaseTag implements Component {
 		StringBuffer text = new StringBuffer();
 		text.append(super.forTagBefore());
 
-		text.append("<div class=\"date form_date input-group\" data-date=\"\" data-date-format=\""
-				+ this.format
-				+ "\"  data-link-field=\""
-				+ this.id
-				+ "\" data-link-format=\"" + this.format + "\">");
+		text.append("<div class=\"date form_date input-group\" data-date=\"\" data-date-format=\"" + this.format
+				+ "\"  data-link-field=\"" + this.id + "\" data-link-format=\"" + this.format + "\">");
 		if (required) {
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
-		text.append("<input type=\"text\" class=\"form-control\" id=\"cld"
-				+ this.getId() + "\" name=\"cld" + super.getName()
-				+ "\" placeholder=\"" + this.getPlaceholder() + "\">");
-		text.append("<input type=\"hidden\" id=\"" + this.id + "\" name=\""
-				+ this.name + "\" value=\"\" />");
+		text.append("<input type=\"text\" class=\"form-control\" id=\"cld" + this.getId() + "\" name=\"cld"
+				+ super.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\">");
+		text.append("<input type=\"hidden\" id=\"" + this.id + "\" name=\"" + this.name + "\" value=\"\" />");
 		text.append("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>");
 		text.append("</div>");
 		text.append(super.forTagEnd());
@@ -85,7 +81,9 @@ public class InputDateTag extends BaseTag implements Component {
 	}
 
 	public void setFormat(String format) {
-		this.format = format;
+		if (StringUtils.isNotEmpty(format)) {
+			this.format = format;
+		}
 	}
 
 }

@@ -39,7 +39,9 @@ public class CodeGenerator {
 			File dir = new File(packageName);
 			if (!dir.exists())
 				dir.mkdirs();
-			String outFileName = Configure.getProperty("coder.path", "d:/coder") + "/" + coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/" + className;
+			String outFileName = Configure.getProperty("coder.path", "d:/coder") + "/"
+					+ coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/"
+					+ className;
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".ftl")) {
 				Freemarker.printFreemarkerFile(templateFileName, outFileName, CodeGenerator.toMap(coder));
 			}
@@ -107,28 +109,6 @@ public class CodeGenerator {
 		return model1;
 	}
 
-	/***************************************************************************
-	 * 将s_name 变为 sName;
-	 * 
-	 * @param sName
-	 * @return
-	 */
-	public static String convertFieldName(String sName) {
-
-		String[] str = sName.toLowerCase().split("_");
-
-		StringBuffer beanS = new StringBuffer(str[0]);
-
-		for (int i = 1; i < str.length; i++) {
-			if ("".equals(str) || str == null) {
-				continue;
-			}
-			String info = str[i];
-			beanS.append(info.substring(0, 1).toUpperCase() + info.substring(1, info.length()));
-		}
-		return beanS.toString();
-	}
-
 	/**
 	 * 处理部分关键字段
 	 * 
@@ -168,7 +148,8 @@ public class CodeGenerator {
 	public static void processModelName(Coder coder) {
 		String tableName = coder.getTableName();
 		if (StringUtils.isEmpty(coder.getModelName())) {
-			coder.setModelName(ReflectHelper.getPropertyName(getModel(tableName.substring(0, tableName.indexOf("_")).toLowerCase())));
+			coder.setModelName(ReflectHelper
+					.getPropertyName(getModel(tableName.substring(0, tableName.indexOf("_")).toLowerCase())));
 		}
 		String tableComment = coder.getTableComment();
 		if (tableComment == null) {
@@ -213,7 +194,8 @@ public class CodeGenerator {
 	 */
 	public static void processPackageName(Coder coder) {
 		if (StringUtils.isEmpty(coder.getPackageName())) {
-			coder.setPackageName(Configure.getProperty("coder.package.prefix", "com.afcac") + "." + coder.getModelName() + "." + coder.getFunctionName().toLowerCase());
+			coder.setPackageName(Configure.getProperty("coder.package.prefix", "com.afcac") + "." + coder.getModelName()
+					+ "." + coder.getFunctionName().toLowerCase());
 		}
 	}
 

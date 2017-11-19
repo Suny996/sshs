@@ -42,11 +42,14 @@ public class ViewResolver {
 		Elements bodys = doc.getElementsByTag("body");
 		if (bodys != null && bodys.size() > 0) {
 			for (Element e : bodys) {
-				bodyText.append(resolveBody(e, cachedJs));
+				bodyText.append(resolveBody(e));
 			}
 		}
 		text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
 				.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
+		if (StringUtils.isNotEmpty(cachedJs)) {
+			text += cachedJs;
+		}
 		return text;
 	}
 
@@ -55,12 +58,9 @@ public class ViewResolver {
 	 * @param body
 	 * @return
 	 */
-	private static String resolveBody(Element body, String cachedJs) {
+	private static String resolveBody(Element body) {
 		StringBuffer text = new StringBuffer();
 		// text.append("<" + body.tagName() + body.attributes() + ">\n");
-		if (StringUtils.isNotEmpty(cachedJs)) {
-			text.append(cachedJs);
-		}
 		text.append(body.ownText());
 		Elements elements = body.children();
 		for (Element e : elements) {

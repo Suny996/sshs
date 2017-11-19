@@ -54,6 +54,11 @@ public class ViewResolverServlet extends HttpServlet {
 	private static String viewJspTemplate = "";
 
 	/**
+	 * 运行模式
+	 */
+	private static String coreRunMode;
+
+	/**
 	 * 缓存标志
 	 */
 	private static boolean viewCacheFlag = true;
@@ -82,11 +87,10 @@ public class ViewResolverServlet extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		super.init(config);
-
+		coreRunMode = Configure.getProperty("core.runMode", "run");
 		if ("false".equalsIgnoreCase(Configure.getProperty("view.cached"))) {
 			viewCacheFlag = false;
-		} else if (!"run".equalsIgnoreCase(Configure.getProperty("runMode"))
-				&& !Configure.getProperty("runMode", "prod").toUpperCase().contains("PROD")) {
+		} else if (!coreRunMode.equalsIgnoreCase("run") && !coreRunMode.toLowerCase().contains("prod")) {
 			viewCacheFlag = false;
 		}
 		InputStream htmlTemplate = config.getServletContext().getResourceAsStream(
@@ -167,20 +171,25 @@ public class ViewResolverServlet extends HttpServlet {
 	 */
 	protected void doRequest(String viewRequest, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String filePath = request.getServletContext().getRealPath("");
 		String viewFileName = getViewNameNoPattern(viewRequest);
 		String pattern = getViewNamePattern(viewRequest);
-		InputStream view = request.getServletContext().getResourceAsStream(viewFileName + pattern);
+		InputStream view = null;
+		String debugViewRoot = Configure.getProperty("debug.view.root");
+		if ((viewRequest.endsWith(".w") || viewRequest.endsWith(".dw")) && coreRunMode.equalsIgnoreCase("debug")
+				&& StringUtils.isNotEmpty(debugViewRoot)) {
+			view = FileUtils.openInputStream(new File(debugViewRoot + viewFileName + pattern));
+		}
+		if (view == null) {
+			view = request.getServletContext().getResourceAsStream(viewFileName + pattern);
+		}
 		if (view == null) {
 			view = request.getClass().getResourceAsStream(viewFileName + pattern);
-		} else if (!viewRequest.endsWith(".w") && !viewRequest.endsWith(".dw")) {
-			PrintWriter out = response.getWriter();
-			out.print(view);
 		}
-		String text = "";
-		String filePath = request.getServletContext().getRealPath("");
+
 		String cachedView = "/.cached" + viewFileName + pattern;
 		if (pattern != null && (pattern.endsWith("html") || pattern.endsWith("htm") || pattern.endsWith("jsp"))) {
-			text = doPageRequest(request, view, viewFileName, pattern);
+			String text = doPageRequest(request, view, viewFileName, pattern);
 			if (text != null && text.contains("<%")) {
 				pattern = ".jsp";
 			}
@@ -195,11 +204,11 @@ public class ViewResolverServlet extends HttpServlet {
 				_cachedView.put(viewRequest, cachedView);
 				request.getRequestDispatcher(cachedView).forward(request, response);
 			}
+			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
 		} else {
-			text = doResourceRequest(view, filePath + cachedView);
+			doResourceRequest(view, filePath + cachedView);
 			request.getRequestDispatcher(cachedView).forward(request, response);
 		}
-		logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
 
 		if (view != null) {
 			view.close();
@@ -226,8 +235,9 @@ public class ViewResolverServlet extends HttpServlet {
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		// 处理视图内容
 		String text = "";
-		String privateJs = "<script type=\"text/javascript\" src=\"" + request.getContextPath() + viewFileName
-				+ ".js.dw\"></script>";
+		String privateJs = "<script type=\"text/javascript\">var Model; require([ \""+request.getContextPath() + viewFileName+".js.dw\" ], function(model) {\r\n" + 
+				"		Model = model;\r\n" + 
+				"	}); </script>";
 
 		if (text != null && text.contains("<%")) {
 			text = ViewResolver.resolve(doc, viewJspTemplate, privateJs).replaceAll("\\&lt;\\%", "\\<\\%")
@@ -250,12 +260,10 @@ public class ViewResolverServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected String doResourceRequest(InputStream input, String fileName) throws ServletException, IOException {
-		String text = "";
+	protected void doResourceRequest(InputStream input, String fileName) throws ServletException, IOException {
 		if (input != null) {
 			IOUtils.copy(input, FileUtils.openOutputStream(new File(fileName)));
 		}
-		return text;
 	}
 
 	/**
