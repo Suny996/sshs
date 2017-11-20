@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -147,8 +148,9 @@ public class ViewResolverServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String viewRequest = request.getRequestURI();
 		if (StringUtils.isNotEmpty(viewRequest)) {
-			viewRequest = viewRequest.replaceFirst(request.getContextPath(), "");
+			viewRequest = URLDecoder.decode(viewRequest.replaceFirst(request.getContextPath(), ""), "ISO-8859-1");
 		}
+
 		String cachedView = null;
 
 		if (viewCacheFlag) {
@@ -205,7 +207,7 @@ public class ViewResolverServlet extends HttpServlet {
 				request.getRequestDispatcher(cachedView).forward(request, response);
 			}
 			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
-		} else {
+		} else if (view != null) {
 			doResourceRequest(view, filePath + cachedView);
 			request.getRequestDispatcher(cachedView).forward(request, response);
 		}
@@ -235,9 +237,9 @@ public class ViewResolverServlet extends HttpServlet {
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		// 处理视图内容
 		String text = "";
-		String privateJs = "<script type=\"text/javascript\">var Model; require([ \""+request.getContextPath() + viewFileName+".js.dw\" ], function(model) {\r\n" + 
-				"		Model = model;\r\n" + 
-				"	}); </script>";
+		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \""
+				+ request.getContextPath() + viewFileName + ".js.dw\" ], function(model) {\r\n"
+				+ "		Model = model;\r\n" + "	}); </script>";
 
 		if (text != null && text.contains("<%")) {
 			text = ViewResolver.resolve(doc, viewJspTemplate, privateJs).replaceAll("\\&lt;\\%", "\\<\\%")

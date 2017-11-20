@@ -111,7 +111,7 @@ public class ViewResolver {
 			text.append("<" + name + element.attributes() + ">\n");
 		}
 		// body
-		text.append(element.ownText());
+		text.append(element.data() + element.ownText());
 		Elements elements = element.children();
 		for (Element e : elements) {
 			text.append(resolveElement(e));
@@ -145,31 +145,31 @@ public class ViewResolver {
 		for (Field field : fields) {
 			String name = field.getName();
 			Object value = "";
-			if (element.hasAttr(name)) {
-				value = element.attr(name);
-			}
-			try {
-				Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(name),
-						element.attr(name).getClass());
+			if (element.hasAttr(name.toLowerCase())) {
+				value = element.attr(name.toLowerCase());
 				try {
-					method.invoke(component, value);
-					e.removeAttr(name);
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InvocationTargetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(name),
+							value.getClass());
+					try {
+						if (method != null) {
+							method.invoke(component, value);
+							e.removeAttr(name.toLowerCase());
+						}
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalArgumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} catch (NoSuchMethodException e1) {
+					logger.error(e1.getMessage());
+				} catch (SecurityException e1) {
+					logger.error(e1.getMessage());
 				}
-			} catch (NoSuchMethodException e1) {
-				// TODO Auto-generated catch block
-				logger.debug(e1.getMessage());
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				logger.debug(e1.getMessage());
 			}
 		}
 		return e;

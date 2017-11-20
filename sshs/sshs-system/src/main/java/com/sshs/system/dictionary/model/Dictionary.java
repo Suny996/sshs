@@ -42,7 +42,7 @@ public class Dictionary implements Serializable {
 	private String isSystem;
 	private Date crtDate;
 	@Transient
-	private List<Dictionary> children;
+	private List<Dictionary> children =new ArrayList<Dictionary>();
 
 	public String getDictId() {
 		return dictId;

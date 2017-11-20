@@ -34,29 +34,32 @@ public class InputDateTag extends BaseTag implements Component {
 	}
 
 	/**
-	 * 
+	*
 	 */
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(super.forTagBefore());
 
-		text.append("<div class=\"date form_date input-group\" data-date=\"\" data-date-format=\"" + this.format
-				+ "\"  data-link-field=\"" + this.id + "\" data-link-format=\"" + this.format + "\">");
+		text.append("<div id=\"" + this.getId()
+				+ "_picker\" class=\"date form_date input-group\" data-date=\"\"  data-date-format=\""
+				+ this.getFormat() + "\"  data-link-field=\"" + this.getId() + "\" data-link-format=\""
+				+ this.getFormat() + "\">");
 		if (required) {
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
 		text.append("<input type=\"text\" class=\"form-control\" id=\"cld" + this.getId() + "\" name=\"cld"
-				+ super.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\">");
-		text.append("<input type=\"hidden\" id=\"" + this.id + "\" name=\"" + this.name + "\" value=\"\" />");
+				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
+		text.append("<input type=\"hidden\" id=\"" + this.getId() + "\" name=\"" + this.getName() + "\" value=\"\" />");
 		text.append("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>");
 		text.append("</div>");
+		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "_picker\",\""
+				+ this.getFormat() + "\");</script>");
 		text.append(super.forTagEnd());
 		return text.toString();
 	}
 
 	@Override
 	public int doStartTag() throws JspException {
-		// TODO Auto-generated method stub
 		return super.doStartTag();
 	}
 

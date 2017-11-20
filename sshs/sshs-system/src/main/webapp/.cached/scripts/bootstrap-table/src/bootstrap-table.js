@@ -516,6 +516,7 @@
 		switchable : true,
 		clickToSelect : true,
 		formatter : undefined,
+                format: undefined,//add by Suny 2017-11-20
 		footerFormatter : undefined,
 		events : undefined,
 		sorter : undefined,
@@ -741,6 +742,7 @@
 			styles : [],
 			classes : [],
 			formatters : [],
+			formats: [],//add by Suny 2017-11-20
 			events : [],
 			sorters : [],
 			sortNames : [],
@@ -788,6 +790,7 @@
 					that.header.styles[column.fieldIndex] = align + style;
 					that.header.classes[column.fieldIndex] = class_;
 					that.header.formatters[column.fieldIndex] = column.formatter;
+                                        that.header.formats[column.fieldIndex] = column.format;//add by Suny 2017-11-20
 					that.header.events[column.fieldIndex] = column.events;
 					that.header.sorters[column.fieldIndex] = column.sorter;
 					that.header.sortNames[column.fieldIndex] = column.sortName;
@@ -1749,7 +1752,7 @@
 			}
 
 			value = calculateObjectValue(column,
-				that.header.formatters[j], [ value_, item, i, field ], value_);
+				that.header.formatters[j], [ value_, item, i, field, that.header.formats[j]], value_);// mod by Suny 2017-11-20
 
 			if (item['_' + field + '_data'] && !$.isEmptyObject(item['_' + field + '_data'])) {
 				$.each(item['_' + field + '_data'], function(k, v) {

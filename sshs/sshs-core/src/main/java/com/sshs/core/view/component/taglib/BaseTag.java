@@ -72,6 +72,9 @@ public abstract class BaseTag extends TagSupport {
 	}
 
 	public String getId() {
+		if (StringUtils.isEmpty(this.id)) {
+			this.id = UuidUtil.get32UUID();
+		}
 		return id;
 	}
 

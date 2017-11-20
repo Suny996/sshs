@@ -1,11 +1,10 @@
-<form action="" method="post" xid="queryForm" style="height: 44px;"
+<form action="" method="post" id="queryForm" style="height: 44px;"
 	name="queryForm">
 	<input name="tableName" label="表名" /> <input name="tableComment"
-		label="表描述" /> <input type="date" name="coderDate" label="生成日期" /> <select
-		name="coderFlag" bind-options='Dict.getDictItems("YN")'
-		bind-optionsValue="dictCode" bind-optionsLabel="dictName"
-		bind-optionsCaption="全部"></select> <a class="btn btn-default"
-		label="查询" name="btnQuery" icon="linear linear-magnifier"
+		label="表描述" /> <input type="date" name="coderDate"
+		format="yyyy-MM-dd" label="生成日期" /> <select name="coderFlag"
+		dictCode="YN" label="代码是否已生成"></select> <a class="btn btn-default" label="查询"
+		name="btnQuery" icon="linear linear-magnifier"
 		onClick="Model.btnQueryClick();"> <i xid="i1"
 		class="linear linear-magnifier"></i> <span xid="span1">查询</span></a> <a
 		class="btn btn-default" label="重置" name="btnReset"
@@ -13,56 +12,17 @@
 		class="linear linear-cross"></i> <span xid="span8">重置</span></a>
 
 </form>
-
-<table id="mainListTable" class="table table-bordered"
-	data-list="{sex:[{m:男},{f:女}]}" data-url="user/getUserList.do"
-	data-striped=false>
-	<thead>
-		<tr>
-			<th data-field="tableName">表名</th>
-			<th data-field="tableComment">表描述</th>
-			<th data-field="coderFlag" data-formatter="getList">是否已生成代码</th>
-			<th data-field="handle" data-formatter="formateDate">操作</th>
-		</tr>
-	</thead>
-</table>
-
-<div component="$UI/system/components/justep/pagerBar/pagerBar"
-	class="x-pagerbar container-fluid" xid="pagerBar1" data="tableListData">
-	<div class="row" xid="div3">
-		<div class="col-sm-3" xid="div4">
-			<div class="x-pagerbar-length" xid="div5">
-				<label
-					component="$UI/system/components/justep/pagerLimitSelect/pagerLimitSelect"
-					class="x-pagerlimitselect" xid="pagerLimitSelect1"> <span
-					xid="span2">显示</span> <select
-					component="$UI/system/components/justep/select/select"
-					class="form-control input-sm" xid="select2">
-						<option value="5" xid="default1">5</option>
-						<option value="10" xid="default2">10</option>
-						<option value="20" xid="default3">20</option>
-						<option value="50" xid="default4">50</option>
-						<option value="100" xid="default5">100</option>
-				</select> <span xid="span3">条</span></label>
-			</div>
-		</div>
-		<div class="col-sm-3" xid="div6">
-			<div class="x-pagerbar-info" xid="div7">当前显示0条，共0条</div>
-		</div>
-		<div class="col-sm-6" xid="div8">
-			<div class="x-pagerbar-pagination" xid="div9">
-				<ul class="pagination"
-					component="$UI/system/components/bootstrap/pagination/pagination"
-					xid="pagination1">
-					<li class="prev" xid="li1"><a href="#" xid="a1"> <span
-							aria-hidden="true" xid="span4">«</span> <span class="sr-only"
-							xid="span5">Previous</span></a></li>
-					<li class="next" xid="li2"><a href="#" xid="a2"> <span
-							aria-hidden="true" xid="span6">»</span> <span class="sr-only"
-							xid="span7">Next</span></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
+<div id="content">
+	<table id="mainListTable" class="table table-bordered"
+		data-url="system/coder/getTableList.do" data-striped=false>
+		<thead>
+			<tr>
+				<th data-field="tableName" data-sortable=true>表名</th>
+				<th data-field="tableComment">表描述</th>
+				<th data-field="coderFlag" data-format="YN"
+					data-formatter=_DictTranslate>是否已生成代码</th>
+				<th data-field="handle" data-formatter=Model.generateCode>操作</th>
+			</tr>
+		</thead>
+	</table>
 </div>

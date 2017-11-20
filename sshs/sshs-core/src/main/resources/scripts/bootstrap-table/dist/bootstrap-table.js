@@ -122,7 +122,6 @@
 
     var calculateObjectValue = function (self, name, args, defaultValue) {
         var func = name;
-
         if (typeof name === 'string') {
             // support obj.func1.func2
             var names = name.split('.');
@@ -519,6 +518,7 @@
         switchable: true,
         clickToSelect: true,
         formatter: undefined,
+        format: undefined,//add by Suny 2017-11-20
         footerFormatter: undefined,
         events: undefined,
         sorter: undefined,
@@ -739,6 +739,7 @@
             styles: [],
             classes: [],
             formatters: [],
+            formats: [],//add by Suny 2017-11-20
             events: [],
             sorters: [],
             sortNames: [],
@@ -786,6 +787,7 @@
                     that.header.styles[column.fieldIndex] = align + style;
                     that.header.classes[column.fieldIndex] = class_;
                     that.header.formatters[column.fieldIndex] = column.formatter;
+                    that.header.formats[column.fieldIndex] = column.format;//add by Suny 2017-11-20
                     that.header.events[column.fieldIndex] = column.events;
                     that.header.sorters[column.fieldIndex] = column.sorter;
                     that.header.sortNames[column.fieldIndex] = column.sortName;
@@ -1727,7 +1729,7 @@
             }
 
             value = calculateObjectValue(column,
-                that.header.formatters[j], [value_, item, i], value_);
+                that.header.formatters[j], [value_, item, i,that.header.formats[j]], value_);// mod by Suny 2017-11-20
 
             if (item['_' + field + '_data'] && !$.isEmptyObject(item['_' + field + '_data'])) {
                 $.each(item['_' + field + '_data'], function(k, v) {
@@ -2001,7 +2003,7 @@
 
         data = calculateObjectValue(this.options, this.options.queryParams, [params], data);
 
-        $.extend(data, query || {});
+        data=$.extend({},params, data, query || {}); // mod by Suny 2017-10-12
 
         // false to stop request
         if (data === false) {

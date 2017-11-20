@@ -64,7 +64,7 @@ $.fn.extend({
 	}
 });
 
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$('.form_date').datetimepicker({
 		language : 'zh-CN',
 		weekStart : 1,
@@ -75,7 +75,8 @@ $(document).ready(function() {
 		minView : 2,
 		forceParse : true
 	});
-});
+});*/
+
 
 Date.prototype.format = function(fmt) { //author: meizz
 	var o = {

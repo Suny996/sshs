@@ -47,7 +47,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations"
-			value="classpath*:com/afcac/**/mapper/*Mapper.oracle.xml" />
+			value="classpath*:com/sshs/**/mapper/*Mapper.oracle.xml" />
 		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
 	</bean>
 	<!-- 3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory 

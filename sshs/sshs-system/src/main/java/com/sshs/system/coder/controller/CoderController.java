@@ -30,7 +30,7 @@ import com.sshs.system.coder.service.IDbTableService;
  * @version
  */
 @Controller
-@RequestMapping(value = "/coder")
+@RequestMapping(value = "/system/coder")
 public class CoderController extends BaseController {
 	Logger logger = Logger.getLogger(CoderController.class);
 	@Resource(name = "coderService")
@@ -47,7 +47,7 @@ public class CoderController extends BaseController {
 	@RequestMapping(value = "/getTableList.do")
 	@ResponseBody
 	public Page<DbTable> getTableList(@RequestBody Page<DbTable> page, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return dbTableService.findForPageList("com.afcac.system.coder.dao.CoderDao.findDbTableForPageList", page);
+		return dbTableService.findForPageList("com.sshs.system.coder.dao.CoderDao.findDbTableForPageList", page);
 	}
 
 	/**

@@ -20,5 +20,5 @@ public interface DictionaryDao extends Mapper<Dictionary> {
 
 	List<Dictionary> findByParentId(String parentId);
 
-	List<Dictionary> findAll();
+	List<Dictionary> findAllDictCodes();
 }

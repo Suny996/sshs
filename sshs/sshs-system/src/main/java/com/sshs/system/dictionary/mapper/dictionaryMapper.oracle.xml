@@ -2,64 +2,100 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
-<mapper namespace="com.afcac.system.dictionary.dao.DictionaryDao">
+<mapper namespace="com.sshs.system.dictionary.dao.DictionaryDao">
 	<!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->
+	<!--表名 -->
+	<sql id="tableName">
+		SYS_DICTIONARIES
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		DICT_ID ,
+		PARENT_ID ,
+		DICT_TYPE ,
+		DICT_CODE ,
+		DICT_NAME ,
+		DICT_NAME_EN ,
+		DICT_DESC ,
+		STATUS ,
+		SORT_NO ,
+		IS_SYSTEM ,
+		MODULE ,
+		LEGAL_ORG ,
+		CRT_USER_CODE ,
+		CRT_ORG_CODE ,
+		CRT_DATE ,
+		UPD_USER_CODE ,
+		UPD_ORG_CODE ,
+		UPD_DATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{dictId},
+		#{parentId},
+		#{dictType},
+		#{dictCode},
+		#{dictName},
+		#{dictNameEn},
+		#{dictDesc},
+		#{status},
+		#{sortNo},
+		#{IsSystem},
+		#{module},
+		#{legalOrg},
+		#{crtUserCode},
+		#{crtOrgCode},
+		#{crtDate},
+		#{updUserCode},
+		#{updOrgCode},
+		#{updDate}
+	</sql>
+
 	<select id="findById" parameterType="int" resultType="Dictionary">
 		select
-		user_id id,user_name userName,user_age age from t_user where
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
 		user_id=#{id}
 	</select>
-	<!-- 初始化字典项 -->
-	<select id="findByDictCode" parameterType="String"
-		resultType="Dictionary">
+	<!-- 初始化字典项 根据dictCode查询 -->
+	<select id="findByDictCode" parameterType="String" resultType="Dictionary">
 		SELECT
-		DICT_ID,
-		PARENT_ID,
-		DICT_TYPE,
-		DICT_CODE,
-		DICT_NAME,
-		DICT_NAME_EN,
-		DICT_DESC,
-		STATUS,
-		SORT_NO,
-		LEGAL_ORG,
-		IS_SYSTEM,
-		CRT_DATE,
-		MODULE
-		FROM SYS_DICTIONARIES WHERE DICT_TYPE='0' AND DICT_CODE=#{dictCode}
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		WHERE DICT_TYPE='1' AND DICT_CODE=#{dictCode}
 	</select>
-	
-	<!-- 初始化字典项 -->
+
+	<!-- 初始化字典项 根据parentId查询 -->
 	<select id="findByParentId" parameterType="java.lang.String"
 		resultType="Dictionary">
 		SELECT
-		DICT_ID,
-		PARENT_ID,
-		DICT_TYPE,
-		DICT_CODE,
-		DICT_NAME,
-		DICT_NAME_EN,
-		DICT_DESC,
-		STATUS,
-		SORT_NO,
-		LEGAL_ORG,
-		IS_SYSTEM,
-		CRT_DATE,
-		MODULE
-		FROM SYS_DICTIONARIES WHERE PARENT_ID=#{parentId} order by sort_no asc
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		WHERE PARENT_ID=#{parentId} order by
+		sort_no asc
 	</select>
-	
-	<select id="findAll" resultType="Dictionary">
-		select user_id id,user_name
-		userName,user_age age from t_user
+	<!-- 初始化所有字典项目 -->
+	<select id="findAllDictCodes" resultType="Dictionary">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName">
+		</include>
+		where DICT_TYPE='1' and STATUS='1'
 	</select>
 
 	<select id="findForPageList" parameterType="Page" resultType="Dictionary">
 		select
-		user_id id,user_name userName,user_sex as sex,user_post as
-		post,entry_date as entryDate,user_remark as remark
-		,user_age age from
-		t_user where 1=1
+		<include refid="tableName"></include>
+		from
+		<include refid="tableName"></include>
+		where 1=1
 		<if test="params.userName != null and params.userName != ''">
 			and user_name like CONCAT('%',#{params.userName}, '%')
 		</if>

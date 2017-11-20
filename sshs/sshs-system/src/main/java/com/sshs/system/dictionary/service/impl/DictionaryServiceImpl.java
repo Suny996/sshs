@@ -1,10 +1,12 @@
 package com.sshs.system.dictionary.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sshs.core.base.service.impl.BaseServiceImpl;
 import com.sshs.core.page.Page;
+import com.sshs.core.util.DictionaryUtil;
 import com.sshs.system.dictionary.dao.DictionaryDao;
 import com.sshs.system.dictionary.model.Dictionary;
 import com.sshs.system.dictionary.service.IDictionaryService;
@@ -23,15 +26,9 @@ public class DictionaryServiceImpl extends BaseServiceImpl<Dictionary> implement
 	 * 字典缓存
 	 */
 	public static Map<String, Dictionary> dictionarys = new HashMap<String, Dictionary>();
-	/**
-	 * 字典下拉列表缓存
-	 */
-	public static Map<String, Map<String, Object>> dictLists = new HashMap<String, Map<String, Object>>();
+
 	@Resource(name = "dictionaryDao")
 	private DictionaryDao dao;
-
-	// @Resource(name = "baseDao")
-	// private IBaseDao<Dictionary> baseDao;
 
 	public int delete(String id) throws Exception {
 		return dao.delete(id);
@@ -60,11 +57,6 @@ public class DictionaryServiceImpl extends BaseServiceImpl<Dictionary> implement
 	}
 
 	@Override
-	public List<Dictionary> findAll() {
-		return dao.findAll();
-	}
-
-	@Override
 	public Dictionary getDictionaryByCode(String dictCode) {
 		Dictionary dict = dictionarys.get(dictCode);
 		if (dict != null) {
@@ -83,27 +75,45 @@ public class DictionaryServiceImpl extends BaseServiceImpl<Dictionary> implement
 	}
 
 	/**
+	 * 初始化字典项
 	 * 
-	 * @param dictCode
+	 * @return
+	 *//*
+		 * private List<Dictionary> findAllDictCodes() { return dao.findAllDictCodes();
+		 * }
+		 */
+
+	/**
+	 * 初始化字典列表,系统启动时执行缓存
+	 * 
+	 * @param dict
 	 * @return
 	 */
-	public Map<String, Object> getList(String dictCode) {
-		Map<String, Object> list = dictLists.get(dictCode);
-		if (list == null) {
-			// list = new LinkedHashMap<String, Object>();
-			Dictionary dict = getDictionaryByCode(dictCode);
-			list = initList(dict);
-			dictLists.put(dictCode, list);
+	@PostConstruct
+	public void initDictList() {
+		// DictionaryServiceImpl dictService = new DictionaryServiceImpl();
+		List<Dictionary> dictCodes = dao.findAllDictCodes();
+		for (Dictionary dict : dictCodes) {// 字典项
+			initChildren(dict);
+			List<Map<String, Object>> dictProj = new ArrayList<Map<String, Object>>();
+			for (Dictionary dgrp : dict.getChildren()) {// 字典码值或 子字典项目
+				Map<String, Object> dictGrp = new LinkedHashMap<String, Object>();
+				if (!"3".equals(dgrp.getDictType())) {// 字典子项
+					for (Dictionary dv : dgrp.getChildren()) {
+						Map<String, Object> dictVal = new LinkedHashMap<String, Object>();
+						dictVal.put("key", dv.getDictCode());
+						dictVal.put("value", dv.getDictName());
+						dictGrp.put("children", dictVal);
+					}
+				}
+				dictGrp.put("key", dgrp.getDictCode());
+				dictGrp.put("value", dgrp.getDictName());
+				dictGrp.put("desc", dgrp.getDictDesc());
+				dictGrp.put("status", dgrp.getStatus());
+				dictProj.add(dictGrp);
+			}
+			DictionaryUtil.dictlists.put(dict.getDictCode(), dictProj);
 		}
-		return list;
-	}
-
-	private Map<String, Object> initList(Dictionary dict) {
-		Map<String, Object> list = new LinkedHashMap<String, Object>();
-		for (Dictionary d : dict.getChildren()) {
-			list.put(d.getDictCode(), d.getDictName());
-		}
-		return list;
 	}
 
 	/**
@@ -113,7 +123,7 @@ public class DictionaryServiceImpl extends BaseServiceImpl<Dictionary> implement
 	 * @return
 	 */
 	private void initChildren(Dictionary parent) {
-		if ("0".equals(parent.getDictType())) {
+		if (!"3".equals(parent.getDictType())) {
 			List<Dictionary> children = dao.findByParentId(parent.getDictId());
 			if (children != null && !children.isEmpty()) {
 				for (Dictionary d : children) {

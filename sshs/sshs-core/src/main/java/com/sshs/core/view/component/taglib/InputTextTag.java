@@ -36,7 +36,7 @@ public class InputTextTag extends BaseTag implements Component {
 		}
 		text.append("<input type=\"text\" class=\"form-control\" id=\""
 				+ super.getId() + "\" name=\"" + super.getName()
-				+ "\" placeholder=\"" + super.getPlaceholder() + "\">");
+				+ "\" placeholder=\"" + super.getPlaceholder() + "\"/>");
 		text.append("</div>");
 		text.append(super.forTagEnd());
 		return text.toString();

@@ -26,16 +26,15 @@ public class Page<T> {
 	private int offset; // 当前记录起始索引
 	private int limit; // 每页显示记录数
 	private Map<String, Object> userdata = new HashMap<String, Object>();
-	private String sort, order;
-	private String orderBy;
+	private String sort, order = "";
+	private String orderBy = "";
 	List<T> rows;
 	Map<String, Object> variables = new HashMap<String, Object>();
 
 	public Page() {
 		/*
-		 * try { // Integer.parseInt(Tools.readTxtFile(Const.PAGE));
-		 * //this.pageSize = 10; //this.limit = 10; } catch (Exception e) {
-		 * this.pageSize = 10; }
+		 * try { // Integer.parseInt(Tools.readTxtFile(Const.PAGE)); //this.pageSize =
+		 * 10; //this.limit = 10; } catch (Exception e) { this.pageSize = 10; }
 		 */
 	}
 
@@ -157,7 +156,10 @@ public class Page<T> {
 	}
 
 	public void setSort(String sort) {
-		this.sort = sort;
+		if (StringUtils.isNotEmpty(sort)) {
+			this.sort = ReflectHelper.getColumnName(sort);
+			this.orderBy = this.sort + " " + this.orderBy;
+		}
 	}
 
 	public String getOrder() {
@@ -165,10 +167,12 @@ public class Page<T> {
 	}
 
 	public void setOrder(String order) {
-		if (StringUtils.isEmpty(order)) {
-			order = "asc";
+		if (StringUtils.isNotEmpty(order)) {
+			this.order = order;
+			if (StringUtils.isNotEmpty(this.orderBy)) {
+				this.orderBy = this.orderBy + " " + order;
+			}
 		}
-		this.order = order;
 	}
 
 	public Map<String, Object> getUserdata() {
@@ -196,7 +200,11 @@ public class Page<T> {
 				this.orderBy = orderBy;
 			}
 		} else {
-			this.orderBy = orderBy;
+			if (StringUtils.isNotEmpty(this.sort)) {
+				this.orderBy = this.sort + " " + this.order;
+			} else {
+				this.orderBy = orderBy;
+			}
 		}
 	}
 }
