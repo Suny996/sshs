@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<base href="http://localhost:8080/system/">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="scripts/jquery/jquery.js">
+	
+</script>
+
+<!-- Bootstrap -->
+<link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript"
+	src="scripts/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- bootstrap-table -->
+<link href="scripts/bootstrap-table/src/bootstrap-table.css"
+	rel="stylesheet">
+<!-- bootstrap-table -->
+<script type="text/javascript"
+	src="scripts/bootstrap-table/src/bootstrap-table.js"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap-table/src/locale/bootstrap-table-zh-CN.js"></script>
+
+<!-- bootstrap-select -->
+<link rel="stylesheet"
+	href="scripts/bootstrap-select/dist/css/bootstrap-select.css">
+<!-- bootstrap-select -->
+<script type="text/javascript"
+	src="scripts/bootstrap-select/dist/js/bootstrap-select.js"></script>
+
+
+<!-- bootstrap-datetimepicker -->
+<link rel="stylesheet"
+	href="scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<!-- bootstrap-datetimepicker -->
+<script type="text/javascript"
+	src="scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+	charset="UTF-8"></script>
+
+<!-- bootstrap paginator -->
+<script type="text/javascript"
+	src="scripts/bootstrap-paginator/build/bootstrap-paginator.min.js"></script>
+
+<!-- Jquery.easyUI -->
+<!-- <link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/themes/bootstrap/easyui.css">
+
+<link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/demo/demo.css">
+<script type="text/javascript" src="scripts/jquery-easyui/jquery.easyui.min.js"></script>
+ -->
+
+
+<!-- dataTables -->
+<!-- <link rel="stylesheet" type="text/css"
+	href="scripts/dataTables/media/css/dataTables.bootstrap4.css">
+<script type="text/javascript"
+	src="scripts/dataTables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript"
+	src="scripts/dataTables/media/js/dataTables.bootstrap4.js"></script> -->
+
+
+<link href="scripts/justep/comp.min.css" rel="stylesheet">
+<!-- 自定义css样式 -->
+<link rel="stylesheet" type="text/css"
+	href="scripts/sshs/css/component.css">
+<!-- 自定义js ，扩展翻页table组件等 -->
+<script type="text/javascript" src="scripts/sshs/js/component.js"></script>
+
+<!-- require -->
+<script type="text/javascript" src="scripts/requirejs/require.js"></script>
+
+
+</head>
+<body>
+	<form action="" method="post" id="queryForm" style="height: 44px;"
+		name="queryForm" class="form-inline">
+		<div
+			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<label for="44355f3bd9144153ad4e1ed0c15f06b0"
+				class="x-label x-right control-label" style="white-space: nowrap;">表名:</label>
+			<input type="text" class="x-edit form-control "
+				id="44355f3bd9144153ad4e1ed0c15f06b0" name="tableName"
+				placeholder="表名" />
+		</div>
+		<div
+			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<label for="a3f719ba981e4a1a9b410c9f9bab8f9f"
+				class="x-label x-right control-label" style="white-space: nowrap;">表描述:</label>
+			<input type="text" class="x-edit form-control "
+				id="a3f719ba981e4a1a9b410c9f9bab8f9f" name="tableComment"
+				placeholder="表名" />
+		</div>
+		<div
+			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<label for="2f3c173c8e8a45a593da805cf0d225c2"
+				class="x-label x-right control-label" style="white-space: nowrap;">生成日期:</label>
+			<input type="text" class="x-edit date form-control"
+				id="2f3c173c8e8a45a593da805cf0d225c2" name="coderDate"
+				data-date-format="yyyy-MM-dd" placeholder="生成日期" />
+			<script type="text/javascript">
+				_InitDatePicker("2f3c173c8e8a45a593da805cf0d225c2",
+						"yyyy-MM-dd");
+			</script>
+		</div>
+		<div
+			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<label for="a4fdb461d9994c46b7cb526d9f5be4ca"
+				class="x-label x-right control-label" style="white-space: nowrap;">代码是否已生成:</label>
+			<select type="text" class="form-control x-edit"
+				id="a4fdb461d9994c46b7cb526d9f5be4ca" name="coderFlag"
+				placeholder="代码是否已生成"><option value="1">是</option>
+				<option value="0">否</option></select>
+		</div>
+		<!-- 	<div
+			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<button type="button" class="btn btn-primary"
+				icon="linear linear-magnifier" onclick="Model.btnQueryClick();">
+				<i class="linear linear-magnifier"></i>查询
+			</button>
+			<button type="button" class="btn btn-danger">
+				<i xid="i2" class="linear linear-cross"> </i> 重置
+			</button>
+		</div> -->
+		<div
+			class="appearance x-button-edit col-xs-12 col-sm-12 col-md-6 col-lg-4">
+			<button type="button" class="x-btn btn btn-primary"
+				icon="linear linear-magnifier" onclick="Model.btnQueryClick();">
+				<i class="linear linear-magnifier"></i>查询
+			</button>
+			<button type="button" class="x-btn btn btn-danger">
+				<i class="linear linear-cross"> </i> 重置
+			</button>
+		</div>
+	</form>
+	<div id="content">
+		<table id="mainListTable" class="table table-bordered"
+			data-url="system/coder/getTableList.do" data-striped="false">
+			<thead>
+				<tr>
+					<th data-field="tableName" data-sortable="true">表名</th>
+					<th data-field="tableComment">表描述</th>
+					<th data-field="coderFlag" data-format="YN"
+						data-formatter="_DictTranslate">是否已生成代码</th>
+					<th data-field="handle" data-formatter="Model.handleRender">
+						操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+	var Model;
+	require([ "/system/system/coder/mainList.js.dw" ], function(model) {
+		Model = model;
+	});
+</script>

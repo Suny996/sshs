@@ -28,27 +28,27 @@ public class ViewResolver {
 	 * @param doc
 	 * @return
 	 */
-	public static String resolve(Document doc, String viewTemplate, String cachedJs) {
+	public static String resolve(Document doc, String viewTemplate, String pageType) {
 		String text = "";
 		StringBuffer headText = new StringBuffer();
 		StringBuffer bodyText = new StringBuffer();
-		Elements heads = doc.getElementsByTag("head");
-		if (heads != null && heads.size() > 0) {
-			for (Element e : heads) {
-				headText.append(resolveHead(e));
-			}
-		}
-
 		Elements bodys = doc.getElementsByTag("body");
 		if (bodys != null && bodys.size() > 0) {
 			for (Element e : bodys) {
 				bodyText.append(resolveBody(e));
 			}
 		}
-		text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
-				.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
-		if (StringUtils.isNotEmpty(cachedJs)) {
-			text += cachedJs;
+		if (!"body".equalsIgnoreCase(pageType)) {
+			Elements heads = doc.getElementsByTag("head");
+			if (heads != null && heads.size() > 0) {
+				for (Element e : heads) {
+					headText.append(resolveHead(e));
+				}
+			}
+			text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
+					.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
+		} else {
+			text = bodyText.toString();
 		}
 		return text;
 	}
@@ -137,6 +137,7 @@ public class ViewResolver {
 	 */
 
 	private static Element initComponent(Component component, Element element) {
+		component.init();
 		Element e = element.clone();
 		Field[] fields = component.getClass().getFields();
 		// Field[] superFields =

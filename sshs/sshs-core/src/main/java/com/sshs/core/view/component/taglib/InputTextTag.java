@@ -3,6 +3,7 @@ package com.sshs.core.view.component.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
+import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -13,31 +14,33 @@ import com.sshs.core.view.component.Component;
  * 
  */
 public class InputTextTag extends BaseTag implements Component {
-
-	public void init() {
-		// TODO Auto-generated method stub
-	}
-
 	/**
 	 * 输入域组件/标签
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public void init() {
+		this.setId(UuidUtil.get32UUID());
+	}
+
+	@Override
 	public String forStartTag() {
+		// TODO Auto-generated method stub
 		return "";
 	}
 
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
-		text.append(super.forTagBefore());
-		text.append("<div class=\"input-group\">\n");
+		text.append(this.forTagBefore(this.id));
 		if (required) {
+			text.append("<div class=\"input-group\">\n");
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
-		text.append("<input type=\"text\" class=\"form-control\" id=\""
-				+ super.getId() + "\" name=\"" + super.getName()
-				+ "\" placeholder=\"" + super.getPlaceholder() + "\"/>");
-		text.append("</div>");
+		text.append("<input type=\"text\" class=\"x-edit form-control \" id=\"" + this.getId() + "\" name=\"" + this.getName()
+				+ "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
+		if (required) {
+			text.append("</div>");
+		}
 		text.append(super.forTagEnd());
 		return text.toString();
 	}

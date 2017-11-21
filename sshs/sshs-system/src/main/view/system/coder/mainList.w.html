@@ -1,5 +1,5 @@
 <form action="" method="post" id="queryForm" style="height: 44px;"
-	name="queryForm">
+	name="queryForm" class="form-inline">
 	<input name="tableName" label="表名" /> <input name="tableComment"
 		label="表描述" /> <input type="date" name="coderDate"
 		format="yyyy-MM-dd" label="生成日期" /> <select name="coderFlag"
@@ -21,7 +21,7 @@
 				<th data-field="tableComment">表描述</th>
 				<th data-field="coderFlag" data-format="YN"
 					data-formatter=_DictTranslate>是否已生成代码</th>
-				<th data-field="handle" data-formatter=Model.generateCode>操作</th>
+				<th data-field="handle" data-formatter=Model.handleRender>操作</th>
 			</tr>
 		</thead>
 	</table>

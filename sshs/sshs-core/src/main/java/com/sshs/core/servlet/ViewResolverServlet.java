@@ -237,15 +237,17 @@ public class ViewResolverServlet extends HttpServlet {
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		// 处理视图内容
 		String text = "";
-		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \""
-				+ request.getContextPath() + viewFileName + ".js.dw\" ], function(model) {\r\n"
-				+ "		Model = model;\r\n" + "	}); </script>";
+		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \"" + request.getContextPath()
+				+ viewFileName + ".js.dw\" ], function(model) {\r\n" + "		Model = model;\r\n" + "	}); </script>";
 
 		if (text != null && text.contains("<%")) {
-			text = ViewResolver.resolve(doc, viewJspTemplate, privateJs).replaceAll("\\&lt;\\%", "\\<\\%")
-					.replaceAll("\\%\\&gt;", "\\%\\>");
+			text = ViewResolver.resolve(doc, viewJspTemplate, request.getParameter("_pageType"))
+					.replaceAll("\\&lt;\\%", "\\<\\%").replaceAll("\\%\\&gt;", "\\%\\>");
 		} else {
-			text = ViewResolver.resolve(doc, viewHtmlTemplate, privateJs);
+			text = ViewResolver.resolve(doc, viewHtmlTemplate, request.getParameter("_pageType"));
+		}
+		if (StringUtils.isNotEmpty(privateJs)) {
+			text += privateJs;
 		}
 		return text;
 	}

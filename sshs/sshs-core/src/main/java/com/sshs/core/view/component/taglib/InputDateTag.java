@@ -5,6 +5,7 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -24,8 +25,7 @@ public class InputDateTag extends BaseTag implements Component {
 	public String format = "yyyy-MM-dd";
 
 	public void init() {
-		// TODO Auto-generated method stub
-
+		this.setId(UuidUtil.get32UUID());
 	}
 
 	public String forStartTag() {
@@ -38,22 +38,30 @@ public class InputDateTag extends BaseTag implements Component {
 	 */
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
-		text.append(super.forTagBefore());
-
-		text.append("<div id=\"" + this.getId()
-				+ "_picker\" class=\"date form_date input-group\" data-date=\"\"  data-date-format=\""
-				+ this.getFormat() + "\"  data-link-field=\"" + this.getId() + "\" data-link-format=\""
-				+ this.getFormat() + "\">");
+		text.append(this.forTagBefore(this.id));
+		/*
+		 * text.append("<div id=\"" + this.getId() +
+		 * "_picker\" class=\"date form_date input-group\" data-date=\"\"  data-date-format=\""
+		 * + this.getFormat() + "\"  data-link-field=\"" + this.getId() +
+		 * "\" data-link-format=\"" + this.getFormat() + "\">");
+		 */
 		if (required) {
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
-		text.append("<input type=\"text\" class=\"form-control\" id=\"cld" + this.getId() + "\" name=\"cld"
-				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
-		text.append("<input type=\"hidden\" id=\"" + this.getId() + "\" name=\"" + this.getName() + "\" value=\"\" />");
-		text.append("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>");
-		text.append("</div>");
-		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "_picker\",\""
-				+ this.getFormat() + "\");</script>");
+		text.append("<input type=\"text\" class=\"x-edit date form-control\" id=\"" + this.getId() + "\" name=\""
+				+ this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
+				+ this.getPlaceholder() + "\"/>");
+		/*
+		 * text.append("<input type=\"hidden\" id=\"" + this.getId() + "\" name=\"" +
+		 * this.getName() + "\" value=\"\" />"); text.
+		 * append("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>"
+		 * );
+		 */
+		if (required) {
+			text.append("</div>");
+		}
+		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()
+				+ "\");</script>");
 		text.append(super.forTagEnd());
 		return text.toString();
 	}

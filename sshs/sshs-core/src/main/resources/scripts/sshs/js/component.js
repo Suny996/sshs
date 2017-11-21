@@ -1,8 +1,8 @@
 /**
- * ajax获取后台数据 paginator插件扩展，以增加通用性 author:Suny date:2017-10-10
+ * bootstrapTable ajax获取后台数据 paginator插件扩展，以增加通用性 author:Suny date:2017-10-10
  */
 $.fn.extend({
-	getElementsJson : function(parameter) {
+	getElementsJson : function(parameter) {//将form组件内的表单元素打包成json对象
 		var params = $(this).serializeArray();
 		if (parameter) {
 			for (x in parameter) {
@@ -11,7 +11,7 @@ $.fn.extend({
 		}
 		return params;
 	},
-	loadData : function(params) {
+	loadData : function(params) {//bootstrapTable 扩展 初始化
 		if (!params) {
 			params = {};
 		} else {
@@ -61,8 +61,13 @@ $.fn.extend({
 			// detailView : false, //是否显示父子表
 			columns : columns
 		});
+	},
+	showPage:function(url,param){//发送页面请求，替换到当前对象中
+		$(this).load(url,$.extend({"_pageType":"body"}, param));
 	}
 });
+
+
 
 /**
  * 数据字典项翻译-table渲染用
@@ -119,7 +124,7 @@ var _InitDatePicker=function(id,format,lang) {
 				todayHighlight: 1,
 				startView: 2,
 				minView: 2,
-				forceParse: 0
+				forceParse: 1
 		    };
 
 	if (format && format.toLowerCase().indexOf("yy")>=0 && format.toLowerCase().indexOf("hh")>=0) {
