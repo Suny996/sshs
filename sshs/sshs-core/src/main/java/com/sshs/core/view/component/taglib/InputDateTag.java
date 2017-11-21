@@ -39,24 +39,14 @@ public class InputDateTag extends BaseTag implements Component {
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
-		/*
-		 * text.append("<div id=\"" + this.getId() +
-		 * "_picker\" class=\"date form_date input-group\" data-date=\"\"  data-date-format=\""
-		 * + this.getFormat() + "\"  data-link-field=\"" + this.getId() +
-		 * "\" data-link-format=\"" + this.getFormat() + "\">");
-		 */
+
 		if (required) {
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
 		text.append("<input type=\"text\" class=\"x-edit date form-control\" id=\"" + this.getId() + "\" name=\""
 				+ this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
 				+ this.getPlaceholder() + "\"/>");
-		/*
-		 * text.append("<input type=\"hidden\" id=\"" + this.getId() + "\" name=\"" +
-		 * this.getName() + "\" value=\"\" />"); text.
-		 * append("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>"
-		 * );
-		 */
+
 		if (required) {
 			text.append("</div>");
 		}

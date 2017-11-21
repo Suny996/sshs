@@ -1,15 +1,17 @@
-<form action="" method="post" id="queryForm" style="height: 44px;"
-	name="queryForm" class="form-inline">
+<form type="condition" action="javascript:Model.btnQueryClick();"
+	name="queryForm" style="height: 44px;" name="queryForm"
+	class="form-inline">
 	<input name="tableName" label="表名" /> <input name="tableComment"
 		label="表描述" /> <input type="date" name="coderDate"
 		format="yyyy-MM-dd" label="生成日期" /> <select name="coderFlag"
-		dictCode="YN" label="代码是否已生成"></select> <a class="btn btn-default" label="查询"
-		name="btnQuery" icon="linear linear-magnifier"
-		onClick="Model.btnQueryClick();"> <i xid="i1"
-		class="linear linear-magnifier"></i> <span xid="span1">查询</span></a> <a
-		class="btn btn-default" label="重置" name="btnReset"
-		icon="linear linear-cross"> <i xid="i2"
-		class="linear linear-cross"></i> <span xid="span8">重置</span></a>
+		dictCode="YN" label="代码是否已生成"></select>
+
+	<div type="buttonGroup">
+		<button type="submit" class="btn-primary" accessKey="a" value="查询"
+			icon="linear linear-magnifier" onclick=""></button>
+		<button type="reset"
+			icon="linear linear-cross"></button>
+	</div>
 
 </form>
 <div id="content">

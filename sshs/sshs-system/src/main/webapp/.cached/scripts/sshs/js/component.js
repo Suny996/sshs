@@ -2,7 +2,7 @@
  * bootstrapTable ajax获取后台数据 paginator插件扩展，以增加通用性 author:Suny date:2017-10-10
  */
 $.fn.extend({
-	getElementsJson : function(parameter) {//将form组件内的表单元素打包成json对象
+	getElementsJson : function(parameter) {// 将form组件内的表单元素打包成json对象
 		var params = $(this).serializeArray();
 		if (parameter) {
 			for (x in parameter) {
@@ -11,7 +11,7 @@ $.fn.extend({
 		}
 		return params;
 	},
-	loadData : function(params) {//bootstrapTable 扩展 初始化
+	loadData : function(params) {// bootstrapTable 扩展 初始化
 		if (!params) {
 			params = {};
 		} else {
@@ -62,10 +62,20 @@ $.fn.extend({
 			columns : columns
 		});
 	},
-	showPage:function(url,param){//发送页面请求，替换到当前对象中
+	showPage:function(url,param){// 发送页面请求，替换到当前对象中
 		$(this).load(url,$.extend({"_pageType":"body"}, param));
 	}
 });
+
+$.extend({
+	showPage:function(url,param,target){
+			if(target){
+				$(target).showPage(url,param);
+			}else{
+				$("body").showPage(url,param);
+			}
+		}
+	});
 
 
 

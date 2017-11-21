@@ -12,7 +12,7 @@ define(function(require) {
 		// this.comp('tableListData').refreshData();
 	};
 	Model.showRunPage = function(tableName) {
-		$("#content").showPage("system/coder/coder.w",{"tableName":tableName});
+		$.showPage("system/coder/coder.w",{"tableName":tableName});
 	}
 	Model.handleRender = function(value, row, index) {
 		return [

@@ -1,13 +1,21 @@
 package com.sshs.core.view.resolver;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.inject.Named;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.ParseSettings;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import com.sshs.core.util.ReflectHelper;
@@ -28,27 +36,37 @@ public class ViewResolver {
 	 * @param doc
 	 * @return
 	 */
-	public static String resolve(Document doc, String viewTemplate, String pageType) {
+	public static String resolve(InputStream input, String viewTemplate, String pageType) {
+
 		String text = "";
-		StringBuffer headText = new StringBuffer();
-		StringBuffer bodyText = new StringBuffer();
-		Elements bodys = doc.getElementsByTag("body");
-		if (bodys != null && bodys.size() > 0) {
-			for (Element e : bodys) {
-				bodyText.append(resolveBody(e));
-			}
-		}
-		if (!"body".equalsIgnoreCase(pageType)) {
-			Elements heads = doc.getElementsByTag("head");
-			if (heads != null && heads.size() > 0) {
-				for (Element e : heads) {
-					headText.append(resolveHead(e));
+		try {
+			Parser parser = Parser.htmlParser();
+			parser.settings(new ParseSettings(true, true));
+			Document doc = Jsoup.parse(input, "UTF-8", "", parser);
+
+			StringBuffer headText = new StringBuffer();
+			StringBuffer bodyText = new StringBuffer();
+			Elements bodys = doc.getElementsByTag("body");
+			if (bodys != null && bodys.size() > 0) {
+				for (Element e : bodys) {
+					bodyText.append(resolveBody(e));
 				}
 			}
-			text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
-					.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
-		} else {
-			text = bodyText.toString();
+			if (!"body".equalsIgnoreCase(pageType)) {
+				Elements heads = doc.getElementsByTag("head");
+				if (heads != null && heads.size() > 0) {
+					for (Element e : heads) {
+						headText.append(resolveHead(e));
+					}
+				}
+				text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
+						.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
+			} else {
+				text = bodyText.toString();
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		return text;
 	}
@@ -90,8 +108,13 @@ public class ViewResolver {
 		StringBuffer text = new StringBuffer();
 		String name = element.tagName();
 		String type = element.attr("type");
-		if (StringUtils.isEmpty(type) && "input".equalsIgnoreCase(name)) {
-			type = "text";
+		if (StringUtils.isEmpty(type)) {
+			if ("input".equalsIgnoreCase(name)) {
+				type = "text";
+			}
+			if ("button".equalsIgnoreCase(name)) {
+				type = "button";
+			}
 		}
 		Object bean = SpringUtil.getComponent(name + ReflectHelper.capitalName(type));
 		Component component = null;
@@ -140,37 +163,46 @@ public class ViewResolver {
 		component.init();
 		Element e = element.clone();
 		Field[] fields = component.getClass().getFields();
-		// Field[] superFields =
-		// component.getClass().getSuperclass().getDeclaredFields();
-		// Arrays.asList(superFields).addAll(Arrays.asList(fields));
 		for (Field field : fields) {
-			String name = field.getName();
+			String fieldName = field.getName();
 			Object value = "";
-			if (element.hasAttr(name.toLowerCase())) {
-				value = element.attr(name.toLowerCase());
-				try {
-					Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(name),
-							value.getClass());
-					try {
-						if (method != null) {
-							method.invoke(component, value);
-							e.removeAttr(name.toLowerCase());
-						}
-					} catch (IllegalAccessException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IllegalArgumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+			String attrName = "";
+			if (element.hasAttr(fieldName)) {
+				attrName = fieldName;
+				value = element.attr(attrName);
+			} else {
+				Annotation[] annotations = field.getAnnotations();
+				if (annotations != null && annotations.length > 0 && annotations[0] instanceof Named) {
+					Named named = (Named) annotations[0];
+					attrName = named.value();
+					if (element.hasAttr(attrName)) {
+						value = element.attr(attrName);
 					}
-				} catch (NoSuchMethodException e1) {
-					logger.error(e1.getMessage());
-				} catch (SecurityException e1) {
-					logger.error(e1.getMessage());
 				}
+			}
+
+			try {
+				Method method = component.getClass().getMethod("set" + ReflectHelper.capitalName(fieldName),
+						value.getClass());
+				try {
+					if (method != null) {
+						method.invoke(component, value);
+						e.removeAttr(attrName);
+					}
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} catch (NoSuchMethodException e1) {
+				logger.error(e1.getMessage());
+			} catch (SecurityException e1) {
+				logger.error(e1.getMessage());
 			}
 		}
 		return e;

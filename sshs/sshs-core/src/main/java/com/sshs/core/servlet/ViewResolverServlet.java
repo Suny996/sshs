@@ -20,8 +20,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import com.sshs.core.util.Configure;
 import com.sshs.core.view.resolver.ViewResolver;
@@ -198,23 +196,30 @@ public class ViewResolverServlet extends HttpServlet {
 			if (!viewCacheFlag && !".jsp".equalsIgnoreCase(pattern)) {
 				PrintWriter out = response.getWriter();
 				out.print(text);
+				out.close();
 				return;
 			} else {
 				cachedView = "/.cached" + viewFileName + pattern;
 
 				FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
 				_cachedView.put(viewRequest, cachedView);
+				if (view != null) {
+					view.close();
+				}
 				request.getRequestDispatcher(cachedView).forward(request, response);
 			}
 			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
 		} else if (view != null) {
 			doResourceRequest(view, filePath + cachedView);
+			if (view != null) {
+				view.close();
+			}
 			request.getRequestDispatcher(cachedView).forward(request, response);
 		}
-
 		if (view != null) {
 			view.close();
 		}
+
 	}
 
 	/**
@@ -234,17 +239,17 @@ public class ViewResolverServlet extends HttpServlet {
 		if (input == null) {
 			throw new ServletException("请求的视图文件:[" + (viewFileName + pattern) + "]不存在！");
 		}
-		Document doc = Jsoup.parse(input, "UTF-8", "");
+
 		// 处理视图内容
 		String text = "";
 		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \"" + request.getContextPath()
 				+ viewFileName + ".js.dw\" ], function(model) {\r\n" + "		Model = model;\r\n" + "	}); </script>";
 
 		if (text != null && text.contains("<%")) {
-			text = ViewResolver.resolve(doc, viewJspTemplate, request.getParameter("_pageType"))
+			text = ViewResolver.resolve(input, viewJspTemplate, request.getParameter("_pageType"))
 					.replaceAll("\\&lt;\\%", "\\<\\%").replaceAll("\\%\\&gt;", "\\%\\>");
 		} else {
-			text = ViewResolver.resolve(doc, viewHtmlTemplate, request.getParameter("_pageType"));
+			text = ViewResolver.resolve(input, viewHtmlTemplate, request.getParameter("_pageType"));
 		}
 		if (StringUtils.isNotEmpty(privateJs)) {
 			text += privateJs;

@@ -13,4 +13,9 @@
 	<bean id="inputText" class="com.sshs.core.view.component.taglib.InputTextTag" />
 	<bean id="inputDate" class="com.sshs.core.view.component.taglib.InputDateTag" />
 	<bean id="select" class="com.sshs.core.view.component.taglib.SelectTag" />
+	
+	<bean id="divButtonGroup" class="com.sshs.core.view.component.taglib.ButtonGroupTag" />
+	<bean id="buttonButton" class="com.sshs.core.view.component.taglib.ButtonButtonTag" />
+	<bean id="buttonSubmit" class="com.sshs.core.view.component.taglib.ButtonSubmitTag" />
+	<bean id="buttonReset" class="com.sshs.core.view.component.taglib.ButtonResetTag" />
 </beans>
