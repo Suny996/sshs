@@ -71,4 +71,25 @@
 
 	<!-- 5. 使用声明式事务 transaction-manager：引用上面定义的事务管理器 -->
 	<!-- tx:annotation-driven transaction-manager="txManager" -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<!-- 国际化信息所在的文件名 -->
+		<property name="basename" value="i18n.messages" />
+		<!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称 -->
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+	<!-- 国际化操作 拦截器 必需配置，可以和其它国际化方式通用 -->
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	<bean id="defaultUrlMapping"
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="interceptors" ref="localeChangeInterceptor" />
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en_US"></property>
+	</bean>
 </beans>

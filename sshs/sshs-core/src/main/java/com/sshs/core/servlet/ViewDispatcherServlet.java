@@ -6,13 +6,12 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +19,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.sshs.core.util.Configure;
 import com.sshs.core.view.resolver.ViewResolver;
@@ -30,12 +32,13 @@ import com.sshs.core.view.resolver.ViewResolver;
  * @author Suny
  * @date 2017-11-15
  */
-@WebServlet(name = "ViewResolverServlet", urlPatterns = { "*.w", "*.dw", "/scripts/*" }, loadOnStartup = 2)
-public class ViewResolverServlet extends HttpServlet {
+// @WebServlet(name = "viewResolverServlet", urlPatterns = { "*.w", "*.dw",
+// "/scripts/*" }, loadOnStartup = 1)
+public class ViewDispatcherServlet extends DispatcherServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	Logger logger = Logger.getLogger(ViewResolverServlet.class);
+	Logger logger = Logger.getLogger(ViewDispatcherServlet.class);
 	/**
 	 * 页面缓存 容器
 	 */
@@ -71,14 +74,6 @@ public class ViewResolverServlet extends HttpServlet {
 	 * 
 	 */
 	private static String basePath = null;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ViewResolverServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * @see Servlet#init(ServletConfig)
@@ -118,46 +113,41 @@ public class ViewResolverServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doPost(request, response);
-	}
+	@Override
+	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 从后台代码获取国际化信息
+		RequestContext requestContext = new RequestContext(request);
+		request.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale("zh_CN"));
+		logger.debug(">>>>>>>>>>>>>>" + requestContext.getMessage("male"));
+		String uri = request.getRequestURI();
+		if (uri.endsWith(".w") || uri.endsWith(".dw")) {
+			/**
+			 * 初始化basePath
+			 */
+			if (basePath == null) {
+				basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+						+ request.getContextPath() + "/";
+				viewHtmlTemplate = viewHtmlTemplate.replaceAll("\\<\\!--\\_BasePath\\--\\>", basePath);
+			}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		/**
-		 * 初始化basePath
-		 */
-		if (basePath == null) {
-			basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath() + "/";
-			viewHtmlTemplate = viewHtmlTemplate.replaceAll("\\<\\!--\\_BasePath\\--\\>", basePath);
-		}
+			// TODO Auto-generated method stub
+			String viewRequest = request.getRequestURI();
+			if (StringUtils.isNotEmpty(viewRequest)) {
+				viewRequest = URLDecoder.decode(viewRequest.replaceFirst(request.getContextPath(), ""), "ISO-8859-1");
+			}
 
-		// TODO Auto-generated method stub
-		String viewRequest = request.getRequestURI();
-		if (StringUtils.isNotEmpty(viewRequest)) {
-			viewRequest = URLDecoder.decode(viewRequest.replaceFirst(request.getContextPath(), ""), "ISO-8859-1");
-		}
+			String cachedView = null;
 
-		String cachedView = null;
-
-		if (viewCacheFlag) {
-			cachedView = _cachedView.get(viewRequest);
-		}
-		if (StringUtils.isEmpty(cachedView)) {
-			doRequest(viewRequest, request, response);
+			if (viewCacheFlag) {
+				cachedView = _cachedView.get(viewRequest);
+			}
+			if (StringUtils.isEmpty(cachedView)) {
+				doRequest(viewRequest, request, response);
+			} else {
+				request.getRequestDispatcher(cachedView).forward(request, response);
+			}
 		} else {
-			request.getRequestDispatcher(cachedView).forward(request, response);
+			super.doService(request, response);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.sshs.system.coder.controller;
 
+import java.util.Locale;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.sshs.core.base.controller.BaseController;
 import com.sshs.core.exception.BusinessException;
@@ -46,7 +50,12 @@ public class CoderController extends BaseController {
 	 */
 	@RequestMapping(value = "/getTableList.do")
 	@ResponseBody
-	public Page<DbTable> getTableList(@RequestBody Page<DbTable> page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Page<DbTable> getTableList(@RequestBody Page<DbTable> page, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// 从后台代码获取国际化信息
+		RequestContext requestContext = new RequestContext(request);
+		request.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale("zh_CN"));
+		logger.debug(">>>>>>>xxxx>>>>>>>" + requestContext.getMessage("male"));
 		return dbTableService.findForPageList("com.sshs.system.coder.dao.CoderDao.findDbTableForPageList", page);
 	}
 
@@ -58,7 +67,8 @@ public class CoderController extends BaseController {
 	 */
 	@RequestMapping(value = "/getColunmList.do")
 	@ResponseBody
-	public Page<Column> getColunmList(@RequestBody Page<Column> page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Page<Column> getColunmList(@RequestBody Page<Column> page, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		coderService.findColumnForList(page);
 		return page;
 	}
@@ -71,7 +81,8 @@ public class CoderController extends BaseController {
 	 */
 	@RequestMapping(value = "/runCoder.do")
 	@ResponseBody
-	public Message runCoder(@RequestBody Coder coder, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Message runCoder(@RequestBody Coder coder, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		try {
 			for (Column col : coder.getFields()) {
 				if (StringUtils.isEmpty(coder.getTableName())) {
