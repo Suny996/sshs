@@ -5,7 +5,6 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -22,11 +21,11 @@ public class InputDateTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public String format = "yyyy-MM-dd";
+	public String format = "";
 
-	public void init() {
+	/*public void init() {
 		this.setId(UuidUtil.get32UUID());
-	}
+	}*/
 
 	public String forStartTag() {
 		// TODO Auto-generated method stub

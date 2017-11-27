@@ -18,6 +18,7 @@ import org.jsoup.parser.ParseSettings;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
+import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.ReflectHelper;
 import com.sshs.core.util.SpringUtil;
 import com.sshs.core.view.component.Component;
@@ -36,7 +37,7 @@ public class ViewResolver {
 	 * @param doc
 	 * @return
 	 */
-	public static String resolve(InputStream input, String viewTemplate, String pageType) {
+	public static String resolve(InputStream input, LabelResource labelResource, String viewTemplate, String pageType) {
 
 		String text = "";
 		try {
@@ -49,7 +50,7 @@ public class ViewResolver {
 			Elements bodys = doc.getElementsByTag("body");
 			if (bodys != null && bodys.size() > 0) {
 				for (Element e : bodys) {
-					bodyText.append(resolveBody(e));
+					bodyText.append(resolveBody(e, labelResource));
 				}
 			}
 			if (!"body".equalsIgnoreCase(pageType)) {
@@ -60,7 +61,8 @@ public class ViewResolver {
 					}
 				}
 				text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
-						.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "");
+						.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "")
+						.replaceAll("\\$\\{locale\\}", labelResource.getLocale().toString());
 			} else {
 				text = bodyText.toString();
 			}
@@ -76,13 +78,13 @@ public class ViewResolver {
 	 * @param body
 	 * @return
 	 */
-	private static String resolveBody(Element body) {
+	private static String resolveBody(Element body, LabelResource labelResource) {
 		StringBuffer text = new StringBuffer();
 		// text.append("<" + body.tagName() + body.attributes() + ">\n");
 		text.append(body.ownText());
 		Elements elements = body.children();
 		for (Element e : elements) {
-			text.append(resolveElement(e));
+			text.append(resolveElement(e, labelResource));
 		}
 		// text.append("</" + body.tagName() + ">");
 		return text.toString();
@@ -104,7 +106,7 @@ public class ViewResolver {
 	 * @param element
 	 * @return
 	 */
-	private static String resolveElement(Element element) {
+	private static String resolveElement(Element element, LabelResource labelResource) {
 		StringBuffer text = new StringBuffer();
 		String name = element.tagName();
 		String type = element.attr("type");
@@ -122,7 +124,7 @@ public class ViewResolver {
 		if (bean != null && bean instanceof Component) {
 			component = (Component) bean;
 			try {
-				initComponent(component, element);
+				initComponent(component, element, labelResource);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -137,7 +139,7 @@ public class ViewResolver {
 		text.append(element.data() + element.ownText());
 		Elements elements = element.children();
 		for (Element e : elements) {
-			text.append(resolveElement(e));
+			text.append(resolveElement(e, labelResource));
 		}
 		// end
 		if (component != null) {
@@ -159,8 +161,8 @@ public class ViewResolver {
 	 * @return
 	 */
 
-	private static Element initComponent(Component component, Element element) {
-		component.init();
+	private static Element initComponent(Component component, Element element, LabelResource labelResource) {
+		component.init(labelResource);
 		Element e = element.clone();
 		Field[] fields = component.getClass().getFields();
 		for (Field field : fields) {

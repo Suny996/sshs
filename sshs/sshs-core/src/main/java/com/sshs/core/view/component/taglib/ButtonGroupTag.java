@@ -18,9 +18,6 @@ public class ButtonGroupTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void init() {
-	}
-
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();

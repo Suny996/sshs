@@ -49,7 +49,7 @@ public class ButtonButtonTag extends BaseTag implements Component {
 
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
-		text.append(this.value);
+		text.append(labelResource.getLabel(this.value));
 		text.append("</button>");
 		return text.toString();
 	}

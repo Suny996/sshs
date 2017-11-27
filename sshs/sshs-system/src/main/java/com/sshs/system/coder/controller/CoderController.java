@@ -53,9 +53,12 @@ public class CoderController extends BaseController {
 	public Page<DbTable> getTableList(@RequestBody Page<DbTable> page, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// 从后台代码获取国际化信息
+		RequestContext requestContext1 = new RequestContext(request);
+
+		logger.debug(request.getSession().getId() + ">>>>>>>xxxx中文>>>"+request.getSession().getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME)+">>>>" + requestContext1.getMessage("male"));
+		request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale("en","US"));
 		RequestContext requestContext = new RequestContext(request);
-		request.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale("zh_CN"));
-		logger.debug(">>>>>>>xxxx>>>>>>>" + requestContext.getMessage("male"));
+		logger.debug(">>>>>>>中文>>>>>>>" + requestContext.getMessage("male"));
 		return dbTableService.findForPageList("com.sshs.system.coder.dao.CoderDao.findDbTableForPageList", page);
 	}
 

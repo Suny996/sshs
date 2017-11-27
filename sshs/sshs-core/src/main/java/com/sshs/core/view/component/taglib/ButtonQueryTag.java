@@ -15,7 +15,7 @@ import com.sshs.core.view.component.Component;
  * @date 2017-10-17
  * 
  */
-public class ButtonSubmitTag extends BaseTag implements Component {
+public class ButtonQueryTag extends BaseTag implements Component {
 	/**
 	 * 输入域组件/标签
 	 */
@@ -25,8 +25,8 @@ public class ButtonSubmitTag extends BaseTag implements Component {
 		super.init(labelResource);
 		this.className = "btn-primary";
 		this.icon = "linear linear-magnifier";
-		this.value = "submit";
-		this.accessKey = "c";
+		this.value = "search";
+		this.accessKey = "s";
 	}
 
 	public String icon;

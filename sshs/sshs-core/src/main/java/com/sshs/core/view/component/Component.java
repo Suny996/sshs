@@ -1,5 +1,7 @@
 package com.sshs.core.view.component;
 
+import com.sshs.core.locale.LabelResource;
+
 public interface Component {
 	String getId();
 
@@ -7,5 +9,5 @@ public interface Component {
 
 	String forStartTag();
 
-	void init();
+	void init(LabelResource labelResource);
 }

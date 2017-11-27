@@ -9,7 +9,6 @@ import javax.servlet.jsp.JspWriter;
 import org.apache.commons.lang.StringUtils;
 
 import com.sshs.core.util.DictionaryUtil;
-import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -28,9 +27,9 @@ public class SelectTag extends BaseTag implements Component {
 
 	public String dictCode = "";
 
-	public void init() {
+	/*public void init() {
 		this.setId(UuidUtil.get32UUID());
-	}
+	}*/
 
 	public String forStartTag() {
 		return "";

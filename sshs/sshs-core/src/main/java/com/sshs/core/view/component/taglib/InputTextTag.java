@@ -3,7 +3,6 @@ package com.sshs.core.view.component.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -19,9 +18,9 @@ public class InputTextTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void init() {
+	/*public void init(Locale locale) {
 		this.setId(UuidUtil.get32UUID());
-	}
+	}*/
 
 	@Override
 	public String forStartTag() {
@@ -36,8 +35,8 @@ public class InputTextTag extends BaseTag implements Component {
 			text.append("<div class=\"input-group\">\n");
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
-		text.append("<input type=\"text\" class=\"x-edit form-control \" id=\"" + this.getId() + "\" name=\"" + this.getName()
-				+ "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
+		text.append("<input type=\"text\" class=\"x-edit form-control \" id=\"" + this.getId() + "\" name=\""
+				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
 		if (required) {
 			text.append("</div>");
 		}

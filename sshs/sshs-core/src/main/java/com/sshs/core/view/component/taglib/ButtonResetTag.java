@@ -5,7 +5,7 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.sshs.core.util.UuidUtil;
+import com.sshs.core.locale.LabelResource;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -21,10 +21,13 @@ public class ButtonResetTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void init() {
-		this.setId(UuidUtil.get32UUID());
+	public void init(LabelResource labelResource) {
+		super.init(labelResource);
+		// this.setId(UuidUtil.get32UUID());
 		this.className = "btn-danger";
-		this.value = "重置";
+		this.icon = "linear linear-cross";
+		this.value = "reset";
+		this.accessKey = "r";
 	}
 
 	public String icon;
@@ -41,6 +44,9 @@ public class ButtonResetTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.onclick)) {
 			text.append(" onclick=\"" + this.onclick + "\"");
 		}
+		if (StringUtils.isNotEmpty(this.accessKey)) {
+			text.append(" accessKey=\"" + this.accessKey + "\"");
+		}
 		text.append(">");
 		if (StringUtils.isNotEmpty(this.icon)) {
 			text.append("<i class=\"" + this.icon + "\"> </i>");
@@ -50,7 +56,7 @@ public class ButtonResetTag extends BaseTag implements Component {
 
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
-		text.append(this.value);
+		text.append(labelResource.getLabel(this.value));
 		text.append("</button>");
 		return text.toString();
 	}
@@ -70,7 +76,9 @@ public class ButtonResetTag extends BaseTag implements Component {
 	}
 
 	public void setIcon(String icon) {
-		this.icon = icon;
+		if (StringUtils.isNotEmpty(icon)) {
+			this.icon = icon;
+		}
 	}
 
 	public String getOnclick() {
@@ -90,6 +98,16 @@ public class ButtonResetTag extends BaseTag implements Component {
 	public void setValue(String value) {
 		if (StringUtils.isNotEmpty(value)) {
 			this.value = value;
+		}
+	}
+
+	public String getAccessKey() {
+		return accessKey;
+	}
+
+	public void setAccessKey(String accessKey) {
+		if (StringUtils.isNotEmpty(accessKey)) {
+			this.accessKey = accessKey;
 		}
 	}
 }

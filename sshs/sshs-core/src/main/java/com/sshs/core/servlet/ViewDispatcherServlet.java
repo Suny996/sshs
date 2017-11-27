@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -21,8 +22,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.servlet.support.RequestContext;
 
+import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.Configure;
 import com.sshs.core.view.resolver.ViewResolver;
 
@@ -116,9 +117,6 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 从后台代码获取国际化信息
-		RequestContext requestContext = new RequestContext(request);
-		request.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale("zh_CN"));
-		logger.debug(">>>>>>>>>>>>>>" + requestContext.getMessage("male"));
 		String uri = request.getRequestURI();
 		if (uri.endsWith(".w") || uri.endsWith(".dw")) {
 			/**
@@ -132,6 +130,18 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 
 			// TODO Auto-generated method stub
 			String viewRequest = request.getRequestURI();
+
+			Locale locale = null;
+			String local = request.getParameter("locale");
+			if (StringUtils.isNotEmpty(local) && local.contains("_")) {
+				locale = new Locale(local.split("_")[0], local.split("_")[1]);
+			} else {
+				locale = (Locale) request.getSession()
+						.getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+			}
+			if (locale == null) {
+				locale = request.getLocale();
+			}
 			if (StringUtils.isNotEmpty(viewRequest)) {
 				viewRequest = URLDecoder.decode(viewRequest.replaceFirst(request.getContextPath(), ""), "ISO-8859-1");
 			}
@@ -139,10 +149,10 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			String cachedView = null;
 
 			if (viewCacheFlag) {
-				cachedView = _cachedView.get(viewRequest);
+				cachedView = _cachedView.get(viewRequest + locale);
 			}
 			if (StringUtils.isEmpty(cachedView)) {
-				doRequest(viewRequest, request, response);
+				doRequest(viewRequest, locale, request, response);
 			} else {
 				request.getRequestDispatcher(cachedView).forward(request, response);
 			}
@@ -159,8 +169,8 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void doRequest(String viewRequest, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doRequest(String viewRequest, Locale locale, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String filePath = request.getServletContext().getRealPath("");
 		String viewFileName = getViewNameNoPattern(viewRequest);
 		String pattern = getViewNamePattern(viewRequest);
@@ -177,9 +187,9 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			view = request.getClass().getResourceAsStream(viewFileName + pattern);
 		}
 
-		String cachedView = "/.cached" + viewFileName + pattern;
+		String cachedView = "/.cached" + viewFileName + "_" + locale + pattern;
 		if (pattern != null && (pattern.endsWith("html") || pattern.endsWith("htm") || pattern.endsWith("jsp"))) {
-			String text = doPageRequest(request, view, viewFileName, pattern);
+			String text = doPageRequest(request, locale, view, viewFileName, pattern);
 			if (text != null && text.contains("<%")) {
 				pattern = ".jsp";
 			}
@@ -189,10 +199,10 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 				out.close();
 				return;
 			} else {
-				cachedView = "/.cached" + viewFileName + pattern;
+				cachedView = "/.cached" + viewFileName + "_" + locale + pattern;
 
 				FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
-				_cachedView.put(viewRequest, cachedView);
+				_cachedView.put(viewRequest + locale, cachedView);
 				if (view != null) {
 					view.close();
 				}
@@ -224,22 +234,24 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected String doPageRequest(HttpServletRequest request, InputStream input, String viewFileName, String pattern)
-			throws ServletException, IOException {
+	protected String doPageRequest(HttpServletRequest request, Locale locale, InputStream input, String viewFileName,
+			String pattern) throws ServletException, IOException {
 		if (input == null) {
 			throw new ServletException("请求的视图文件:[" + (viewFileName + pattern) + "]不存在！");
 		}
-
+		ResourceBundle pubResource = ResourceBundle.getBundle("i18n/labels", locale);
+		ResourceBundle privateResource = ResourceBundle.getBundle(getViewDir(viewFileName) + "/i18n/label", locale);
+		LabelResource labelResource = new LabelResource(locale, pubResource, privateResource);
 		// 处理视图内容
 		String text = "";
 		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \"" + request.getContextPath()
 				+ viewFileName + ".js.dw\" ], function(model) {\r\n" + "		Model = model;\r\n" + "	}); </script>";
 
 		if (text != null && text.contains("<%")) {
-			text = ViewResolver.resolve(input, viewJspTemplate, request.getParameter("_pageType"))
+			text = ViewResolver.resolve(input, labelResource, viewJspTemplate, request.getParameter("_pageType"))
 					.replaceAll("\\&lt;\\%", "\\<\\%").replaceAll("\\%\\&gt;", "\\%\\>");
 		} else {
-			text = ViewResolver.resolve(input, viewHtmlTemplate, request.getParameter("_pageType"));
+			text = ViewResolver.resolve(input, labelResource, viewHtmlTemplate, request.getParameter("_pageType"));
 		}
 		if (StringUtils.isNotEmpty(privateJs)) {
 			text += privateJs;
@@ -299,5 +311,20 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			}
 		}
 		return "";
+	}
+
+	/**
+	 * 获取view所在目录
+	 * 
+	 * @param viewName
+	 * @return
+	 */
+	private String getViewDir(String viewName) {
+		if (viewName != null && viewName.contains("/")) {
+			return viewName.substring(0, viewName.lastIndexOf("/"));
+		} else {
+			return "";
+		}
+
 	}
 }

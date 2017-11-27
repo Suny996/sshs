@@ -1,10 +1,15 @@
 package com.sshs.core.view.component.taglib;
 
+import java.util.Locale;
+
 import javax.inject.Named;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.sshs.core.locale.LabelResource;
+import com.sshs.core.util.UuidUtil;
 
 /**
  * 表单普通输入域标签
@@ -19,6 +24,8 @@ public abstract class BaseTag extends TagSupport {
 	 * 输入域标签
 	 */
 	private static final long serialVersionUID = 1L;
+	public Locale locale;
+	public LabelResource labelResource;
 	public String id;
 	public String name;
 	public String style;
@@ -34,6 +41,12 @@ public abstract class BaseTag extends TagSupport {
 
 	public int columns = 4;
 
+	public void init(LabelResource labelResource) {
+		this.setId(UuidUtil.get32UUID());
+		this.labelResource = labelResource;
+		this.locale = labelResource.getLocale();
+	}
+
 	@Override
 	public int doStartTag() throws JspException {
 		return super.doStartTag();
@@ -48,11 +61,13 @@ public abstract class BaseTag extends TagSupport {
 		StringBuffer text = new StringBuffer();
 		text.append("<div class=\"appearance x-label-edit x-label30 " + getColumnsClass(columns) + "\">\n");
 		/* text.append("<div class=\"form-group\">\n"); */
-		if (StringUtils.isNotEmpty(label)) {
-			text.append(
-					"<label for=\"" + id + "\" class=\"x-label x-right control-label\"	style=\"white-space:nowrap;\">"
-							+ label + ":</label>\n");
+
+		if (StringUtils.isEmpty(label)) {
+			label = this.name;
 		}
+		label = labelResource.getLabel(label);
+		text.append("<label for=\"" + id + "\" class=\"x-label x-right control-label\"	style=\"white-space:nowrap;\">"
+				+ label + ":</label>\n");
 		return text.toString();
 	}
 

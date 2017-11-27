@@ -18,4 +18,5 @@
 	<bean id="buttonButton" class="com.sshs.core.view.component.taglib.ButtonButtonTag" />
 	<bean id="buttonSubmit" class="com.sshs.core.view.component.taglib.ButtonSubmitTag" />
 	<bean id="buttonReset" class="com.sshs.core.view.component.taglib.ButtonResetTag" />
+	<bean id="buttonQuery" class="com.sshs.core.view.component.taglib.ButtonQueryTag" />
 </beans>
