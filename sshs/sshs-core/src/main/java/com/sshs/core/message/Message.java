@@ -1,5 +1,10 @@
 package com.sshs.core.message;
 
+/**
+ * 
+ * @author Suny
+ *
+ */
 public class Message {
 	String code;
 	String message;

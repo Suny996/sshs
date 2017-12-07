@@ -4,6 +4,12 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * 页面标签信息国际化
+ * 
+ * @author Suny
+ * @date 2017-11-20
+ */
 public class LabelResource {
 	ResourceBundle pubResource = null;
 	ResourceBundle privateResource = null;

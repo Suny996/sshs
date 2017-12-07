@@ -25,12 +25,14 @@ public class ButtonGroupTag extends BaseTag implements Component {
 		return text.toString();
 	}
 
+	@Override
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append("</div>");
 		return text.toString();
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		try {
 			JspWriter out = this.pageContext.getOut();

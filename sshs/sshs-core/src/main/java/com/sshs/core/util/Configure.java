@@ -10,8 +10,44 @@ import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.sshs.constant.Global;
+
+/**
+ * 全局配置文件处理类
+ * 
+ * @author Suny
+ * @date 2017-10-23
+ */
 public class Configure {
 	private static final Logger logger = Logger.getLogger(Configure.class);
+	/**
+	 * 是否缓存视图文件配置项key
+	 */
+	public static final String CONFIGURE_CACHED_FLAG = "view.cached";
+
+	/**
+	 * 是否缓存视图文件配置项no Cache
+	 */
+	public static final String CONFIGURE_CACHED_NOCACHE = "false";
+
+	/**
+	 * 运行模式配置项目key
+	 */
+	public static final String CONFIGURE_RUNMOD_FLAG = "core.runMode";
+	/**
+	 * 运行模式配置项目run
+	 */
+	public static final String CONFIGURE_RUNMOD_RUN = "run";
+	/**
+	 * 运行模式配置项目debug
+	 */
+	public static final String CONFIGURE_RUNMOD_DEBUG = "debug";
+
+	/**
+	 * 视图模板文件路径配置项目key
+	 */
+	public static final String CONFIGURE_VIEW_TEMPLATE_HTML = "view.html.template.path";
+
 	private static Properties props;
 	static {
 		loadProps();
@@ -73,7 +109,7 @@ public class Configure {
 	public static String getClasspath() {
 		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../")
 				.replaceAll("file:/", "").replaceAll("%20", " ").trim();
-		if (path.indexOf(":") != 1) {
+		if (path.indexOf(Global.CHARACTER_COLON) != 1) {
 			path = File.separator + path;
 		}
 		return path;
@@ -87,7 +123,7 @@ public class Configure {
 	public static String getClassResources() {
 		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")))
 				.replaceAll("file:/", "").replaceAll("%20", " ").trim();
-		if (path.indexOf(":") != 1) {
+		if (path.indexOf(Global.CHARACTER_COLON) != 1) {
 			path = File.separator + path;
 		}
 		return path;

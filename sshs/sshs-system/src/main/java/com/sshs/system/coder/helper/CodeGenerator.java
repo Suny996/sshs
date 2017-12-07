@@ -13,12 +13,19 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.sshs.constant.Global;
 import com.sshs.core.util.Configure;
 import com.sshs.core.util.Freemarker;
 import com.sshs.core.util.ReflectHelper;
 import com.sshs.system.coder.model.Coder;
 import com.sshs.system.coder.model.Column;
 
+/**
+ * 代码生成工具类
+ * 
+ * @author Suny
+ * @date 2017-10-23
+ */
 public class CodeGenerator {
 	public static void generate(Coder coder) throws Exception {
 		CodeGenerator.processProperties(coder);
@@ -37,8 +44,9 @@ public class CodeGenerator {
 			String className = element.element("className").getText();
 			String templateFileName = element.element("template").getText();
 			File dir = new File(packageName);
-			if (!dir.exists())
+			if (!dir.exists()) {
 				dir.mkdirs();
+			}
 			String outFileName = Configure.getProperty("coder.path", "d:/coder") + "/"
 					+ coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/"
 					+ className;
@@ -58,7 +66,7 @@ public class CodeGenerator {
 	 * @return
 	 */
 	public static Map<String, Object> toMap(Coder coder) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>(50);
 		map.put("coder", coder);
 		map.put("fields", coder.getFields());
 		return map;
@@ -94,11 +102,14 @@ public class CodeGenerator {
 	private static Map<String, String> modelMapping;
 	static {
 		modelMapping = new HashMap<String, String>();
-		modelMapping.put("sys", "system");// 系统管理模块
-		modelMapping.put("cfg", "config");// 配置管理模块
-		modelMapping.put("ie", "index");// 指标管理模块
+		// 系统管理模块
+		modelMapping.put("sys", "system");
+		// 配置管理模块
+		modelMapping.put("cfg", "config");
+		// 指标管理模块
+		modelMapping.put("ie", "index");
+		// 关系管理
 		modelMapping.put("prm", "relation");
-		modelMapping.put("date", "Date");
 	}
 
 	public static String getModel(String model) {
@@ -135,8 +146,10 @@ public class CodeGenerator {
 	public static void processClassName(Coder coder) {
 		String tableName = coder.getTableName();
 		if (StringUtils.isEmpty(coder.getClassName())) {
-			coder.setClassName(ReflectHelper.getPropertyName(tableName.substring(tableName.indexOf("_") + 1), false));
-			coder.setClassDeclare(ReflectHelper.getPropertyName(tableName.substring(tableName.indexOf("_") + 1)));
+			coder.setClassName(ReflectHelper
+					.getPropertyName(tableName.substring(tableName.indexOf(Global.CHARACTER_UNDERLINE) + 1), false));
+			coder.setClassDeclare(ReflectHelper
+					.getPropertyName(tableName.substring(tableName.indexOf(Global.CHARACTER_UNDERLINE) + 1)));
 		}
 	}
 
@@ -157,8 +170,8 @@ public class CodeGenerator {
 		}
 		if (StringUtils.isEmpty(coder.getModelNameCn())) {
 			String modelNameCn = tableComment;
-			if (tableComment.indexOf("-") > 0) {
-				modelNameCn = tableComment.substring(0, tableComment.indexOf("-"));
+			if (tableComment.indexOf(Global.CHARACTER_STICK) > 0) {
+				modelNameCn = tableComment.substring(0, tableComment.indexOf(Global.CHARACTER_STICK));
 			}
 			coder.setModelNameCn(modelNameCn);
 		}

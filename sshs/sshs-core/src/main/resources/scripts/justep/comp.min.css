@@ -1109,7 +1109,7 @@ ul {
   list-style: none;
 }
 * {
-  /*-webkit-user-select: none; suny*/
+  -webkit-user-select: none; 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
   -ms-touch-action: none;
@@ -7420,7 +7420,7 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 div.dataTables_wrapper div.dataTables_length select {
   width: 75px;
- /* display: inline-block; suny*/ 
+  display: inline-block; 
 }
 div.dataTables_wrapper div.dataTables_filter {
   text-align: right;

@@ -10,11 +10,19 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import tk.mybatis.mapper.common.Mapper;
-
+import com.sshs.constant.Global;
 import com.sshs.core.base.service.IBaseService;
 import com.sshs.core.page.Page;
 
+import tk.mybatis.mapper.common.Mapper;
+
+/**
+ * 基础服务类
+ * 
+ * @author Suny
+ * @date 2017-10-20
+ * 
+ */
 public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	@Autowired
 	private Mapper<T> dao;
@@ -22,35 +30,64 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	/**
-	 * 查找对象
 	 * 
-	 * @param str
-	 * @param obj
 	 * @return
-	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public Page<T> findForPageList(String sqlId, Page<T> page) throws Exception {
-		page.setRows((List<T>) sqlSessionTemplate.selectList(sqlId, page));
-		return page;
-	}
-
 	protected Mapper<T> getDao() {
 		return this.dao;
 	}
 
-	public int save(T object) throws Exception {
-		setCrtProperties(object);
-		return dao.insert(object);
+	/**
+	 * 新增
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int save(T model) throws Exception {
+		setCrtProperties(model);
+		return dao.insert(model);
 	}
 
-	public int update(T object) throws Exception {
-		setUpdProperties(object);
-		return getDao().updateByPrimaryKey(object);
+	/**
+	 * 修改
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int update(T model) throws Exception {
+		setUpdProperties(model);
+		return getDao().updateByPrimaryKey(model);
 	}
 
-	public int delete(T object) throws Exception {
-		return getDao().delete(object);
+	/**
+	 * 删除
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int delete(T model) throws Exception {
+		return getDao().delete(model);
+	}
+
+	/**
+	 * 公共分页查询方法
+	 * 
+	 * @param sqlId
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page<T> findForPageList(String sqlId, Page<T> page) throws Exception {
+		page.setRows((List<T>) sqlSessionTemplate.selectList(sqlId, page));
+		return page;
 	}
 
 	/**
@@ -62,24 +99,24 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 			Class<?> clazz = object.getClass();
 			Method setCrtUserCode = clazz.getDeclaredMethod("setCrtUserCode", String.class);
 			if (setCrtUserCode != null) {
-				setCrtUserCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getEmpNo());
+				setCrtUserCode.invoke(object, "admin");
 			}
 			Method setCrtOrgCode = clazz.getDeclaredMethod("setCrtOrgCode", String.class);
 			if (setCrtOrgCode != null) {
-				setCrtOrgCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getOrgCode());
+				setCrtOrgCode.invoke(object, "admin");
 			}
 			Method setCrtDate = clazz.getDeclaredMethod("setCrtDate", java.util.Date.class);
 			if (setCrtDate != null) {
 				setCrtDate.invoke(object, new Date());
 			}
 			// 处理法人行问题，全省权限时不设置法人行号
-			String authType = "01";// SystemUtil.getCurrentUserInfo().getAuthDataType();
-			if (authType != null && !authType.contains(",A,")) {
+			String authType = "01";
+			if (authType != null && !authType.contains(Global.AUTH_LEVEL_TOP)) {
 				Method getLegalOrg = clazz.getDeclaredMethod("getLegalOrg");
 				if (getLegalOrg != null && getLegalOrg.invoke(object) == null) {
 					Method setLegalOrg = clazz.getDeclaredMethod("setLegalOrg", String.class);
 					if (setLegalOrg != null) {
-						setLegalOrg.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getLegalOrgCode());
+						setLegalOrg.invoke(object, "admin");
 					}
 				}
 			}
@@ -108,11 +145,11 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 
 			Method setUpdUserCode = clazz.getDeclaredMethod("setUpdUserCode", String.class);
 			if (setUpdUserCode != null) {
-				setUpdUserCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getEmpNo());
+				setUpdUserCode.invoke(object, "admin");
 			}
 			Method setUpdOrgCode = clazz.getDeclaredMethod("setUpdOrgCode", String.class);
 			if (setUpdOrgCode != null) {
-				setUpdOrgCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getOrgCode());
+				setUpdOrgCode.invoke(object, "admin");
 			}
 			Method setUpdDate = clazz.getDeclaredMethod("setUpdDate", java.util.Date.class);
 			if (setUpdDate != null) {
@@ -120,11 +157,11 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 			}
 			Method setModUserCode = clazz.getDeclaredMethod("setModUserCode", String.class);
 			if (setModUserCode != null) {
-				setModUserCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getEmpNo());
+				setModUserCode.invoke(object, "admin");
 			}
 			Method setModOrgCode = clazz.getDeclaredMethod("setModOrgCode", String.class);
 			if (setModOrgCode != null) {
-				setModOrgCode.invoke(object, "admin");// SystemUtil.getCurrentUserInfo().getOrgCode());
+				setModOrgCode.invoke(object, "admin");
 			}
 			Method setModDate = clazz.getDeclaredMethod("setModDate", java.util.Date.class);
 			if (setModDate != null) {

@@ -18,16 +18,12 @@ public class InputTextTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/*public void init(Locale locale) {
-		this.setId(UuidUtil.get32UUID());
-	}*/
-
 	@Override
 	public String forStartTag() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 
+	@Override
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
@@ -36,7 +32,7 @@ public class InputTextTag extends BaseTag implements Component {
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
 		text.append("<input type=\"text\" class=\"x-edit form-control \" id=\"" + this.getId() + "\" name=\""
-				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"/>");
+				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\" " + element.attributes() + "/>");
 		if (required) {
 			text.append("</div>");
 		}
@@ -44,6 +40,7 @@ public class InputTextTag extends BaseTag implements Component {
 		return text.toString();
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		try {
 			JspWriter out = this.pageContext.getOut();

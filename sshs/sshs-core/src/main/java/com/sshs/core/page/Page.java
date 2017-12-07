@@ -9,33 +9,64 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.sshs.constant.Global;
+import com.sshs.core.util.Configure;
 import com.sshs.core.util.ReflectHelper;
 
 /**
  * 分页类
  * 
- * @author Suny 创建时间：2017年9月28日
+ * @author Suny
+ * @date 2017年9月28日
  */
 public class Page<T> {
-	private int pageSize; // 每页显示记录数
-	private int totalPage; // 总页数
-	private int totalCount; // 总记录数
-	private int currentPage; // 当前页
-	private int currentRow; // 当前记录起始索引
-	// bootstrap-table
-	private int offset; // 当前记录起始索引
-	private int limit; // 每页显示记录数
-	private Map<String, Object> userdata = new HashMap<String, Object>();
+	/**
+	 * 每页显示记录数
+	 */
+	private int pageSize;
+	/**
+	 * 总页数
+	 */
+	private int totalPage;
+	/**
+	 * 总记录数
+	 */
+	private int totalCount;
+	/**
+	 * 当前页
+	 */
+	private int currentPage;
+	/**
+	 * 当前记录起始索引
+	 */
+	private int currentRow;
+	/**
+	 * bootstrap-table 当前记录起始索引
+	 */
+	private int offset;
+	/**
+	 * 每页显示记录数
+	 */
+	private int limit;
+	/**
+	 * 排序
+	 */
 	private String sort, order = "";
 	private String orderBy = "";
 	List<T> rows;
-	Map<String, Object> variables = new HashMap<String, Object>();
+	Map<String, Object> variables = new HashMap<String, Object>(20);
+	Map<String, Object> userdata = new HashMap<String, Object>(10);
 
 	public Page() {
-		/*
-		 * try { // Integer.parseInt(Tools.readTxtFile(Const.PAGE)); //this.pageSize =
-		 * 10; //this.limit = 10; } catch (Exception e) { this.pageSize = 10; }
-		 */
+		try {
+			this.pageSize = Integer.parseInt(Configure.getProperty("page.pageSize", "10"));
+			this.limit = this.pageSize;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.pageSize = 10;
+			this.limit = this.pageSize;
+		}
+
 	}
 
 	public void getPage(HttpServletRequest request) {
@@ -89,10 +120,12 @@ public class Page<T> {
 	}
 
 	public int getCurrentPage() {
-		if (currentPage <= 0)
+		if (currentPage <= 0) {
 			currentPage = 1;
-		if (currentPage > getTotalPage())
+		}
+		if (currentPage > getTotalPage()) {
 			currentPage = getTotalPage();
+		}
 		return currentPage;
 	}
 
@@ -109,9 +142,10 @@ public class Page<T> {
 	}
 
 	public int getCurrentRow() {
-		currentRow = offset;// (getDraw() - 1) * getPageSize();
-		if (currentRow < 0)
+		currentRow = this.offset;
+		if (currentRow < 0) {
 			currentRow = 0;
+		}
 		return currentRow;
 	}
 
@@ -151,6 +185,14 @@ public class Page<T> {
 		this.variables = variables;
 	}
 
+	public Map<String, Object> getUserdata() {
+		return userdata;
+	}
+
+	public void setUserdata(Map<String, Object> userdata) {
+		this.userdata = userdata;
+	}
+
 	public String getSort() {
 		return sort;
 	}
@@ -175,14 +217,6 @@ public class Page<T> {
 		}
 	}
 
-	public Map<String, Object> getUserdata() {
-		return userdata;
-	}
-
-	public void setUserdata(Map<String, Object> userdata) {
-		this.userdata = userdata;
-	}
-
 	public String getOrderBy() {
 		return orderBy;
 	}
@@ -191,17 +225,17 @@ public class Page<T> {
 		String orderName = "";
 		String order = "";
 		if (StringUtils.isNotEmpty(orderBy)) {
-			if (orderBy.contains(" ")) {
-				String[] orders = orderBy.split(" ");
+			if (orderBy.contains(Global.CHARACTER_BLANK)) {
+				String[] orders = orderBy.split(Global.CHARACTER_BLANK);
 				orderName = orders[0];
 				order = orders[1];
-				this.orderBy = ReflectHelper.getColumnName(orderName) + " " + order;
+				this.orderBy = ReflectHelper.getColumnName(orderName) + Global.CHARACTER_BLANK + order;
 			} else {
 				this.orderBy = orderBy;
 			}
 		} else {
 			if (StringUtils.isNotEmpty(this.sort)) {
-				this.orderBy = this.sort + " " + this.order;
+				this.orderBy = this.sort + Global.CHARACTER_BLANK + this.order;
 			} else {
 				this.orderBy = orderBy;
 			}

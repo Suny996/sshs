@@ -1,9 +1,14 @@
 package com.sshs.core.exception;
 
+/**
+ * 
+ * @author Suny
+ *
+ */
 public class BusinessException extends RuntimeException {
 
 	/**
-     */
+	 */
 	private static final long serialVersionUID = -7638041501183925225L;
 
 	private Integer code;

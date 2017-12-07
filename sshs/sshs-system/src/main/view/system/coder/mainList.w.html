@@ -1,9 +1,8 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
-	name="queryForm" style="height: 44px;" name="queryForm"
-	class="form-inline">
+	id="queryForm" style="height: 44px;" class="form-inline">
 	<input name="tableName" /> <input name="tableComment" /> <input
-		type="date" name="coderDate" format="yyyy-MM-dd" /> <select
-		name="coderFlag" dictCode="YN"></select>
+		type="date" name="coderDate" /> <select name="coderFlag"
+		dictCode="YN"></select>
 
 	<div type="buttonGroup">
 		<button type="query"></button>
@@ -12,15 +11,17 @@
 
 </form>
 <div id="content">
-	<table id="mainListTable" class="table table-bordered"
-		data-url="system/coder/getTableList.do" data-striped=false>
+	<table type="bootstrap" id="mainListTable" pagination=true
+		url="system/coder/getTableList.do">
 		<thead>
 			<tr>
-				<th data-field="tableName" data-sortable=true>表名</th>
-				<th data-field="tableComment">表描述</th>
-				<th data-field="coderFlag" data-format="YN"
-					data-formatter=_DictTranslate>是否已生成代码</th>
-				<th data-field="handle" data-formatter=Model.handleRender>操作</th>
+				<th type="column" rowNumber="true" />
+				<th type="column" field="tableName" sortable=true />
+				<th type="column" field="tableComment" />
+				<th type="column" field="coderFlag" dictCode="YN" />
+				<th type="column" field="handle" formatter=Model.handleRender />
+				<th type="column" field="handle"><button text="generate"
+						action=Model.showRunPage></button></th>
 			</tr>
 		</thead>
 	</table>

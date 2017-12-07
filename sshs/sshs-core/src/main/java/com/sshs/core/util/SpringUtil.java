@@ -1,16 +1,23 @@
 package com.sshs.core.util;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * 代码中获取bean工具类
+ * 
+ * @author Suny
+ * @date 2017-12-01
+ */
 @Component
 public class SpringUtil implements ApplicationContextAware {
-
-	//private static Logger logger = Logger.getLogger(SpringUtil.class);
-
-	// Spring应用上下文环境
+	static Logger logger = Logger.getLogger(SpringUtil.class);
+	/**
+	 * Spring应用上下文环境
+	 */
 	private static ApplicationContext applicationContext;
 
 	/**
@@ -18,6 +25,7 @@ public class SpringUtil implements ApplicationContextAware {
 	 * 
 	 * @param applicationContext
 	 */
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		SpringUtil.applicationContext = applicationContext;
 	}
@@ -45,7 +53,7 @@ public class SpringUtil implements ApplicationContextAware {
 		try {
 			object = applicationContext.getBean(name);
 		} catch (BeansException e) {
-			//logger.error("获取Component[" + name + "]错误!" + e.getMessage());
+			logger.error("获取Component[" + name + "]错误!" + e.getMessage());
 		}
 		return object;
 	}

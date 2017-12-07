@@ -27,14 +27,12 @@ public class SelectTag extends BaseTag implements Component {
 
 	public String dictCode = "";
 
-	/*public void init() {
-		this.setId(UuidUtil.get32UUID());
-	}*/
-
+	@Override
 	public String forStartTag() {
 		return "";
 	}
 
+	@Override
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
@@ -42,17 +40,29 @@ public class SelectTag extends BaseTag implements Component {
 			text.append("<div class=\"input-group\">\n");
 			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
 		}
-		text.append("<select type=\"text\" class=\"form-control x-edit\" id=\"" + super.getId() + "\" name=\""
-				+ super.getName() + "\" placeholder=\"" + super.getPlaceholder() + "\">");
+		text.append("<select type=\"text\" class=\"x-edit\" id=\"" + super.getId() + "\" name=\"" + super.getName()
+				+ "\" placeholder=\"" + super.getPlaceholder() + "\" " + element.attributes() + ">");
+		if (!required) {
+			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
+		}
 		if (StringUtils.isNotEmpty(this.getDictCode())) {
 			List<Map<String, Object>> list = DictionaryUtil.getList(this.getDictCode());
 			if (list != null) {
 				for (Map<String, Object> dict : list) {
+					String key = (String) dict.get("key");
+					String value = (String) dict.get(labelResource.getLocale().toString());
+					if (StringUtils.isEmpty(value)) {
+						value = (String) dict.get("value");
+					}
 					if (dict.get("children") != null) {
-						text.append("<optgroup label=\"" + dict.get("value") + "\" data-subtext=\"" + dict.get("desc")
-								+ "\" class=\"get-class\">");
+						String desc = (String) dict.get(labelResource.getLocale() + "_desc");
+						if (StringUtils.isEmpty(desc)) {
+							desc = (String) dict.get("desc");
+						}
+						text.append(
+								"<optgroup label=\"" + value + "\" data-subtext=\"" + desc + "\" class=\"get-class\">");
 					} else {
-						text.append("<option value=\"" + dict.get("key") + "\">" + dict.get("value") + "</option>");
+						text.append("<option value=\"" + key + "\">" + key + " " + value + "</option>");
 					}
 				}
 			}
@@ -66,6 +76,7 @@ public class SelectTag extends BaseTag implements Component {
 		return text.toString();
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		try {
 			JspWriter out = this.pageContext.getOut();

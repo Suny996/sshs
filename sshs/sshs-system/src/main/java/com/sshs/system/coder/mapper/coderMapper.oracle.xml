@@ -143,7 +143,7 @@
 		</if>
 	</select>
 	<!-- 代码生成-查询列信息 -->
-	<select id="findColumnForPageList" parameterType="Page"
+<!-- 	<select id="findColumnForPageList" parameterType="Page"
 		resultType="Column">
 		SELECT A.COLUMN_ID,
 		A.TABLE_NAME,
@@ -154,10 +154,10 @@
 		A.DATA_LENGTH AS COLUMN_SIZE,
 		A.DATA_SCALE AS COLUMN_SCALE,
 		A.DATA_DEFAULT AS DEFAULT_VALUE,
-		CASE WHEN A.NULLABLE = 'N' THEN 'Y'
-		ELSE 'N' END AS REQUIRED_FLAG,
+		CASE WHEN A.NULLABLE = 'N' THEN '1'
+		ELSE '0' END AS REQUIRED_FLAG,
 		CASE WHEN D.COLUMN_NAME IS NOT NULL THEN
-		'Y' ELSE 'N' END
+		'1' ELSE '0' END
 		AS PRIMARY_KEY_FLAG
 		FROM USER_TAB_COLUMNS A,
 		USER_TAB_COMMENTS B,
@@ -185,10 +185,9 @@
 		<if test="orderBy == null or orderBy == ''">
 			ORDER BY COLUMN_ID
 		</if>
-	</select>
+	</select> -->
 	<!-- 代码生成-查询列信息 -->
-	<select id="findColumnAll" parameterType="Map"
-		resultType="Column">
+	<select id="findColumnAll" parameterType="Map" resultType="Column">
 		SELECT A.COLUMN_ID,
 		A.TABLE_NAME,
 		B.COMMENTS AS TABLE_COMMENT,
@@ -198,10 +197,10 @@
 		A.DATA_LENGTH AS COLUMN_SIZE,
 		A.DATA_SCALE AS COLUMN_SCALE,
 		A.DATA_DEFAULT AS DEFAULT_VALUE,
-		CASE WHEN A.NULLABLE = 'N' THEN 'Y'
-		ELSE 'N' END AS REQUIRED_FLAG,
+		CASE WHEN A.NULLABLE = 'N' THEN '1'
+		ELSE '0' END AS REQUIRED_FLAG,
 		CASE WHEN D.COLUMN_NAME IS NOT NULL THEN
-		'Y' ELSE 'N' END
+		'1' ELSE '0' END
 		AS PRIMARY_KEY_FLAG
 		FROM USER_TAB_COLUMNS A,
 		USER_TAB_COMMENTS B,

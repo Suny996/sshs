@@ -30,11 +30,53 @@ import com.sshs.core.view.component.Component;
  */
 public class ViewResolver {
 
+	/**
+	 * logger
+	 */
 	private static Logger logger = Logger.getLogger(ViewResolver.class);
 
 	/**
+	 * body
+	 */
+	public static final String VIEW_PAGE_TYPE_BODY = "body";
+
+	/**
+	 * input
+	 */
+	public static final String VIEW_COMPONENT_INPUT = "input";
+
+	/**
+	 * button
+	 */
+	public static final String VIEW_COMPONENT_BUTTON = "button";
+
+	/**
+	 * text
+	 */
+	public static final String VIEW_COMPONENT_TEXT = "text";
+
+	/**
+	 * select
+	 */
+	public static final String VIEW_COMPONENT_SELECT = "select";
+	
+	/**
+	 * dictCode
+	 */
+	public static final String VIEW_COMPONENT_PLISTKEY = "dictCode";
+	
+	/**
+	 * action
+	 */
+	public static final String VIEW_COMPONENT_ACTION = "action";
+
+	/**
+	 * 解析视图
 	 * 
-	 * @param doc
+	 * @param input
+	 * @param labelResource
+	 * @param viewTemplate
+	 * @param pageType
 	 * @return
 	 */
 	public static String resolve(InputStream input, LabelResource labelResource, String viewTemplate, String pageType) {
@@ -53,7 +95,7 @@ public class ViewResolver {
 					bodyText.append(resolveBody(e, labelResource));
 				}
 			}
-			if (!"body".equalsIgnoreCase(pageType)) {
+			if (!VIEW_PAGE_TYPE_BODY.equalsIgnoreCase(pageType)) {
 				Elements heads = doc.getElementsByTag("head");
 				if (heads != null && heads.size() > 0) {
 					for (Element e : heads) {
@@ -67,7 +109,6 @@ public class ViewResolver {
 				text = bodyText.toString();
 			}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return text;
@@ -80,13 +121,11 @@ public class ViewResolver {
 	 */
 	private static String resolveBody(Element body, LabelResource labelResource) {
 		StringBuffer text = new StringBuffer();
-		// text.append("<" + body.tagName() + body.attributes() + ">\n");
 		text.append(body.ownText());
 		Elements elements = body.children();
 		for (Element e : elements) {
 			text.append(resolveElement(e, labelResource));
 		}
-		// text.append("</" + body.tagName() + ">");
 		return text.toString();
 	}
 
@@ -111,10 +150,10 @@ public class ViewResolver {
 		String name = element.tagName();
 		String type = element.attr("type");
 		if (StringUtils.isEmpty(type)) {
-			if ("input".equalsIgnoreCase(name)) {
+			if (VIEW_COMPONENT_INPUT.equalsIgnoreCase(name)) {
 				type = "text";
 			}
-			if ("button".equalsIgnoreCase(name)) {
+			if (VIEW_COMPONENT_BUTTON.equalsIgnoreCase(name)) {
 				type = "button";
 			}
 		}
@@ -126,7 +165,6 @@ public class ViewResolver {
 			try {
 				initComponent(component, element, labelResource);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			String eleText = component.forStartTag();
@@ -192,13 +230,10 @@ public class ViewResolver {
 						e.removeAttr(attrName);
 					}
 				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (InvocationTargetException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			} catch (NoSuchMethodException e1) {
@@ -206,6 +241,7 @@ public class ViewResolver {
 			} catch (SecurityException e1) {
 				logger.error(e1.getMessage());
 			}
+			component.setElement(element);
 		}
 		return e;
 	}

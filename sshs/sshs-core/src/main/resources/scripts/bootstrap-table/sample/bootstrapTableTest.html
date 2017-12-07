@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width" />
 <title>BootStrap Table使用</title>
+<base href="/system/">
 <!--  @*1、Jquery组件引用*@   -->
-<script type="text/javascript" src="aframe/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery.min.js"></script>
 <!--    @*2、bootstrap组件引用*@   -->
-<script src="aframe/bootstrap/js/bootstrap.min.js"></script>
+<script src="scripts/bootstrap/js/bootstrap.min.js"></script>
 
-<link href="aframe/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 <!--     @*3、bootstrap table组件以及中文包的引用*@   -->
-<script src="aframe/bootstrap-table/src/bootstrap-table.js"></script>
+<script src="scripts/bootstrap-table/src/bootstrap-table.js"></script>
 
-<link href="aframe/bootstrap-table/src/bootstrap-table.css"
+<link href="scripts/bootstrap-table/src/bootstrap-table.css"
 	rel="stylesheet" />
 
-<script src="aframe/bootstrap-table/src/locale/bootstrap-table-zh-CN.js"></script>
+<script src="scripts/bootstrap-table/src/locale/bootstrap-table-zh_CN.js"></script>
 
 <!--    @*4、页面Js文件的引用*@   -->
 <script>
@@ -41,7 +42,7 @@
 	var oTableInit = new Object();
 	$(document).ready(function() {
 		$('#tb_departments').bootstrapTable({
-			url : '/aframe/user/getUserList.do', //请求后台的URL（*）
+			url : '/system/system/coder/getTableList.do', //请求后台的URL（*）
 			method : 'get', //请求方式（*）
 			toolbar : '#toolbar', //工具按钮用哪个容器
 			striped : true, //是否显示行间隔色

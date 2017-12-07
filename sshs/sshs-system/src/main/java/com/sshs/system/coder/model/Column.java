@@ -4,16 +4,27 @@ import java.io.Serializable;
 
 import org.apache.ibatis.type.Alias;
 
+/**
+ * 列对象
+ * 
+ * @author Suny
+ *
+ */
 @Alias("Column")
 public class Column implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// 列号
+	/**
+	 * 列号
+	 */
 	private String columnId;
-	// 表名
+	/**
+	 * 表名
+	 */
 	private String tableName;
+
 	public String getPropFuncName() {
 		return propFuncName;
 	}
@@ -22,69 +33,111 @@ public class Column implements Serializable {
 		this.propFuncName = propFuncName;
 	}
 
-	// 表描述
+	/**
+	 * 表描述
+	 */
 	private String tableComment;
-	// 属性名称
+	/**
+	 * 属性名称
+	 */
 	private String propertyName;
-	// 属性set get 方法名称
+	/**
+	 * 属性set get 方法名称
+	 */
 	private String propFuncName;
-	// pojo的数据类型
+	/**
+	 * pojo的数据类型
+	 */
 	private String propertyType;
-	// 字段名称；
+	/**
+	 * 字段名称；
+	 */
 	private String columnName;
-	// 字段描述；
+	/**
+	 * 字段描述；
+	 */
 	private String columnComment;
-	// 数据库字段类型
+	/**
+	 * 数据库字段类型
+	 */
 	private String columnType;
-	// 数据库字段長度
+	/**
+	 * 数据库字段長度
+	 */
 	private Integer columnSize;
-	// 数据库字段精度
+	/**
+	 * 数据库字段精度
+	 */
 	private Integer columnScale;
 
-	// 默认值
+	/**
+	 * 默认值
+	 */
 	private String defaultValue;
 
-	// 是否可为空
+	/**
+	 * 是否可为空
+	 */
 	private String requiredFlag;
 
-	// 是否主键
+	/**
+	 * 是否主键
+	 */
 	private String primaryKeyFlag;
 
-	// 是否查询
+	/**
+	 * 是否查询
+	 */
 	private boolean searchFlag;
 
-	// 查询类型
+	/**
+	 * 查询类型
+	 */
 	private boolean searchType;
 
-	// 列表是否显示
-
+	/**
+	 * 列表是否显示
+	 */
 	private boolean listFlag;
 
-	// 修改是否显示
+	/**
+	 * 修改是否显示
+	 */
 	private boolean modifyFlag;
 
-	// 修改是否只读
-
+	/**
+	 * 修改是否只读
+	 */
 	private boolean modifyFlag1;
 
-	// 编辑组件类型
+	/**
+	 * 编辑组件类型
+	 */
 	private String componentType1;
 
-	// 新增是否显示
+	/**
+	 * 新增是否显示
+	 */
 	private boolean addFlag;
 
-	// 新增是否之读
+	/**
+	 * 新增是否之读
+	 */
 	private boolean addDefault;
 
-	// 验证
-
+	/**
+	 * 验证
+	 */
 	private String validators;
 
-	// 正则表达式
-
+	/**
+	 * 
+	 */
 	private String dataRange;
 
-	// 查询下拉框字典类型queryDictType
+	/**
+	 * 查询下拉框字典类型dictCode
+	 */
 	private String dictCode;
 
 	public String getColumnId() {

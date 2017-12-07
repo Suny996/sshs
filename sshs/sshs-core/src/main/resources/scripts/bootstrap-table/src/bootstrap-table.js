@@ -516,7 +516,7 @@
 		switchable : true,
 		clickToSelect : true,
 		formatter : undefined,
-                format: undefined,//add by Suny 2017-11-20
+        format: undefined,//add by Suny 2017-11-20
 		footerFormatter : undefined,
 		events : undefined,
 		sorter : undefined,

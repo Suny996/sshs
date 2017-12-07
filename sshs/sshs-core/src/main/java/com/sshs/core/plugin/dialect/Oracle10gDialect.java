@@ -1,12 +1,12 @@
 package com.sshs.core.plugin.dialect;
 
 /**
- * 翻页查询oracle 
+ * 翻页查询oracle
  * 
  * @author Suny
  * @date 2017/11/01
  */
-public class Oracle10gDialect extends Dialect {
+public class Oracle10gDialect extends AbstractDialect {
 	/**
 	 * Constructs a Oracle10gDialect
 	 */
@@ -14,6 +14,7 @@ public class Oracle10gDialect extends Dialect {
 		super();
 	}
 
+	@Override
 	public String getLimitString(String sql, int offset, int limit) {
 		sql = sql.trim();
 

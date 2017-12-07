@@ -18,7 +18,12 @@ import com.sshs.core.page.Page;
 import com.sshs.system.dictionary.model.Dictionary;
 import com.sshs.system.dictionary.service.IDictionaryService;
 
-
+/**
+ * 数据字典
+ * 
+ * @author Suny
+ * @date 2017-10-29
+ */
 @Controller
 @RequestMapping("/dictionary")
 public class DictionaryController extends BaseController {
@@ -50,11 +55,11 @@ public class DictionaryController extends BaseController {
 	 */
 	@RequestMapping("/getDictionaryList.do")
 	@ResponseBody
-	public Page<Dictionary> getUserList(Page<Dictionary> page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Page<Dictionary> getUserList(Page<Dictionary> page, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		dictionaryService.findForList(page);
 		return page;
 	}
-
 
 	/**
 	 * 添加字典并重定向
@@ -68,7 +73,6 @@ public class DictionaryController extends BaseController {
 		try {
 			dictionaryService.save(dictionary);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "redirect:/user/getAllUser.do";
@@ -92,7 +96,6 @@ public class DictionaryController extends BaseController {
 				return "/error.jsp";
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "/error.jsp";
 		}
@@ -110,7 +113,6 @@ public class DictionaryController extends BaseController {
 		try {
 			request.setAttribute("user", dictionaryService.findById(id));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "/sample/sample1/editUser.jsp";
@@ -139,7 +141,6 @@ public class DictionaryController extends BaseController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

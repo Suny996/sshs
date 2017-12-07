@@ -12,17 +12,14 @@ import com.sshs.system.coder.model.Column;
 import com.sshs.system.coder.service.ICoderService;
 
 /**
- * 类名称：CreateCodeService 代码生成器 创建人：FH Q313596790 修改时间：2015年11月24日
+ * 类名称：CreateCodeService 代码生成器
  * 
- * @version
+ * @author Suny
+ * @date 2015年11月24日
+ * @version 1.0
  */
 @Service("coderService")
 public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderService {
-
-	/*
-	 * @Resource(name = "baseDao") private IBaseDao<Column> dao;
-	 */
-
 	@Resource(name = "coderDao")
 	private CoderDao coderDao;
 
@@ -32,6 +29,7 @@ public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderSe
 	 * @param coder
 	 * @throws Exception
 	 */
+	@Override
 	public int save(Coder coder) throws Exception {
 		// 新增一条数据
 		return coderDao.insert(coder);
@@ -44,6 +42,7 @@ public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderSe
 	 * @param pd
 	 * @throws Exception
 	 */
+	@Override
 	public int delete(String coderId) throws Exception {
 		return coderDao.delete(coderId);
 	}
@@ -54,6 +53,7 @@ public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderSe
 	 * @param pd
 	 * @throws Exception
 	 */
+	@Override
 	public Coder findById(String coderId) throws Exception {
 		return coderDao.findById(coderId);
 	}
@@ -64,12 +64,10 @@ public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderSe
 	 * @param page
 	 * @throws Exception
 	 */
-	public void findColumnForList(Page<Column> page) throws Exception {
-		// dao.findForList("com.afcac.system.coder.dao.CoderDao.findColumnForPageList",
-		// page);
+	@Override
+	public Page<Column> findColumnForList(Page<Column> page) throws Exception {
 		page.setRows(coderDao.findColumnAll(page.getVariables()));
-
-		// page.getUserdata().put("sys.count", page.getRows().size());
+		return page;
 	}
 
 }

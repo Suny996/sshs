@@ -2,6 +2,11 @@ package com.sshs.core.util;
 
 import java.util.UUID;
 
+/**
+ * Uuid工具类
+ * @author Suny
+ * @date 2017-10-29
+ */
 public class UuidUtil {
 
 	public static String get32UUID() {

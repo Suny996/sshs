@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContext;
 
+/**
+ * 
+ * @author Suny
+ *
+ */
 public class LocaleHelper {
 	public static Logger logger = Logger.getLogger(LocaleHelper.class);
 	@Autowired
@@ -25,8 +30,6 @@ public class LocaleHelper {
 	}
 
 	public static String getLabel(String label) {
-		//RequestContext requestContext = new RequestContext(request);
-		//logger.debug(">>>>>>>" + label + ">>>>>>>" + requestContext.getMessage(label));
-		return label;//requestContext.getMessage(label);
+		return label;
 	}
 }

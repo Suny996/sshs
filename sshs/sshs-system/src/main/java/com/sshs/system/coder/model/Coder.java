@@ -31,12 +31,16 @@ public class Coder implements Serializable {
 	private String packageName;
 
 	private String className;
-	// 首字母小写
+	/**
+	 * 首字母小写
+	 */
 	@Transient
 	private String classDeclare;
 	private String modelName;
 	private String modelNameCn;
-	// 功能
+	/**
+	 * 功能
+	 */
 	private String functionName;
 	private String tableName;
 	private String tableComment;
@@ -80,7 +84,7 @@ public class Coder implements Serializable {
 	 * UPD_DATE 修改日期
 	 */
 	private Date updDate;
-	
+
 	public String getCoderId() {
 		return coderId;
 	}

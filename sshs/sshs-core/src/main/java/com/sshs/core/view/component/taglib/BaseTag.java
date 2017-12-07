@@ -7,6 +7,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.nodes.Element;
 
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.UuidUtil;
@@ -24,8 +25,10 @@ public abstract class BaseTag extends TagSupport {
 	 * 输入域标签
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final int VIEW_MAX_COLUMNS = 12;
 	public Locale locale;
 	public LabelResource labelResource;
+	public Element element;
 	public String id;
 	public String name;
 	public String style;
@@ -88,6 +91,31 @@ public abstract class BaseTag extends TagSupport {
 		super.release();
 	}
 
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	public LabelResource getLabelResource() {
+		return labelResource;
+	}
+
+	public void setLabelResource(LabelResource labelResource) {
+		this.labelResource = labelResource;
+	}
+
+	public Element getElement() {
+		return element;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
+	}
+
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -108,6 +136,7 @@ public abstract class BaseTag extends TagSupport {
 		return labelStyle;
 	}
 
+	@Override
 	public void setId(String id) {
 		if (StringUtils.isNotEmpty(id)) {
 			this.id = id;
@@ -154,8 +183,8 @@ public abstract class BaseTag extends TagSupport {
 	}
 
 	public void setColumns(int columns) {
-		if (columns > 12) {
-			columns = 12;
+		if (columns > VIEW_MAX_COLUMNS) {
+			columns = VIEW_MAX_COLUMNS;
 		}
 		if (columns < 1) {
 			columns = 1;
@@ -170,10 +199,10 @@ public abstract class BaseTag extends TagSupport {
 	 * @return
 	 */
 	public String getColumnsClass(int columns) {
-		int cols = 12 / columns;
-		int mcolumns = 12 / (cols <= 1 ? 1 : cols - 1);
-		int scolumns = 12 / (cols <= 2 ? 1 : cols - 2);
-		int xcolumns = 12 / (cols <= 3 ? 1 : cols - 3);
+		int cols = VIEW_MAX_COLUMNS / columns;
+		int mcolumns = VIEW_MAX_COLUMNS / (cols <= 1 ? 1 : cols - 1);
+		int scolumns = VIEW_MAX_COLUMNS / (cols <= 2 ? 1 : cols - 2);
+		int xcolumns = VIEW_MAX_COLUMNS / (cols <= 3 ? 1 : cols - 3);
 
 		return "col-xs-" + xcolumns + " col-sm-" + scolumns + " col-md-" + mcolumns + " col-lg-" + columns;
 	}

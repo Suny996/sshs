@@ -21,10 +21,11 @@ public class ButtonSubmitTag extends BaseTag implements Component {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void init(LabelResource labelResource) {
 		super.init(labelResource);
 		this.className = "btn-primary";
-		this.icon = "linear linear-magnifier";
+		this.icon = "linear linear-highlight";
 		this.value = "submit";
 		this.accessKey = "c";
 	}
@@ -46,13 +47,14 @@ public class ButtonSubmitTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.accessKey)) {
 			text.append(" accessKey=\"" + this.accessKey + "\"");
 		}
-		text.append(">");
+		text.append(" " + element.attributes() + ">");
 		if (StringUtils.isNotEmpty(this.icon)) {
 			text.append("<i class=\"" + this.icon + "\"> </i>");
 		}
 		return text.toString();
 	}
 
+	@Override
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(labelResource.getLabel(this.value));
@@ -60,6 +62,7 @@ public class ButtonSubmitTag extends BaseTag implements Component {
 		return text.toString();
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		try {
 			JspWriter out = this.pageContext.getOut();
@@ -88,12 +91,14 @@ public class ButtonSubmitTag extends BaseTag implements Component {
 		this.onclick = onclick;
 	}
 
+	@Override
 	public void setClassName(String className) {
 		if (StringUtils.isNotEmpty(className)) {
 			this.className = className;
 		}
 	}
 
+	@Override
 	public void setValue(String value) {
 		if (StringUtils.isNotEmpty(value)) {
 			this.value = value;

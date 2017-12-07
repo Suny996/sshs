@@ -7,11 +7,16 @@ import java.util.regex.Pattern;
 import tk.mybatis.mapper.util.StringUtil;
 
 /**
- * 说明：反射工具 创建人：Suny 修改时间：2017年9月20日
+ * 说明：反射工具
  * 
- * @version
+ * @date 2017年9月20日
+ * @author Suny
+ * @version 1.0
  */
 public class ReflectHelper {
+
+	private static Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
+
 	/**
 	 * 获取obj对象fieldName的Field
 	 * 
@@ -19,6 +24,7 @@ public class ReflectHelper {
 	 * @param fieldName
 	 * @return
 	 */
+
 	public static Field getFieldByFieldName(Object obj, String fieldName) {
 		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass
 				.getSuperclass()) {
@@ -105,7 +111,7 @@ public class ReflectHelper {
 			return "";
 		}
 		StringBuffer sb = new StringBuffer();
-		Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
+		// Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
 		Matcher matcher = pattern.matcher(columnName);
 		while (matcher.find()) {
 			String word = matcher.group();
@@ -134,7 +140,7 @@ public class ReflectHelper {
 		}
 		property = String.valueOf(property.charAt(0)).toUpperCase().concat(property.substring(1));
 		StringBuffer sb = new StringBuffer();
-		Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
+		// Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
 		Matcher matcher = pattern.matcher(property);
 		while (matcher.find()) {
 			String word = matcher.group();

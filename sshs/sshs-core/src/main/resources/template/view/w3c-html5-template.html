@@ -9,6 +9,10 @@
 <script type="text/javascript" src="scripts/jquery/jquery.js">
 	
 </script>
+<script type="text/javascript"
+	src="scripts/jquery.serializeJSON-master/jquery.serializejson.js">
+	
+</script>
 
 <!-- Bootstrap -->
 <link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,15 +27,28 @@
 	src="scripts/bootstrap-table/src/bootstrap-table.js"></script>
 <script type="text/javascript"
 	src="scripts/bootstrap-table/src/locale/bootstrap-table-${locale}.js"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
 
 <!-- bootstrap-select -->
-<link rel="stylesheet"
-	href="scripts/bootstrap-select/dist/css/bootstrap-select.css">
+<!-- <link rel="stylesheet"
+	href="scripts/bootstrap-select/dist/css/bootstrap-select.css"> -->
 <!-- bootstrap-select -->
+<!-- <script type="text/javascript"
+	src="scripts/bootstrap-select/dist/js/bootstrap-select.js"></script> -->
+<!-- <script type="text/javascript"
+	src="scripts/bootstrap-select/dist/js/i18n/defaults-${locale}.js"></script> -->
+
+<!-- select2 bootstrap-->
+<link rel="stylesheet"
+	href="scripts/select2-master/dist/css/select2.css">
+<link rel="stylesheet"
+	href="scripts/select2-bootstrap-theme-master/dist/select2-bootstrap.css">
+<!-- select2 -->
 <script type="text/javascript"
-	src="scripts/bootstrap-select/dist/js/bootstrap-select.js"></script>
+	src="scripts/select2-master/dist/js/select2-sshs.js"></script>
 <script type="text/javascript"
-	src="scripts/bootstrap-select/dist/js/i18n/defaults-${locale}.js"></script>
+	src="scripts/select2-master/dist/js/i18n/${locale}.js"></script>
 
 <!-- bootstrap-datetimepicker -->
 <link rel="stylesheet"
@@ -58,7 +75,11 @@
 	href="scripts/jquery-easyui/demo/demo.css">
 <script type="text/javascript" src="scripts/jquery-easyui/jquery.easyui.min.js"></script>
  -->
-
+<!-- bootstrap-switch -->
+<link rel="stylesheet"
+	href="scripts/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.min.css">
+<script
+	src="scripts/bootstrap-switch-master/dist/js/bootstrap-switch.min.js"></script>
 
 <!-- dataTables -->
 <!-- <link rel="stylesheet" type="text/css"
@@ -67,6 +88,9 @@
 	src="scripts/dataTables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript"
 	src="scripts/dataTables/media/js/dataTables.bootstrap4.js"></script> -->
+
+<script type="text/javascript" src="scripts/bootbox-master/bootbox.js"></script>
+
 
 <!-- 引用justep的样式表 -->
 <link href="scripts/justep/comp.min.css" rel="stylesheet">
@@ -88,3 +112,8 @@
 </html>
 <!--_PageFooter-->
 <!--_PageException-->
+<script type="text/javascript">
+	var _locale = {};
+	_locale["locale"] = "${locale}";
+	bootbox.setLocale("${locale}");
+</script>

@@ -3,6 +3,12 @@ package com.sshs.system.coder.model;
 import java.io.Serializable;
 
 import org.apache.ibatis.type.Alias;
+
+/**
+ * 
+ * @author Suny
+ *
+ */
 @Alias("DbTable")
 public class DbTable implements Serializable {
 

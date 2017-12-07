@@ -6,6 +6,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Suny
+ *
+ */
 public class Serializabler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +21,7 @@ public class Serializabler implements Serializable {
 	 * @param obj
 	 * @return
 	 */
-	public static byte[] Object2Bytes(Object obj) {
+	public static byte[] object2Bytes(Object obj) {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			ObjectOutputStream outputStream = new ObjectOutputStream(out);

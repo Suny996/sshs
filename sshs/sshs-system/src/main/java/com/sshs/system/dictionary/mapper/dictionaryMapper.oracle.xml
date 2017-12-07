@@ -16,7 +16,6 @@
 		DICT_TYPE ,
 		DICT_CODE ,
 		DICT_NAME ,
-		DICT_NAME_EN ,
 		DICT_DESC ,
 		STATUS ,
 		SORT_NO ,
@@ -88,6 +87,24 @@
 		<include refid="tableName">
 		</include>
 		where DICT_TYPE='1' and STATUS='1'
+	</select>
+
+	<!-- 初始化所有字典项目 -->
+	<select id="findI18nByDictId" parameterType="String" resultType="DictionaryI18n">
+		select I18N_ID,
+		DICT_ID,
+		DICT_CODE,
+		LANGUAGE,
+		COUNTRY,
+		DICT_NAME,
+		DICT_DESC,
+		STATUS,
+		LEGAL_ORG,
+		UPD_USER_CODE,
+		UPD_DATE
+		from
+		SYS_DICTIONARIES_I18N
+		where DICT_ID=#{dictId}
 	</select>
 
 	<select id="findForPageList" parameterType="Page" resultType="Dictionary">

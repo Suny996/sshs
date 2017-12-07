@@ -7,7 +7,8 @@ import com.sshs.system.coder.model.Column;
 
 /**
  * 类名称：代码生成器接口类
- * @author Suny 
+ * 
+ * @author Suny
  * @date 2017年10月24日
  * @version
  */
@@ -18,6 +19,7 @@ public interface ICoderService extends IBaseService<Coder> {
 	 * 
 	 * @param coder
 	 * @throws Exception
+	 * @return
 	 */
 	public int save(Coder coder) throws Exception;
 
@@ -26,6 +28,7 @@ public interface ICoderService extends IBaseService<Coder> {
 	 * 
 	 * @param coderId
 	 * @throws Exception
+	 * @return
 	 */
 	public int delete(String coderId) throws Exception;
 
@@ -34,6 +37,7 @@ public interface ICoderService extends IBaseService<Coder> {
 	 * 
 	 * @param coderId
 	 * @throws Exception
+	 * @return
 	 */
 	public Coder findById(String coderId) throws Exception;
 
@@ -42,8 +46,8 @@ public interface ICoderService extends IBaseService<Coder> {
 	 * 
 	 * @param page
 	 * @throws Exception
+	 * @return
 	 */
-	public void findColumnForList(Page<Column> page) throws Exception;
-	
+	public Page<Column> findColumnForList(Page<Column> page) throws Exception;
 
 }

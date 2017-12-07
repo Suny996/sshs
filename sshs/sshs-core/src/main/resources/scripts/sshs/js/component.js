@@ -4,12 +4,13 @@
 $.fn.extend({
 	getElementsJson : function(parameter) {// 将form组件内的表单元素打包成json对象
 		var params = $(this).serializeArray();
-		if (parameter) {
-			for (x in parameter) {
-				params[parameter[x].name] = parameter[x].value;
-			}
+		if (!parameter) {
+			parameter = {};
 		}
-		return params;
+		for (x in params) {
+			parameter[params[x].name] = params[x].value;
+		}
+		return parameter;
 	},
 	loadData : function(params) {// bootstrapTable 扩展 初始化
 		if (!params) {
@@ -26,6 +27,9 @@ $.fn.extend({
 		} else {
 			columns = $(this).data("columns");
 		}
+		if (typeof params === 'string') {
+			params = JSON.parse(params);
+		}
 		$(this).bootstrapTable({
 			url : $(this).data("url") ? $(this).data("url") : "", // 请求后台的URL（*）
 			method : $(this).data("method") ? $(this).data("method") : 'post', // 请求方式（*）
@@ -36,7 +40,7 @@ $.fn.extend({
 			sortable : true, // 是否启用排序
 			sortName : $(this).data("sortName"), // 初始化的时候排序的字段
 			sortOrder : $(this).data("sortOrder"), // 排序方式
-			queryParams : JSON.stringify(params), // 传递参数（*）
+			queryParams : params, // 传递参数（*）
 			sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
 			contentType : "application/json", // "application/x-www-form-urlencoded",
 												// //请求数据内容格式 默认是
@@ -45,7 +49,7 @@ $.fn.extend({
 			dataType : "json", // 期待返回数据类型
 			pageNumber : 1, // 初始化加载第一页，默认第一页
 			pageSize : $(this).data("pageSize") ? $(this).data("pageSize") : 10, // 每页的记录行数（*）
-			pageList : $(this).data("pageList") ? $(this).data("pageList") : [ 5, 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
+			pageList : $(this).data("pageList") ? $(this).data("pageList"):[ 5,10,25,50,100], // 可供选择的每页的行数（*）
 			// search : true, // 是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
 			// strictSearch : true,
 			dataField : "rows",
@@ -63,6 +67,13 @@ $.fn.extend({
 		});
 	},
 	showPage:function(url,param){// 发送页面请求，替换到当前对象中
+		if(_locale["locale"] && url.indexOf("locale=")<0){
+			if(url.indexOf("?")<0){
+				url=url+"?locale="+_locale["locale"];
+			}else{
+				url=url+"&locale="+_locale["locale"];
+			}
+		}
 		$(this).load(url,$.extend({"_pageType":"body"}, param));
 	}
 });
@@ -77,19 +88,37 @@ $.extend({
 		}
 	});
 
-
-
 /**
  * 数据字典项翻译-table渲染用
  */
-var _DICTIONNARY={"YN":{"1":"是","0":"否"}};
+var _DICTIONNARY={};
 var _DictTranslate = function(value, row, index, name, format) {// 翻译table里的字典项目，已修改過bootstrapTable加入format參數
 	var dict = _DICTIONNARY[format];
 	if(dict){
-		var val = dict[value];
-		if(val){
-			return val;
-		}
+		 for(var i in dict){  
+		        if(dict[i]["key"]==value){  // item 表示Json串中的属性，如'name'
+		            var val =dict[i][_locale["locale"]];// key所对应的value
+		            if(!val){
+		            	val = dict[i]["value"];
+		            }
+		            if(val){
+		            	return val;
+		            } else if(dict[i]["children"]){
+		            	var cd = dict[i]["children"];
+		            	for(var j in cd){  
+		     		        if(cd[j]["key"]==value){ 
+		     		            val =cd[j][_locale["locale"]];// key所对应的value
+		     		            if(!val){
+		     		            	val = cd[j]["value"];
+		     		            }
+		     		            if(val){
+		     		            	return val;
+		     		            }
+		     		        }
+		     		  }
+		            }
+		        }  
+		    }  
 	}
 	return value; 
 };
@@ -119,12 +148,13 @@ Date.prototype.format = function(fmt) { // author: meizz
 	return fmt;
 };
 
+$(document).ready(function() { $("select").select2({theme:"bootstrap",width: 'resolve'}); });
 /**
  * 日历空间初始化
  */
 var _InitDatePicker=function(id,format,lang) {
 	if(!lang){
-		lang="zh-CN"
+		lang="zh_CN"
 	}
 	 var options = {
 		        language:  lang,

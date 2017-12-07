@@ -42,7 +42,8 @@ public abstract class BaseController {
 	 * @return
 	 */
 	public HttpServletRequest getRequest() {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
 		return request;
 	}
 
@@ -79,36 +80,13 @@ public abstract class BaseController {
 		return null;
 	}
 
-	/*
-	 * protected HttpServletResponse getServletResponse() { return
-	 * RequestResponseContext.getResponse(); }
-	 * 
-	 * protected void writeResponse(ActionResult result) throws IOException {
-	 * HttpServletResponse response = getServletResponse();
-	 * response.setContentType("text/html; charset=utf-8"); OutputStream stream
-	 * = response.getOutputStream();
-	 * stream.write(JsonUtil.toJson(result).getBytes("utf-8")); stream.flush();
-	 * stream.close(); }
-	 */
-
-	/** 基于@ExceptionHandler异常处理 */
-	/*
-	 * @ExceptionHandler public ModelAndView
-	 * handleAndReturnPage(HttpServletRequest request, HttpServletResponse
-	 * response, Exception ex) {
-	 * 
-	 * ModelAndView mv = new ModelAndView("Exception") ; mv.addObject("ex", ex);
-	 * 
-	 * // 根据不同错误转向不同页面 if (ex instanceof BusinessException) { return mv; } else
-	 * { return mv; //返回Exception.jsp页面 } }
-	 */
-
 	/** 基于@ExceptionHandler异常处理 */
 	@ExceptionHandler
 	@ResponseBody
-	public Map<String, Object> handleAndReturnData(HttpServletRequest request, HttpServletResponse response, Exception e) {
+	public Map<String, Object> handleAndReturnData(HttpServletRequest request, HttpServletResponse response,
+			Exception e) {
 
-		Map<String, Object> data = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<String, Object>(10);
 		if (e instanceof BusinessException) {
 			BusinessException ex = (BusinessException) e;
 			data.put("code", ex.getCode());

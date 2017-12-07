@@ -33,7 +33,6 @@ public class Dictionary implements Serializable {
 	private String dictType;
 	private String dictCode;
 	private String dictName;
-	private String dictNameEn;
 	private String dictDesc;
 	private String status;
 	private double sortNo;
@@ -42,7 +41,9 @@ public class Dictionary implements Serializable {
 	private String isSystem;
 	private Date crtDate;
 	@Transient
-	private List<Dictionary> children =new ArrayList<Dictionary>();
+	private List<Dictionary> children = new ArrayList<Dictionary>();
+	@Transient
+	private List<DictionaryI18n> i18ns = new ArrayList<DictionaryI18n>();
 
 	public String getDictId() {
 		return dictId;
@@ -82,14 +83,6 @@ public class Dictionary implements Serializable {
 
 	public void setDictName(String dictName) {
 		this.dictName = dictName;
-	}
-
-	public String getDictNameEn() {
-		return dictNameEn;
-	}
-
-	public void setDictNameEn(String dictNameEn) {
-		this.dictNameEn = dictNameEn;
 	}
 
 	public String getDictDesc() {
@@ -157,5 +150,16 @@ public class Dictionary implements Serializable {
 			children = new ArrayList<Dictionary>();
 		}
 		children.add(dictionary);
+	}
+
+	public List<DictionaryI18n> getI18ns() {
+		return i18ns;
+	}
+
+	public void addI18n(DictionaryI18n i18n) {
+		if (i18ns == null) {
+			i18ns = new ArrayList<DictionaryI18n>();
+		}
+		i18ns.add(i18n);
 	}
 }

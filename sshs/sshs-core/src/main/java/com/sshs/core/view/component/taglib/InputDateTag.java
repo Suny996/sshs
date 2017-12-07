@@ -1,10 +1,13 @@
 package com.sshs.core.view.component.taglib;
 
+import java.util.Locale;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.sshs.core.locale.LabelResource;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -22,19 +25,24 @@ public class InputDateTag extends BaseTag implements Component {
 	private static final long serialVersionUID = 1L;
 
 	public String format = "";
-
-	/*public void init() {
-		this.setId(UuidUtil.get32UUID());
-	}*/
-
+	@Override
+	public void init(LabelResource labelResource) {
+		super.init(labelResource);
+		if (labelResource.getLocale().equals(Locale.CHINA)) {
+			this.format = "yyyy-MM-dd";
+		} else {
+			this.format = "MM-dd-yyyy";
+		}
+	}
+	@Override
 	public String forStartTag() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 
 	/**
 	*
 	 */
+	@Override
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
@@ -44,13 +52,13 @@ public class InputDateTag extends BaseTag implements Component {
 		}
 		text.append("<input type=\"text\" class=\"x-edit date form-control\" id=\"" + this.getId() + "\" name=\""
 				+ this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
-				+ this.getPlaceholder() + "\"/>");
+				+ this.getPlaceholder() + "\" " + element.attributes() + "/>");
 
 		if (required) {
 			text.append("</div>");
 		}
 		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()
-				+ "\");</script>");
+				+ "\",\"" + labelResource.getLocale() + "\"); </script>");
 		text.append(super.forTagEnd());
 		return text.toString();
 	}
