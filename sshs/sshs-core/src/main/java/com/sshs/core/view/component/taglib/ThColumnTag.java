@@ -196,27 +196,27 @@ public class ThColumnTag extends BaseTag implements Component {
 		StringBuffer text = new StringBuffer();
 		switch (element.attr("type")) {
 		case "checkbox":
-			text.append("<input type=\"checkbox\" ");
+			text.append("<input type=\"checkbox\"  class=\"form-control\" ");
 			break;
 		case "switch":
 			String labelText = "";
 			if (StringUtils.isNotEmpty(element.attr(ViewResolver.VIEW_COMPONENT_TEXT))) {
 				labelText = Global.CHARACTER_DOT + element.attr(ViewResolver.VIEW_COMPONENT_TEXT);
 			}
-			text.append("<input type=\"checkbox\" data-switch-init=true data-on-text=\""
+			text.append("<input type=\"checkbox\" class=\"form-switch form-control \" data-on-text=\""
 					+ labelResource.getLabel("switch.dataOnText" + labelText) + "\" data-off-text= \""
 					+ labelResource.getLabel("switch.dataOffText" + labelText) + "\" ");
 			break;
 		default:
-			text.append("<input type=\"text\" ");
+			text.append("<input type=\"text\" class=\"form-control\" ");
 		}
-		text.append(" name=\"" + this.field + "\" class=\"form-control \"");
+		text.append(" name=\"" + this.field + "\"");
 		for (Attribute a : element.attributes()) {
 			if (!a.getKey().equalsIgnoreCase("type")) {
 				text.append(" " + a.getKey() + "=\"" + a.getValue() + "\" ");
 			}
 		}
-		text.append("</>");
+		text.append("></input>"); 
 		return text.toString();
 	}
 
@@ -228,7 +228,7 @@ public class ThColumnTag extends BaseTag implements Component {
 	 */
 	private String getSelectHTML(Element element) {
 		StringBuffer text = new StringBuffer();
-		text.append("<select type=\"text\" class=\"x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
+		text.append("<select type=\"text\" class=\" form-select2 x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
 		if (!required) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}

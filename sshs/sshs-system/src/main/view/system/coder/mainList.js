@@ -16,6 +16,7 @@ define(function(require) {
 			runCoder(row["tableName"]);
 		}
 	};
+	//进入页面
 	var runCoder = function(tableName) {
 		$.showPage("system/coder/coder.w", {
 			"tableName" : tableName

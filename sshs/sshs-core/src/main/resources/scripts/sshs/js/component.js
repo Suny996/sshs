@@ -36,7 +36,7 @@ $.fn.extend({
 			toolbar : '#toolbar', // 工具按钮用哪个容器
 			striped : $(this).data("striped") ? $(this).data("striped") : false, // 是否显示行间隔色
 			cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination : true, // 是否显示分页（*）
+			pagination : $(this).data("pagination") ? $(this).data("pagination") : false, // 是否显示分页（*）
 			sortable : true, // 是否启用排序
 			sortName : $(this).data("sortName"), // 初始化的时候排序的字段
 			sortOrder : $(this).data("sortOrder"), // 排序方式
@@ -63,17 +63,37 @@ $.fn.extend({
 			showToggle : $(this).data("showToggle") ? $(this).data("showToggle") : true, // 是否显示详细视图和列表视图的切换按钮
 			// cardView : false, //是否显示详细视图
 			// detailView : false, //是否显示父子表
-			columns : columns
+			columns : columns,
+			onPostBody:function(){
+				$(".form-select2").select2({theme:"bootstrap",width: 'resolve'}); 
+				$('.form-switch').bootstrapSwitch();
+			}
 		});
 	},
-	showPage:function(url,param){// 发送页面请求，替换到当前对象中
-		if(_locale["locale"] && url.indexOf("locale=")<0){
+	getDataEdited : function(useCurrentPage) {
+		var elements = $("[index],[field]");
+		for(x in elements){
+			var element = $(elements[x]);
+			if(element.is('select') || element.is('input') ){
+				var value=null;
+				if(element.is('input') && element.hasClass("form-switch") ){
+					value =	element.bootstrapSwitch('state');  
+				} else {
+					value = element.val();
+				}
+				$(this).bootstrapTable('updateCell', {"index":element.attr("index"),"field":element.attr("field"),"value":value,reinit:false});
+			}
+		}
+		return $(this).bootstrapTable('getData', useCurrentPage);
+	},
+	loadPage:function(url,param){// 发送页面请求，替换到当前对象中
+		/*if(url && _locale["locale"] && url.indexOf("locale=")<0){
 			if(url.indexOf("?")<0){
 				url=url+"?locale="+_locale["locale"];
 			}else{
 				url=url+"&locale="+_locale["locale"];
 			}
-		}
+		}*/
 		$(this).load(url,$.extend({"_pageType":"body"}, param));
 	}
 });
@@ -81,12 +101,26 @@ $.fn.extend({
 $.extend({
 	showPage:function(url,param,target){
 			if(target){
-				$(target).showPage(url,param);
+				$(target).loadPage(url,param);
 			}else{
-				$("body").showPage(url,param);
+				$("body").loadPage(url,param);
 			}
+		},
+	sendRequest:function(url,data){
+		if (typeof data != 'string') {
+			data = JSON.stringify(data);
 		}
-	});
+		$.ajax({url:url,
+					data:data,
+					type:"post",
+					contentType : "application/json",
+					dataType:"json",
+					success:function(data, textStatus){
+						bootBox.alert(textStatus);
+					}
+			});
+		}
+});
 
 /**
  * 数据字典项翻译-table渲染用
@@ -124,6 +158,37 @@ var _DictTranslate = function(value, row, index, name, format) {// 翻译table�
 };
 
 /**
+ * 单元格渲染
+ */
+var _EditorRender = function(value, row, index,name,format) {
+	var editor= $(format);
+	editor.attr("index",index);
+	editor.attr("field",name);
+	if(editor.is('input') && editor.attr("type")==="text"){
+		editor.attr("value",value);
+	}
+	if(editor.is('select')){
+		var options= editor.filter("option");
+		options.each(function(option){
+			if(option.val()==value){
+				options.attr("selected",true);
+			}
+		});
+	}
+	if(editor.is('button')){
+		 editor.attr("onclick","javascript:"+editor.attr("action")+"("+JSON.stringify(row)+");");
+	}
+	return editor.get(0).outerHTML;
+};
+
+/**
+ * 显示行号
+ */
+var _RowNumber = function(value, row, index,name,format) {
+	return index+1; // 序号
+};
+
+/**
  * 日期格式化
  */
 var _DateFormat = function(value, row, index,name,format) {
@@ -148,7 +213,10 @@ Date.prototype.format = function(fmt) { // author: meizz
 	return fmt;
 };
 
-$(document).ready(function() { $("select").select2({theme:"bootstrap",width: 'resolve'}); });
+$(document).ready(function() {
+	$("select").select2({theme:"bootstrap",width: 'resolve'}); 
+	$('input[type="checkbox"], input[type="radio"]').filter('[data-switch-init]').bootstrapSwitch();
+});
 /**
  * 日历空间初始化
  */
@@ -176,4 +244,4 @@ var _InitDatePicker=function(id,format,lang) {
 		options["maxView"]= 1;
 	}
 	$("#" + id ).datetimepicker(options);
-};
+}; 
