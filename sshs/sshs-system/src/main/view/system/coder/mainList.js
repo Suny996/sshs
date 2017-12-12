@@ -9,15 +9,15 @@ define(function(require) {
 		if (row["coderFlag"] == 1) {
 			bootbox.confirm("代码已生成，需要重新生成吗？", function(result) {
 				if (result) {
-					runCoder(row["tableName"]);
+					runCoder1(row["tableName"]);
 				}
 			});
 		} else {
-			runCoder(row["tableName"]);
+			runCoder1(row["tableName"]);
 		}
 	};
 	//进入页面
-	var runCoder = function(tableName) {
+	var runCoder1 = function(tableName) {
 		$.showPage("system/coder/coder.w", {
 			"tableName" : tableName
 		});

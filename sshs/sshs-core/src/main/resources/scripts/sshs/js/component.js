@@ -72,52 +72,48 @@ $.fn.extend({
 	},
 	getDataEdited : function(useCurrentPage) {
 		var elements = $("[index],[field]");
-		for(x in elements){
-			var element = $(elements[x]);
-			if(element.is('select') || element.is('input') ){
-				var value=null;
-				if(element.is('input') && element.hasClass("form-switch") ){
-					value =	element.bootstrapSwitch('state');  
-				} else {
-					value = element.val();
+		if(elements.lengths>0){
+			for(x in elements){
+				var element = $(elements[x]);
+				if(element.is('select') || element.is('input') ){
+					var value=null;
+					if(element.is('input') && element.hasClass("form-switch") ){
+						value =	element.bootstrapSwitch('state');  
+					} else {
+						value = element.val();
+					}
+					$(this).bootstrapTable('updateCell', {"index":element.attr("index"),"field":element.attr("field"),"value":value,reinit:false});
 				}
-				$(this).bootstrapTable('updateCell', {"index":element.attr("index"),"field":element.attr("field"),"value":value,reinit:false});
 			}
 		}
 		return $(this).bootstrapTable('getData', useCurrentPage);
 	},
-	loadPage:function(url,param){// 发送页面请求，替换到当前对象中
-		/*if(url && _locale["locale"] && url.indexOf("locale=")<0){
-			if(url.indexOf("?")<0){
-				url=url+"?locale="+_locale["locale"];
-			}else{
-				url=url+"&locale="+_locale["locale"];
-			}
-		}*/
-		$(this).load(url,$.extend({"_pageType":"body"}, param));
-	}
 });
 
 $.extend({
 	showPage:function(url,param,target){
+			//alert("showpage:"+url);
 			if(target){
-				$(target).loadPage(url,param);
+				$(target).load(url,$.extend({"_pageType":"body"}, param));
 			}else{
-				$("body").loadPage(url,param);
+				$("body").load(url,$.extend({"_pageType":"body"}, param));
 			}
 		},
-	sendRequest:function(url,data){
-		if (typeof data != 'string') {
-			data = JSON.stringify(data);
-		}
-		$.ajax({url:url,
-					data:data,
-					type:"post",
-					contentType : "application/json",
-					dataType:"json",
-					success:function(data, textStatus){
-						bootBox.alert(textStatus);
-					}
+	sendRequest : function(url,data) {
+			$.ajax({
+				type : "post",
+				cache: false,
+				async : false,
+				dataType : "json",
+				contentType : "application/json",
+				url : url,
+				data : JSON.stringify(data),
+				success : function(result) {
+						alert("success:"+result);
+				},
+			   error:function(resutl){
+					alert("error:"+result);
+				}
 			});
 		}
 });

@@ -8,7 +8,7 @@ define(function(require) {
 
 	Model.runCoder = function() {
 		var data = $("#coderForm").getElementsJson({
-			"fields" : $('#columnListTable').getDataEdited(true)
+			"fields" : $('#columnListTable').getDataEdited()
 		});
 		$.sendRequest("system/coder/runCoder.do", data);
 	};

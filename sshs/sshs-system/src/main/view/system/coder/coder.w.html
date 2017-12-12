@@ -1,18 +1,20 @@
 
-<form action="javascript:Model.runCoder();" method="post" id="coderForm">
+<form id="coderForm">
 	<input type="text" name="title" /> <input type="text" name="modelName" />
 	<input name="modelNameCn" /> <input name="functionName" />
-	<div type="buttonGroup">
-		<button type="submit" value="generate"></button>
-		<button type="reset"></button>
-	</div>
 </form>
+<div type="buttonGroup">
+	<button type="submit" value="generate"
+		onclick="javascript:Model.runCoder();"></button>
+	<button type="reset"></button>
+</div>
 <div id="content">
-	<table type="bootstrap" id="columnListTable" striped="true" pagination=false
-		url="system/coder/getColunmList.do" data-unique-id="columnName">
+	<table type="bootstrap" id="columnListTable" striped="true"
+		pagination=false url="system/coder/getColunmList.do"
+		data-unique-id="columnName">
 		<thead>
 			<tr>
-			    <th type="column" rowNumber="true" />
+				<th type="column" rowNumber="true" />
 				<th type="column" field="columnName" sortable=true />
 				<th type="column" field="columnComment" />
 				<th type="column" field="columnType" />
