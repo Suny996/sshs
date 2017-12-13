@@ -86,7 +86,7 @@ public class Freemarker {
 		try {
 			byteArrayOutputStream = new ByteArrayOutputStream();
 			out = new OutputStreamWriter(byteArrayOutputStream);
-			Template template = getFreemarkerTemplate("/config/template/" + templateFileName);
+			Template template = getFreemarkerTemplate(templateFileName);
 			// 模版输出
 			template.process(paramMap, out);
 			out.flush();
@@ -137,7 +137,7 @@ public class Freemarker {
 				file.getParentFile().mkdirs();
 			}
 			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
-			Template template = getFreemarkerTemplate("/config/template/" + templateFileName);
+			Template template = getFreemarkerTemplate(templateFileName);
 			// 模版输出
 			template.process(paramMap, out);
 			out.flush();
@@ -161,8 +161,7 @@ public class Freemarker {
 		try {
 			writer = new OutputStreamWriter(new FileOutputStream(out, false), "UTF-8");
 
-			reader = new InputStreamReader(Freemarker.class.getResourceAsStream("/config/template/" + templateFileName),
-					"UTF-8");
+			reader = new InputStreamReader(Freemarker.class.getResourceAsStream(templateFileName), "UTF-8");
 
 			Properties properties = new Properties();
 			properties.put("input.encoding", "UTF-8");

@@ -152,12 +152,11 @@ public class Configure {
 	 */
 	public static File getClassPathFile(String fileName) {
 		URL url = getClassPathFileUrl(fileName);
-		/**
-		 * url.getFile() 得到这个文件的绝对路径
-		 */
-		logger.debug(">>>>>" + url.getFile());
+		if (url == null) {
+			logger.error("文件：[" + fileName + "]不存在！！！");
+			return null;
+		}
 		File file = new File(url.getFile());
-		logger.debug(file.exists());
 		return file;
 	}
 
@@ -169,10 +168,10 @@ public class Configure {
 	 */
 	public static String getClassPathFileName(String fileName) {
 		URL url = getClassPathFileUrl(fileName);
-		/**
-		 * url.getFile() 得到这个文件的绝对路径
-		 */
-		logger.debug(">>>>>" + url.getFile());
+		if (url == null) {
+			logger.error("文件：[" + fileName + "]不存在！！！");
+			return null;
+		}
 		return url.getFile();
 	}
 
@@ -196,7 +195,10 @@ public class Configure {
 	public static File getClassPathFileDir(String fileName) {
 		File path = null;
 		File file = getClassPathFile(fileName);
-		logger.debug(file.exists());
+		if (file == null) {
+			logger.error("文件：[" + fileName + "]不存在！！！");
+			return null;
+		}
 		if (file.exists()) {
 			path = file.getParentFile();
 		}
@@ -211,6 +213,10 @@ public class Configure {
 	 */
 	public static String getClassPathFileDirName(String fileName) {
 		File file = getClassPathFileDir(fileName);
+		if (file == null) {
+			logger.error("文件：[" + fileName + "]不存在！！！");
+			return null;
+		}
 		return file.getName();
 	}
 }

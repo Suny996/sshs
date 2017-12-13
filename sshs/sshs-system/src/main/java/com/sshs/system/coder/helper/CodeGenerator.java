@@ -29,7 +29,7 @@ import com.sshs.system.coder.model.Column;
 public class CodeGenerator {
 	public static void generate(Coder coder) throws Exception {
 		CodeGenerator.processProperties(coder);
-		String xml = Freemarker.printFreemarkerString("config.xml", CodeGenerator.toMap(coder));
+		String xml = Freemarker.printFreemarkerString("/template/coder/config.xml", CodeGenerator.toMap(coder));
 		Document document = null;
 		SAXReader reader = null;
 		reader = new SAXReader();
@@ -47,14 +47,21 @@ public class CodeGenerator {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			String outFileName = Configure.getProperty("coder.path", "d:/coder") + "/"
-					+ coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/"
-					+ className;
+			String outPath = "";
+			if ("view".equalsIgnoreCase(packageName)) {
+				outPath = Configure.getProperty("coder.path.view", "d:/coder/view");
+			} else {
+				outPath = Configure.getProperty("coder.path.java", "d:/coder/java");
+			}
+			String outFileName = outPath + "/" + coder.getPackageName().replaceAll("\\.", "/") + "/"
+					+ packageName.replaceAll("\\.", "/") + "/" + className;
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".ftl")) {
-				Freemarker.printFreemarkerFile(templateFileName, outFileName, CodeGenerator.toMap(coder));
+				Freemarker.printFreemarkerFile("/template/coder/" + templateFileName, outFileName,
+						CodeGenerator.toMap(coder));
 			}
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".vm")) {
-				Freemarker.printVelocityFile(templateFileName, outFileName, CodeGenerator.toMap(coder));
+				Freemarker.printVelocityFile("/template/coder/" + templateFileName, outFileName,
+						CodeGenerator.toMap(coder));
 			}
 		}
 	}
