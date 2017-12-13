@@ -216,7 +216,7 @@ public class ThColumnTag extends BaseTag implements Component {
 				text.append(" " + a.getKey() + "=\"" + a.getValue() + "\" ");
 			}
 		}
-		text.append("></input>"); 
+		text.append("></input>");
 		return text.toString();
 	}
 
@@ -228,7 +228,8 @@ public class ThColumnTag extends BaseTag implements Component {
 	 */
 	private String getSelectHTML(Element element) {
 		StringBuffer text = new StringBuffer();
-		text.append("<select type=\"text\" class=\" form-select2 x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
+		text.append(
+				"<select type=\"text\" class=\" form-select2 x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
 		if (!required) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}
@@ -272,7 +273,14 @@ public class ThColumnTag extends BaseTag implements Component {
 			labelText = element.attr(ViewResolver.VIEW_COMPONENT_TEXT);
 			element.removeAttr(ViewResolver.VIEW_COMPONENT_TEXT);
 		}
-		text.append("<button name=\"" + this.field + "\" class=form-control ");
+		text.append("<button name=\"" + this.field + "\" ");
+		if (StringUtils.isNotEmpty(element.attr(ViewResolver.VIEW_COMPONENT_CLASS))) {
+			text.append(" class=\"btn btn-link " + element.attr(ViewResolver.VIEW_COMPONENT_CLASS) + "\" ");
+			element.removeAttr(ViewResolver.VIEW_COMPONENT_CLASS);
+		} else {
+			text.append(" class=\"btn btn-link \"");
+		}
+
 		if (StringUtils.isNotEmpty(element.attr(ViewResolver.VIEW_COMPONENT_ACTION))) {
 			text.append(" action=" + element.attr(ViewResolver.VIEW_COMPONENT_ACTION) + " ");
 			element.removeAttr(ViewResolver.VIEW_COMPONENT_ACTION);

@@ -71,6 +71,12 @@ public class ViewResolver {
 	public static final String VIEW_COMPONENT_ACTION = "action";
 
 	/**
+	 * class
+	 */
+	public static final String VIEW_COMPONENT_CLASS = "class";
+	
+	
+	/**
 	 * 解析视图
 	 * 
 	 * @param input
