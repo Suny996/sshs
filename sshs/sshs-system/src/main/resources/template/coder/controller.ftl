@@ -9,15 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.afcac.aframe.base.controller.BaseController;
-import com.afcac.aframe.page.Page;
+import com.sshs.core.base.controller.BaseController;
+import com.sshs.core.page.Page;
 import ${coder.packageName}.model.${coder.className};
 import ${coder.packageName}.service.I${coder.className}Service;
 
 
  /** 
- * @see ${coder.title}controller类
- * @author Suny
+ * ${coder.title}controller类
+ * @author ${coder.systemUser}
  * @date ${coder.crtDate?string("yyyy/MM/dd")}
  */
 @Controller

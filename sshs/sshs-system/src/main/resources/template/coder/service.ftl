@@ -1,12 +1,12 @@
 package ${coder.packageName}.service;
 
-import com.afcac.aframe.base.service.IBaseService;
- <#-- import com.afcac.aframe.page.Page;-->
+import com.sshs.core.base.service.IBaseService;
+ <#-- import com.sshs.core.page.Page;-->
 import ${coder.packageName}.model.${coder.className};
 
  /** 
- * @see ${coder.title}service接口
- * @author Suny
+ * ${coder.title}service接口
+ * @author ${coder.systemUser}
  * @date ${coder.crtDate?string("yyyy/MM/dd")}
  */
 public interface I${coder.className}Service extends IBaseService<${coder.className}> {

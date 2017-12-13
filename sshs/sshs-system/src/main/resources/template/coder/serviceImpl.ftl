@@ -4,16 +4,16 @@ package ${coder.packageName}.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.afcac.aframe.base.service.impl.BaseServiceImpl;
- <#-- import com.afcac.aframe.page.Page;
+import com.sshs.core.base.service.impl.BaseServiceImpl;
+ <#-- import com.sshs.core.page.Page;
 
 import ${coder.packageName}.dao.${coder.className}Dao;-->
 import ${coder.packageName}.model.${coder.className};
 import ${coder.packageName}.service.I${coder.className}Service;
 
  /** 
- * @see ${coder.title}service实现类
- * @author Suny
+ * ${coder.title}service实现类
+ * @author ${coder.systemUser}
  * @date ${coder.crtDate?string("yyyy/MM/dd")}
  */
 @Service("${coder.classDeclare}Service")

@@ -88,17 +88,17 @@ public class Column implements Serializable {
 	/**
 	 * 是否查询
 	 */
-	private boolean searchFlag;
+	private String searchFlag;
 
 	/**
 	 * 查询类型
 	 */
-	private boolean searchType;
+	private String searchType;
 
 	/**
 	 * 列表是否显示
 	 */
-	private boolean listFlag;
+	private String listFlag;
 
 	/**
 	 * 修改是否显示
@@ -118,12 +118,12 @@ public class Column implements Serializable {
 	/**
 	 * 新增是否显示
 	 */
-	private boolean addFlag;
+	private String addFlag;
 
 	/**
 	 * 新增是否之读
 	 */
-	private boolean addDefault;
+	private String addDefault;
 
 	/**
 	 * 验证
@@ -148,42 +148,6 @@ public class Column implements Serializable {
 		this.columnId = columnId;
 	}
 
-	public boolean isSearchFlag() {
-		return searchFlag;
-	}
-
-	public void setSearchFlag(boolean searchFlag) {
-		this.searchFlag = searchFlag;
-	}
-
-	public boolean isSearchType() {
-		return searchType;
-	}
-
-	public void setSearchType(boolean searchType) {
-		this.searchType = searchType;
-	}
-
-	public boolean isListFlag() {
-		return listFlag;
-	}
-
-	public void setListFlag(boolean listFlag) {
-		this.listFlag = listFlag;
-	}
-
-	public boolean isModifyFlag() {
-		return modifyFlag;
-	}
-
-	public void setModifyFlag(boolean modifyFlag) {
-		this.modifyFlag = modifyFlag;
-	}
-
-	public boolean isModifyFlag1() {
-		return modifyFlag1;
-	}
-
 	public void setModifyFlag1(boolean modifyFlag1) {
 		this.modifyFlag1 = modifyFlag1;
 	}
@@ -194,22 +158,6 @@ public class Column implements Serializable {
 
 	public void setComponentType1(String componentType1) {
 		this.componentType1 = componentType1;
-	}
-
-	public boolean isAddFlag() {
-		return addFlag;
-	}
-
-	public void setAddFlag(boolean addFlag) {
-		this.addFlag = addFlag;
-	}
-
-	public boolean isAddDefault() {
-		return addDefault;
-	}
-
-	public void setAddDefault(boolean addDefault) {
-		this.addDefault = addDefault;
 	}
 
 	public String getValidators() {
@@ -324,6 +272,58 @@ public class Column implements Serializable {
 
 	public void setPrimaryKeyFlag(String primaryKeyFlag) {
 		this.primaryKeyFlag = primaryKeyFlag;
+	}
+
+	public String getSearchFlag() {
+		return searchFlag;
+	}
+
+	public void setSearchFlag(String searchFlag) {
+		this.searchFlag = searchFlag;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getListFlag() {
+		return listFlag;
+	}
+
+	public void setListFlag(String listFlag) {
+		this.listFlag = listFlag;
+	}
+
+	public boolean isModifyFlag() {
+		return modifyFlag;
+	}
+
+	public void setModifyFlag(boolean modifyFlag) {
+		this.modifyFlag = modifyFlag;
+	}
+
+	public String getAddFlag() {
+		return addFlag;
+	}
+
+	public void setAddFlag(String addFlag) {
+		this.addFlag = addFlag;
+	}
+
+	public String getAddDefault() {
+		return addDefault;
+	}
+
+	public void setAddDefault(String addDefault) {
+		this.addDefault = addDefault;
+	}
+
+	public boolean isModifyFlag1() {
+		return modifyFlag1;
 	}
 
 	public String getDictCode() {

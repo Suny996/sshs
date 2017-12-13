@@ -54,6 +54,8 @@ public class Coder implements Serializable {
 
 	@Transient
 	private String createDate;
+	@Transient
+	private String systemUser;
 
 	/**
 	 * CRT_USER_CODE 创建人
@@ -123,6 +125,14 @@ public class Coder implements Serializable {
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getSystemUser() {
+		return systemUser;
+	}
+
+	public void setSystemUser(String systemUser) {
+		this.systemUser = systemUser;
 	}
 
 	public String getTitle() {

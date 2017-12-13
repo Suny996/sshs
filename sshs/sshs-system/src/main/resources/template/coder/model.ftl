@@ -7,12 +7,13 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 
 import org.apache.ibatis.type.Alias;
 
 /** 
- * @see ${coder.title}bean ${coder.className}类
- * @author Suny
+ * ${coder.title}bean ${coder.className}类
+ * @author ${coder.systemUser}
  * @date ${coder.crtDate?string("yyyy/MM/dd")}
  */
 @Alias("${coder.className}")
@@ -28,11 +29,11 @@ public class ${coder.className} implements Serializable {
     /**
     * ${field.columnComment}
     */
-	<#if field.primaryKeyFlag == "Y">
+	<#if field.primaryKeyFlag=="1">
 	@Id
 	@GeneratedValue(generator = "UUID")
 	</#if>
-	//@Column(name="${field.columnName}")
+	@Column(name="${field.columnName}")
 	private ${field.propertyType} ${field.propertyName};
 </#list>
 

@@ -142,6 +142,9 @@ public class CodeGenerator {
 		if (coder.getCrtDate() == null) {
 			coder.setCrtDate(new Date());
 		}
+		if (coder.getSystemUser() == null) {
+			coder.setSystemUser(System.getProperty("user.name"));
+		}
 	}
 
 	/**
@@ -214,7 +217,7 @@ public class CodeGenerator {
 	 */
 	public static void processPackageName(Coder coder) {
 		if (StringUtils.isEmpty(coder.getPackageName())) {
-			coder.setPackageName(Configure.getProperty("coder.package.prefix", "com.afcac") + "." + coder.getModelName()
+			coder.setPackageName(Configure.getProperty("coder.package.prefix", "com.sshs") + "." + coder.getModelName()
 					+ "." + coder.getFunctionName().toLowerCase());
 		}
 	}

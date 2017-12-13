@@ -5,8 +5,8 @@ import java.util.List;
 import tk.mybatis.mapper.common.Mapper;
 import ${coder.packageName}.model.${coder.className};
  /** 
- * @see ${coder.title}dao接口类
- * @author Suny
+ * ${coder.title}dao接口类
+ * @author ${coder.systemUser}
  * @date ${coder.crtDate?string("yyyy/MM/dd")}
  */
 public interface ${coder.className}Dao extends Mapper<${coder.className}> {

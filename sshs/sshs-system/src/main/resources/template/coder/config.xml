@@ -38,7 +38,22 @@
 
 	<clazz>
 		<packageName>view</packageName>
-		<className>${coder.className}Manage.view.xml</className>
-		<template>view-template.vm</template>
+		<className>${coder.className}.w.html</className>
+		<template>view.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>view</packageName>
+		<className>${coder.className}List.w.html</className>
+		<template>viewList.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>view</packageName>
+		<className>${coder.className}.js</className>
+		<template>view-js.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>view</packageName>
+		<className>${coder.className}List.js</className>
+		<template>viewList-js.ftl</template>
 	</clazz>
 </classes>
