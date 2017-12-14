@@ -71,28 +71,35 @@ $.fn.extend({
 		});
 	},
 	getDataEdited : function(useCurrentPage) {
-		var elements = $("[index],[field]");
-		if(elements.lengths>0){
-			for(x in elements){
-				var element = $(elements[x]);
-				if(element.is('select') || element.is('input') ){
-					var value=null;
-					if(element.is('input') && element.hasClass("form-switch") ){
-						value =	element.bootstrapSwitch('state');  
-					} else {
-						value = element.val();
-					}
-					$(this).bootstrapTable('updateCell', {"index":element.attr("index"),"field":element.attr("field"),"value":value,reinit:false});
+		var data1 = $(this).bootstrapTable('getData', useCurrentPage);
+		if(data1 && data1.constructor === Array){
+			var data2 =JSON.stringify(data1);//实现对象复制
+			var data = JSON.parse(data2);
+			var elements = $("[index],[field]");
+			if(elements && elements.length>0){
+				for(var x=0;x<elements.length;x++){
+						var element = elements.get(x);
+						if(element && element.tagName=='INPUT' || element.tagName=="SELECT" ){
+							var value=null;
+							if(element.tagName=='INPUT'  && element.className && element.className.indexOf("form-switch")>=0 ){
+								value = $(element).bootstrapSwitch('state');
+							} else {
+								value = element.value;
+							}
+							if(data[parseInt(element.getAttribute("index"))]){
+								data[parseInt(element.getAttribute("index"))][element.getAttribute("field")] = value;
+							}
+						}
 				}
 			}
 		}
-		return $(this).bootstrapTable('getData', useCurrentPage);
-	},
+		return data;
+	}
 });
 
 $.extend({
 	showPage:function(url,param,target){
-			//alert("showpage:"+url);
+			// alert("showpage:"+url);
 			if(target){
 				$(target).load(url,$.extend({"_pageType":"body"}, param));
 			}else{
