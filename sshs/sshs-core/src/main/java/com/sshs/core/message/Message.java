@@ -7,12 +7,12 @@ package com.sshs.core.message;
  */
 public class Message {
 	String code;
-	String message;
+	String msg;
 
-	public Message(String code, String message) {
+	public Message(String code, String msg) {
 		super();
 		this.code = code;
-		this.message = message;
+		this.msg = msg;
 	}
 
 	public String getCode() {
@@ -23,11 +23,11 @@ public class Message {
 		this.code = code;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getMsg() {
+		return msg;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 }

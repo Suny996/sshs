@@ -100,7 +100,7 @@ public class CoderController extends BaseController {
 			return new Message("0000", "成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException(-10001, e.getMessage());
+			throw new BusinessException(-10001, "代码生成出错！");
 		}
 	}
 }

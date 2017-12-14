@@ -109,10 +109,10 @@ $.extend({
 				url : url,
 				data : JSON.stringify(data),
 				success : function(result) {
-					bootbox.alert(result["code"]+""+result["message"]);
+					bootbox.alert(result["code"]+""+result["msg"]);
 				},
 			   error:function(resutl){
-				   bootbox.alert(result["code"]+""+result["message"]);
+				   bootbox.alert(result["code"]+""+result["msg"]);
 				}
 			});
 		}

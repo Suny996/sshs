@@ -1,8 +1,10 @@
 package com.sshs.core.exception;
 
 /**
+ * 异常类
  * 
  * @author Suny
+ * @date 2017-10-22
  *
  */
 public class BusinessException extends RuntimeException {
@@ -30,5 +32,4 @@ public class BusinessException extends RuntimeException {
 	public void setCode(Integer code) {
 		this.code = code;
 	}
-
 }
