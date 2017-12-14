@@ -38,22 +38,32 @@
 
 	<clazz>
 		<packageName>view</packageName>
-		<className>${coder.className}.w.html</className>
+		<className>${coder.classDeclare}.w.html</className>
 		<template>view.ftl</template>
 	</clazz>
 	<clazz>
 		<packageName>view</packageName>
-		<className>${coder.className}List.w.html</className>
+		<className>${coder.classDeclare}List.w.html</className>
 		<template>viewList.ftl</template>
 	</clazz>
 	<clazz>
 		<packageName>view</packageName>
-		<className>${coder.className}.js</className>
+		<className>${coder.classDeclare}.js</className>
 		<template>view-js.ftl</template>
 	</clazz>
 	<clazz>
 		<packageName>view</packageName>
-		<className>${coder.className}List.js</className>
+		<className>${coder.classDeclare}List.js</className>
 		<template>viewList-js.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>view</packageName>
+		<className>i18n/label_zh_CN.properties</className>
+		<template>label_zhCN.ftl</template>
+	</clazz>
+	<clazz>
+		<packageName>view</packageName>
+		<className>i18n/label_en_US.properties</className>
+		<template>label_enUS.ftl</template>
 	</clazz>
 </classes>
