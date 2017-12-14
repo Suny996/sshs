@@ -47,14 +47,15 @@ public class CodeGenerator {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			String outPath = "";
+			String outFileName = "";
 			if ("view".equalsIgnoreCase(packageName)) {
-				outPath = Configure.getProperty("coder.path.view", "d:/coder/view");
+				outFileName = Configure.getProperty("coder.path.view", "d:/coder/view") + "/" + coder.getModelName()
+						+ "/" + coder.getFunctionName() + "/" + className;
 			} else {
-				outPath = Configure.getProperty("coder.path.java", "d:/coder/java");
+				outFileName = Configure.getProperty("coder.path.java", "d:/coder/java") + "/"
+						+ coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/"
+						+ className;
 			}
-			String outFileName = outPath + "/" + coder.getPackageName().replaceAll("\\.", "/") + "/"
-					+ packageName.replaceAll("\\.", "/") + "/" + className;
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".ftl")) {
 				Freemarker.printFreemarkerFile("/template/coder/" + templateFileName, outFileName,
 						CodeGenerator.toMap(coder));
@@ -230,6 +231,10 @@ public class CodeGenerator {
 	public static void processFields(Coder coder) {
 		for (Column column : coder.getFields()) {
 			column.setPropFuncName(ReflectHelper.capitalName(column.getPropertyName()));
+			if ("1".equals(column.getPrimaryKeyFlag())) {
+				coder.setIdName(column.getPropertyName());
+			}
+			System.out.println(column.getPropertyName() + "=====>>>>>" + column.getRequiredFlag());
 		}
 	}
 }

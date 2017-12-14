@@ -56,7 +56,8 @@ public class Coder implements Serializable {
 	private String createDate;
 	@Transient
 	private String systemUser;
-
+	@Transient
+	private String idName;
 	/**
 	 * CRT_USER_CODE 创建人
 	 */
@@ -253,5 +254,13 @@ public class Coder implements Serializable {
 
 	public void setUpdDate(Date updDate) {
 		this.updDate = updDate;
+	}
+
+	public String getIdName() {
+		return idName;
+	}
+
+	public void setIdName(String idName) {
+		this.idName = idName;
 	}
 }
