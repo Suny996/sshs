@@ -3,6 +3,7 @@ package com.sshs.core.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -245,7 +246,9 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			}
 			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
 		} else if (view != null) {
+			cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + pattern;
 			doResourceRequest(view, filePath + cachedView);
+			CACHEDVIEW.put(viewRequest + locale, cachedView);
 			if (view != null) {
 				view.close();
 			}
@@ -312,7 +315,9 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 	 */
 	protected void doResourceRequest(InputStream input, String fileName) throws ServletException, IOException {
 		if (input != null) {
-			IOUtils.copy(input, FileUtils.openOutputStream(new File(fileName)));
+			OutputStream out = FileUtils.openOutputStream(new File(fileName));
+			IOUtils.copy(input, out);
+			out.close();
 		}
 	}
 
