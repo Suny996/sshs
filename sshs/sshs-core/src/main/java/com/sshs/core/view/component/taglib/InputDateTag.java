@@ -25,6 +25,7 @@ public class InputDateTag extends BaseTag implements Component {
 	private static final long serialVersionUID = 1L;
 
 	public String format = "";
+
 	@Override
 	public void init(LabelResource labelResource) {
 		super.init(labelResource);
@@ -34,6 +35,7 @@ public class InputDateTag extends BaseTag implements Component {
 			this.format = "MM-dd-yyyy";
 		}
 	}
+
 	@Override
 	public String forStartTag() {
 		return "";
@@ -47,16 +49,10 @@ public class InputDateTag extends BaseTag implements Component {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
 
-		if (required) {
-			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
-		}
 		text.append("<input type=\"text\" class=\"x-edit date form-control\" id=\"" + this.getId() + "\" name=\""
 				+ this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
 				+ this.getPlaceholder() + "\" " + element.attributes() + "/>");
 
-		if (required) {
-			text.append("</div>");
-		}
 		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()
 				+ "\",\"" + labelResource.getLocale() + "\"); </script>");
 		text.append(super.forTagEnd());

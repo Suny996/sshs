@@ -1,5 +1,6 @@
 package com.sshs.core.locale;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -34,15 +35,21 @@ public class LabelResource {
 		String value = null;
 		if (this.privateResource != null) {
 			try {
-				value = this.privateResource.getString(name);
+				value = new String(this.privateResource.getString(name).getBytes("ISO-8859-1"), "UTF-8");
 			} catch (MissingResourceException e) {
 
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if (value == null && this.pubResource != null) {
 			try {
-				value = this.pubResource.getString(name);
+				value = new String(this.pubResource.getString(name).getBytes("ISO-8859-1"), "UTF-8");
 			} catch (MissingResourceException e) {
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if (value == null) {

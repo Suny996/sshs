@@ -26,6 +26,7 @@ public abstract class BaseTag extends TagSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static final int VIEW_MAX_COLUMNS = 12;
+	public static final int VIEW_DEFAULT_COLUMNS = 4;
 	public Locale locale;
 	public LabelResource labelResource;
 	public Element element;
@@ -35,14 +36,14 @@ public abstract class BaseTag extends TagSupport {
 	public String label = "";
 	public String labelStyle;
 	public String placeholder = "";
-	public boolean required = false;
+	public String required = "false";
 
 	public String value;
 
 	@Named("class")
 	public String className = "";
 
-	public int columns = 4;
+	public String columns;
 
 	public void init(LabelResource labelResource) {
 		this.setId(UuidUtil.get32UUID());
@@ -63,14 +64,12 @@ public abstract class BaseTag extends TagSupport {
 	public String forTagBefore(String id) {
 		StringBuffer text = new StringBuffer();
 		text.append("<div class=\"appearance x-label-edit x-label30 " + getColumnsClass(columns) + "\">\n");
-		/* text.append("<div class=\"form-group\">\n"); */
-
 		if (StringUtils.isEmpty(label)) {
 			label = this.name;
 		}
 		label = labelResource.getLabel(label);
 		text.append("<label for=\"" + id + "\" class=\"x-label x-right control-label\"	style=\"white-space:nowrap;\">"
-				+ label + ":</label>\n");
+				+ label + ":" + getRequiredHtml() + "</label>\n");
 		return text.toString();
 	}
 
@@ -170,25 +169,19 @@ public abstract class BaseTag extends TagSupport {
 		this.placeholder = placeholder;
 	}
 
-	public boolean isRequired() {
+	public String getRequired() {
 		return required;
 	}
 
-	public void setRequired(boolean required) {
+	public void setRequired(String required) {
 		this.required = required;
 	}
 
-	public int getColumns() {
+	public String getColumns() {
 		return columns;
 	}
 
-	public void setColumns(int columns) {
-		if (columns > VIEW_MAX_COLUMNS) {
-			columns = VIEW_MAX_COLUMNS;
-		}
-		if (columns < 1) {
-			columns = 1;
-		}
+	public void setColumns(String columns) {
 		this.columns = columns;
 	}
 
@@ -198,7 +191,19 @@ public abstract class BaseTag extends TagSupport {
 	 * @param columns
 	 * @return
 	 */
-	public String getColumnsClass(int columns) {
+	public String getColumnsClass(String cs) {
+		int columns = VIEW_DEFAULT_COLUMNS;
+		try {
+			columns = Integer.valueOf(cs);
+		} catch (NumberFormatException e) {
+
+		}
+		if (columns > VIEW_MAX_COLUMNS) {
+			columns = VIEW_MAX_COLUMNS;
+		}
+		if (columns < 1) {
+			columns = 1;
+		}
 		int cols = VIEW_MAX_COLUMNS / columns;
 		int mcolumns = VIEW_MAX_COLUMNS / (cols <= 1 ? 1 : cols - 1);
 		int scolumns = VIEW_MAX_COLUMNS / (cols <= 2 ? 1 : cols - 2);
@@ -221,5 +226,13 @@ public abstract class BaseTag extends TagSupport {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getRequiredHtml() {
+		if (StringUtils.isNotEmpty(required) && !"false".equalsIgnoreCase(required)) {
+			return "<span style=\"font-size:20;color:#FFA042;text-align:right; vertical-align:middle;\">*</span>";
+		} else {
+			return "";
+		}
 	}
 }

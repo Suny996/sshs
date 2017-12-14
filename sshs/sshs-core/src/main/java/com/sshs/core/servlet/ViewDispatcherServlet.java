@@ -278,7 +278,12 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			throw new ServletException("请求的视图文件:[" + (viewFileName + pattern) + "]不存在！");
 		}
 		ResourceBundle pubResource = ResourceBundle.getBundle("i18n/labels", locale);
-		ResourceBundle privateResource = ResourceBundle.getBundle(getViewDir(viewFileName) + "/i18n/label", locale);
+		ResourceBundle privateResource = null;
+		try {
+			privateResource = ResourceBundle.getBundle(getViewDir(viewFileName) + "/i18n/label", locale);
+		} catch (Exception e) {
+			logger.error("label文件未找到！！！");
+		}
 		LabelResource labelResource = new LabelResource(locale, pubResource, privateResource);
 		// 处理视图内容
 		String text = "";

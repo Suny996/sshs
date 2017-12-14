@@ -36,13 +36,10 @@ public class SelectTag extends BaseTag implements Component {
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
-		if (required) {
-			text.append("<div class=\"input-group\">\n");
-			text.append("<div class=\"input-group-addon\" style=\"color:red\">*</div>");
-		}
+
 		text.append("<select type=\"text\" class=\"x-edit\" id=\"" + super.getId() + "\" name=\"" + super.getName()
 				+ "\" placeholder=\"" + super.getPlaceholder() + "\" " + element.attributes() + ">");
-		if (!required) {
+		if (StringUtils.isEmpty(required) || !"false".equalsIgnoreCase(required)) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}
 		if (StringUtils.isNotEmpty(this.getDictCode())) {
@@ -68,9 +65,6 @@ public class SelectTag extends BaseTag implements Component {
 			}
 		}
 		text.append("</select>");
-		if (required) {
-			text.append("</div>\n");
-		}
 
 		text.append(super.forTagEnd());
 		return text.toString();

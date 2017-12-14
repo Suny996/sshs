@@ -230,7 +230,7 @@ public class ThColumnTag extends BaseTag implements Component {
 		StringBuffer text = new StringBuffer();
 		text.append(
 				"<select type=\"text\" class=\" form-select2 x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
-		if (!required) {
+		if (StringUtils.isEmpty(required) || "false".equalsIgnoreCase(required)) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}
 		if (StringUtils.isNotEmpty(element.attr(ViewResolver.VIEW_COMPONENT_PLISTKEY))) {
