@@ -2,7 +2,7 @@ define(function(require) {
 	var Model = {};
 
 	Model.btnQueryClick = function(event) {
-		$("#mainListTable").loadData($("#queryForm").getElementsJson());
+		$("#mainListTable").loadTableData($("#queryForm").getElementsJson());
 	};
 	//进入生成明细页面
 	Model.showRunPage = function(row) {

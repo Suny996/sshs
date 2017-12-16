@@ -1,14 +1,14 @@
 define(function(require) {
 	var Model = {};
 	Model.init = function() {
-		$("#columnListTable").loadData({
+		$("#columnListTable").loadTableData({
 			"tableName" : Model["params"]["tableName"]
 		});
 	}
 
 	Model.runCoder = function() {
 		var data = $("#coderForm").getElementsJson({
-			"fields" : $('#columnListTable').getDataEdited()
+			"fields" : $('#columnListTable').getTableData()
 		});
 		$.sendRequest("system/coder/runCoder.do", data);
 	};
