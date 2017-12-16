@@ -1,0 +1,62 @@
+<form type="condition" action="javascript:Model.btnQueryClick();"
+	id="queryMenuForm" style="height: 44px;" class="form-inline">
+		<input type="text" name="menuId" />
+		<input type="text" name="menuCode" />
+		<input type="text" name="menuName" />
+		<input type="text" name="menuType" />
+		<input type="text" name="menuUrl" />
+		<input type="text" name="parentMenuId" />
+		<input type="text" name="isRelativePath" />
+		<input type="text" name="menuLevel" />
+		<input type="text" name="menuSeq" />
+		<input type="text" name="menuIcon" />
+		<input type="text" name="menuIcona" />
+		<input type="text" name="isVisible" />
+		<input type="text" name="openMode" />
+		<input type="text" name="menuTip" />
+		<input type="text" name="isStart" />
+		<input type="text" name="crtUserCode" />
+		<input type="text" name="crtOrgCode" />
+		<input type="text" name="crtDate" />
+		<input type="text" name="updUserCode" />
+		<input type="text" name="updOrgCode" />
+		<input type="text" name="updDate" />
+
+	<div type="buttonGroup">
+		<button type="query"></button>
+		<button type="reset"></button>
+	</div>
+</form>
+<div id="content">
+	<table type="bootstrap" id="menuListTable" pagination=true
+		url="system/menu/getPageList.do">
+		<thead>
+			<tr>
+				<th type="column" rowNumber="true" />
+					<th type="column" field="menuId" />
+					<th type="column" field="menuCode" />
+					<th type="column" field="menuName" />
+					<th type="column" field="menuType" />
+					<th type="column" field="menuUrl" />
+					<th type="column" field="parentMenuId" />
+					<th type="column" field="isRelativePath" />
+					<th type="column" field="menuLevel" />
+					<th type="column" field="menuSeq" />
+					<th type="column" field="menuIcon" />
+					<th type="column" field="menuIcona" />
+					<th type="column" field="isVisible" />
+					<th type="column" field="openMode" />
+					<th type="column" field="menuTip" />
+					<th type="column" field="isStart" />
+					<th type="column" field="crtUserCode" />
+					<th type="column" field="crtOrgCode" />
+					<th type="column" field="crtDate" />
+					<th type="column" field="updUserCode" />
+					<th type="column" field="updOrgCode" />
+					<th type="column" field="updDate" />
+				<th type="column" field="handle"><button text="edit"
+						action=Model.showEditPage class=" icon-laptop"></button></th>
+			</tr>
+		</thead>
+	</table>
+</div>

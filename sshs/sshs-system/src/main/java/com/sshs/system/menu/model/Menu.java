@@ -14,7 +14,7 @@ import org.apache.ibatis.type.Alias;
 /** 
  * 系统管理->系统管理-菜单表bean Menu类
  * @author Suny
- * @date 2017/12/13
+ * @date 2017/12/16
  */
 @Alias("Menu")
 @Table(name="SYS_MENU")
