@@ -1,7 +1,6 @@
 package com.sshs.system.coder.helper;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,10 +42,6 @@ public class CodeGenerator {
 			String packageName = element.element("packageName").getText();
 			String className = element.element("className").getText();
 			String templateFileName = element.element("template").getText();
-			File dir = new File(packageName);
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
 			String outFileName = "";
 			if ("view".equalsIgnoreCase(packageName)) {
 				outFileName = Configure.getProperty("coder.path.view", "d:/coder/view") + "/" + coder.getModelName()
@@ -234,7 +229,7 @@ public class CodeGenerator {
 			if ("1".equals(column.getPrimaryKeyFlag())) {
 				coder.setIdName(column.getPropertyName());
 			}
-			System.out.println(column.getPropertyName() + "=====>>>>>" + column.getRequiredFlag());
+			//System.out.println(column.getPropertyName() + "=====>>>>>" + column.getRequiredFlag());
 		}
 	}
 }
