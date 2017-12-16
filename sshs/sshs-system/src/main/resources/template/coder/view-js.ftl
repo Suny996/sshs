@@ -1,13 +1,13 @@
 define(function(require) {
 	var Model = {};
 	Model.init = function() {
-		$("#${coder.className}ListTable").loadData({			
-		});
+		$.loadData("${coder.modelName}/${coder.functionName}/get${coder.className}.do", {
+				"${coder.idName}" : Model["params"]["${coder.idName}"]
+			});
 	}
 
 	Model.save = function() {
-		var data = $("${coder.className}Form").getElementsJson();
-		$.sendRequest("system/coder/edit.do", data);
+		$.sendRequest("${coder.modelName}/${coder.functionName}/edit.do", $("${coder.classDeclare}Form").getElementsJson());
 	};
 	return Model;
 });

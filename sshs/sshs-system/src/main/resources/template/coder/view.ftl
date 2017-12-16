@@ -1,4 +1,4 @@
-<form id="${coder.className}Form" method="post" action="javascript:Model.save();">
+<form id="${coder.classDeclare}Form" method="post" action="javascript:Model.save();">
 <#list coder.fields as field>
 	<input type="text" name="${field.propertyName}" <#if field.requiredFlag=="true">required="true"</#if> />
 </#list>

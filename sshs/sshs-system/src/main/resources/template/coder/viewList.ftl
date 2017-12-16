@@ -10,7 +10,7 @@
 	</div>
 </form>
 <div id="content">
-	<table type="bootstrap" id="${coder.className}ListTable" pagination=true
+	<table type="bootstrap" id="${coder.classDeclare}ListTable" pagination=true
 		url="${coder.modelName}/${coder.functionName}/getPageList.do">
 		<thead>
 			<tr>

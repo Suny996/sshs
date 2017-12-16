@@ -985,7 +985,7 @@
       CONFIRM : "Прийняти"
     },
     zh_CN : {
-      OK      : "OK",
+      OK      : "确定",
       CANCEL  : "取消",
       CONFIRM : "确认"
     },

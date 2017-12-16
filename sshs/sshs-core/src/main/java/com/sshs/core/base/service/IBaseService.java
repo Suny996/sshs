@@ -45,4 +45,13 @@ public interface IBaseService<T> {
 	 * @throws Exception
 	 */
 	Page<T> findForPageList(String sqlId, Page<T> page) throws Exception;
+
+	/**
+	 * 根据主键查询单笔记录
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	T findById(String id) throws Exception;
 }

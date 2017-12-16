@@ -76,6 +76,17 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	}
 
 	/**
+	 * 根据主键查询单笔记录
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public T findById(String id) throws Exception {
+		return dao.selectByPrimaryKey(id);
+	}
+	/**
 	 * 公共分页查询方法
 	 * 
 	 * @param sqlId

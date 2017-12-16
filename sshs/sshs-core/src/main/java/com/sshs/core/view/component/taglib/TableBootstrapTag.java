@@ -27,7 +27,7 @@ public class TableBootstrapTag extends BaseTag implements Component {
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
-		text.append("<table id=\"" + this.id + "\" class=\"table table-bordered \"" + this.className + " data-url=\""
+		text.append("<table id=\"" + this.id + "\" class=\"table table-bordered table-hover \"" + this.className + " data-url=\""
 				+ this.url + "\"");
 		if (StringUtils.isNotEmpty(this.striped)) {
 			text.append(" data-striped=" + this.striped + " ");
