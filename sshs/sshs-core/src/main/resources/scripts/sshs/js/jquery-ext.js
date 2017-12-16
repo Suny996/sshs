@@ -25,12 +25,17 @@ $.fn.extend({
 	 * @method serializeJson
 	 */
 	serializeJson : function() {
-		var serializeObj = {}, array = this.serializeArray();
+		var serializeObj = {};
+		var array = this.serializeArray();
 		$(array).each(function() {
+			var value = null;
+			if (this.value) {
+				value = this.value;
+			}
 			if (serializeObj[this.name]) {
-				serializeObj[this.name] += ';' + this.value;
+				serializeObj[this.name] += ';' + value;
 			} else {
-				serializeObj[this.name] = this.value;
+				serializeObj[this.name] = value;
 			}
 		});
 		return serializeObj;
@@ -43,34 +48,34 @@ $.fn.extend({
 	 * @method putJsonElements
 	 */
 	putJsonElements : function(data) {
-		   var obj = data;
-		    var key,value,tagName,type,arr;
-		    for(x in obj){
-		        key = x;
-		        value = obj[x];
-		        $("[name='"+key+"'],[name='"+key+"[]']").each(function(){
-		            tagName = $(this)[0].tagName;
-		            type = $(this).attr('type');
-		            if(tagName=='INPUT'){
-		                if(type=='radio'){
-		                    $(this).attr('checked',$(this).val()==value);
-		                }else if(type=='checkbox'){
-		                    arr = value.split(',');
-		                    for(var i =0;i<arr.length;i++){
-		                        if($(this).val()==arr[i]){
-		                            $(this).attr('checked',true);
-		                            break;
-		                        }
-		                    }
-		                }else{
-		                    $(this).val(value);
-		                }
-		            }else if(tagName=='SELECT' || tagName=='TEXTAREA'){
-		                $(this).val(value);
-		            }
-		             
-		        });
-		    } 
+		var obj = data;
+		var key, value, tagName, type, arr;
+		for (x in obj) {
+			key = x;
+			value = obj[x];
+			$("[name='" + key + "'],[name='" + key + "[]']").each(function() {
+				tagName = $(this)[0].tagName;
+				type = $(this).attr('type');
+				if (tagName == 'INPUT') {
+					if (type == 'radio') {
+						$(this).attr('checked', $(this).val() == value);
+					} else if (type == 'checkbox') {
+						arr = value.split(',');
+						for (var i = 0; i < arr.length; i++) {
+							if ($(this).val() == arr[i]) {
+								$(this).attr('checked', true);
+								break;
+							}
+						}
+					} else {
+						$(this).val(value);
+					}
+				} else if (tagName == 'SELECT' || tagName == 'TEXTAREA') {
+					$(this).val(value);
+				}
+
+			});
+		}
 	},
 	/**
 	 * 显示指定页面
@@ -98,7 +103,8 @@ $.extend({
 		if (target) {
 			target.showPage(url, param);
 		} else {
-			$("body").showPage(url, param);
+			$("div[type='page']").showPage(url, param);
+			// $("body").showPage(url, param);
 		}
 	},
 	/**

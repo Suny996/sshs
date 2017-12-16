@@ -2,7 +2,7 @@ define(function(require) {
 	var Model = {};
 
 	Model.btnQueryClick = function(event) {
-		$("#${coder.classDeclare}ListTable").loadTableData($("#queryForm").getElementsJson());
+		$("#${coder.classDeclare}ListTable").loadTableData($("#query${coder.className}Form").getElementsJson());
 	};
 	//进入修改页面
 	Model.showEditPage = function(row) {

@@ -21,6 +21,7 @@ import org.jsoup.select.Elements;
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.ReflectHelper;
 import com.sshs.core.util.SpringUtil;
+import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -59,12 +60,12 @@ public class ViewResolver {
 	 * select
 	 */
 	public static final String VIEW_COMPONENT_SELECT = "select";
-	
+
 	/**
 	 * dictCode
 	 */
 	public static final String VIEW_COMPONENT_PLISTKEY = "dictCode";
-	
+
 	/**
 	 * action
 	 */
@@ -74,8 +75,7 @@ public class ViewResolver {
 	 * class
 	 */
 	public static final String VIEW_COMPONENT_CLASS = "class";
-	
-	
+
 	/**
 	 * 解析视图
 	 * 
@@ -85,7 +85,8 @@ public class ViewResolver {
 	 * @param pageType
 	 * @return
 	 */
-	public static String resolve(InputStream input, LabelResource labelResource, String viewTemplate, String pageType) {
+	public static String resolve(InputStream input, LabelResource labelResource, String viewTemplate, String pageType,
+			String privateJs) {
 
 		String text = "";
 		try {
@@ -101,6 +102,7 @@ public class ViewResolver {
 					bodyText.append(resolveBody(e, labelResource));
 				}
 			}
+			bodyText.append(privateJs);// 加载私有js文件
 			if (!VIEW_PAGE_TYPE_BODY.equalsIgnoreCase(pageType)) {
 				Elements heads = doc.getElementsByTag("head");
 				if (heads != null && heads.size() > 0) {
@@ -108,7 +110,10 @@ public class ViewResolver {
 						headText.append(resolveHead(e));
 					}
 				}
-				text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
+				text = viewTemplate.replace("<!--_PageHeader-->", headText)
+						.replace("<!--_PageBody-->",
+								"<div id=\"" + UuidUtil.get32UUID() + "\" type=\"page\" class=\"#container-fluid\">"
+										+ bodyText + "</div>")
 						.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "")
 						.replaceAll("\\$\\{locale\\}", labelResource.getLocale().toString());
 			} else {

@@ -1,8 +1,11 @@
 package com.sshs.core.base.service;
 
+import java.util.List;
+
 import com.sshs.core.page.Page;
 
 /**
+ * 基础服务接口
  * 
  * @author Suny
  *
@@ -37,14 +40,22 @@ public interface IBaseService<T> {
 	int delete(T model) throws Exception;
 
 	/**
-	 * 分页查询
+	 * 根据主键批量删除
 	 * 
-	 * @param sqlId
-	 * @param page
+	 * @param ids
 	 * @return
 	 * @throws Exception
 	 */
-	Page<T> findForPageList(String sqlId, Page<T> page) throws Exception;
+	int delete(List<String> ids) throws Exception;
+
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	int delete(String id) throws Exception;
 
 	/**
 	 * 根据主键查询单笔记录
@@ -53,5 +64,15 @@ public interface IBaseService<T> {
 	 * @return
 	 * @throws Exception
 	 */
-	T findById(String id) throws Exception;
+	T getById(String id) throws Exception;
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param sqlId
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	Page<T> findForPageList(String sqlId, Page<T> page) throws Exception;
 }

@@ -1,5 +1,5 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
-	id="queryForm" style="height: 44px;" class="form-inline">
+	id="query${coder.className}Form" style="height: 44px;" class="form-inline">
 	<#list coder.fields as field>
 		<input type="text" name="${field.propertyName}" />
 	</#list>

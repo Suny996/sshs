@@ -295,13 +295,10 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 				+ "		}  }); </script>";
 
 		if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
-			text = ViewResolver.resolve(input, labelResource, viewJspTemplate, request.getParameter("_pageType"))
+			text = ViewResolver.resolve(input, labelResource, viewJspTemplate, request.getParameter("_pageType"),privateJs)
 					.replaceAll("\\&lt;\\%", "\\<\\%").replaceAll("\\%\\&gt;", "\\%\\>");
 		} else {
-			text = ViewResolver.resolve(input, labelResource, viewHtmlTemplate, request.getParameter("_pageType"));
-		}
-		if (StringUtils.isNotEmpty(privateJs)) {
-			text += privateJs;
+			text = ViewResolver.resolve(input, labelResource, viewHtmlTemplate, request.getParameter("_pageType"),privateJs);
 		}
 		return text;
 	}

@@ -33,7 +33,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	 * 
 	 * @return
 	 */
-	protected Mapper<T> getDao() {
+	public Mapper<T> getDao() {
 		return this.dao;
 	}
 
@@ -72,7 +72,35 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	 */
 	@Override
 	public int delete(T model) throws Exception {
-		return getDao().delete(model);
+		return dao.delete(model);
+	}
+
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int delete(String id) throws Exception {
+		return dao.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 根据主键批量删除
+	 * 
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int delete(List<String> ids) throws Exception {
+		int i = 0;
+		for (String id : ids) {
+			i += dao.deleteByPrimaryKey(id);
+		}
+		return i;
 	}
 
 	/**
@@ -83,9 +111,10 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	 * @throws Exception
 	 */
 	@Override
-	public T findById(String id) throws Exception {
+	public T getById(String id) throws Exception {
 		return dao.selectByPrimaryKey(id);
 	}
+
 	/**
 	 * 公共分页查询方法
 	 * 

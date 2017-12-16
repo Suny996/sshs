@@ -15,7 +15,9 @@ import tk.mybatis.mapper.util.StringUtil;
  */
 public class ReflectHelper {
 
-	private static Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
+	private static Pattern patternProperty = Pattern.compile("([A-Za-z\\d]+)(_)?");
+	
+	private static Pattern patternColumn = Pattern.compile("[A-Z]([a-z\\d]+)?");
 
 	/**
 	 * 获取obj对象fieldName的Field
@@ -112,7 +114,7 @@ public class ReflectHelper {
 		}
 		StringBuffer sb = new StringBuffer();
 		// Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
-		Matcher matcher = pattern.matcher(columnName);
+		Matcher matcher = patternProperty.matcher(columnName);
 		while (matcher.find()) {
 			String word = matcher.group();
 			sb.append(smallCamel && matcher.start() == 0 ? Character.toLowerCase(word.charAt(0))
@@ -141,7 +143,7 @@ public class ReflectHelper {
 		property = String.valueOf(property.charAt(0)).toUpperCase().concat(property.substring(1));
 		StringBuffer sb = new StringBuffer();
 		// Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
-		Matcher matcher = pattern.matcher(property);
+		Matcher matcher = patternColumn.matcher(property);
 		while (matcher.find()) {
 			String word = matcher.group();
 			sb.append(word.toUpperCase());

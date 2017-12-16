@@ -38,8 +38,7 @@
 				/uploadFiles/uploadImgs/** = anon
 				/code.do = anon
 				/login_login = anon
-				/app**/** = anon
-				/coder/** = anon
+				/app**/** = anon 
 				/** = anon
 			</value>
 		</property>

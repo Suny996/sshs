@@ -1,5 +1,7 @@
 package com.sshs.core.exception;
 
+import com.sshs.core.message.Message;
+
 /**
  * 异常类
  * 
@@ -13,23 +15,28 @@ public class BusinessException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = -7638041501183925225L;
 
-	private Integer code;
+	private String code;
 
-	public BusinessException(Integer code, String msg) {
+	public BusinessException(String code) {
+		super(Message.getMessage(code));
+		this.code = code;
+	}
+
+	public BusinessException(String code, String msg) {
 		super(msg);
 		this.code = code;
 	}
 
-	public BusinessException(Integer code, String msg, Throwable cause) {
+	public BusinessException(String code, String msg, Throwable cause) {
 		super(msg, cause);
 		this.code = code;
 	}
 
-	public Integer getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 }

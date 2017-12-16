@@ -87,10 +87,10 @@ public class CoderController extends BaseController {
 				col.setPropertyName(ReflectHelper.getPropertyName(col.getColumnName()));
 				col.setPropertyType(CodeGenerator.getPropertyType(col.getColumnType()));
 
-				// 主键使用UUID，页面不控制非空验证
+				/*// 主键使用UUID，页面不控制非空验证
 				if ("Y".equalsIgnoreCase(col.getPrimaryKeyFlag())) {
 					col.setRequiredFlag("Y");
-				}
+				}*/
 			}
 
 			coder.setColumns(Serializabler.object2Bytes(coder.getFields()));
@@ -100,7 +100,7 @@ public class CoderController extends BaseController {
 			return new Message("0000", "成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException(-10001, "代码生成出错！");
+			throw new BusinessException("-10001", "代码生成出错！");
 		}
 	}
 }

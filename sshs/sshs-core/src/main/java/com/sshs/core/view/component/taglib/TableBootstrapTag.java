@@ -23,17 +23,21 @@ public class TableBootstrapTag extends BaseTag implements Component {
 	public String striped;
 	public String uniqueId;
 	public String pagination;
+	public String showToggle;
 
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
-		text.append("<table id=\"" + this.id + "\" class=\"table table-bordered table-hover \"" + this.className + " data-url=\""
-				+ this.url + "\"");
+		text.append("<table id=\"" + this.id + "\" class=\"table table-bordered table-hover \"" + this.className
+				+ " data-url=\"" + this.url + "\"");
 		if (StringUtils.isNotEmpty(this.striped)) {
 			text.append(" data-striped=" + this.striped + " ");
 		}
 		if (StringUtils.isNotEmpty(this.pagination)) {
 			text.append(" data-pagination=" + this.pagination + " ");
+		}
+		if (StringUtils.isNotEmpty(this.showToggle)) {
+			text.append(" data-show-toggle=" + this.showToggle + " ");
 		}
 		if (StringUtils.isNotEmpty(this.uniqueId)) {
 			text.append(" data-unique-id=" + this.uniqueId + " ");
@@ -90,5 +94,13 @@ public class TableBootstrapTag extends BaseTag implements Component {
 
 	public void setPagination(String pagination) {
 		this.pagination = pagination;
+	}
+
+	public String getShowToggle() {
+		return showToggle;
+	}
+
+	public void setShowToggle(String showToggle) {
+		this.showToggle = showToggle;
 	}
 }

@@ -7,7 +7,7 @@ define(function(require) {
 	}
 
 	Model.save = function() {
-		$.sendRequest("${coder.modelName}/${coder.functionName}/edit.do", $("${coder.classDeclare}Form").getElementsJson());
+		$.sendRequest("${coder.modelName}/${coder.functionName}/save.do", $("#${coder.classDeclare}Form").getElementsJson());
 	};
 	return Model;
 });

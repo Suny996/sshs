@@ -48,7 +48,6 @@ public class LabelResource {
 				value = new String(this.pubResource.getString(name).getBytes("ISO-8859-1"), "UTF-8");
 			} catch (MissingResourceException e) {
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

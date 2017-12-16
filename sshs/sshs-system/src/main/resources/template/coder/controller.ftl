@@ -43,11 +43,14 @@ public class ${coder.className}Controller extends BaseController {
 	@ResponseBody
 	public Message save(@RequestBody ${coder.className} ${coder.classDeclare}, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			menuService.save(${coder.classDeclare});
-			return new Message("100000", "保存成功");
+			if(menuService.save(${coder.classDeclare})>0){
+				return new Message("100000");
+			} else {
+			    return new Message("100001");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException(-010001, "新增数据异常！");
+			throw new BusinessException("-100001");
 		}
 	}
 
@@ -63,11 +66,37 @@ public class ${coder.className}Controller extends BaseController {
 	@ResponseBody
 	public Message update(@RequestBody ${coder.className} ${coder.classDeclare}, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			${coder.classDeclare}Service.update(${coder.classDeclare});
-			return new Message("200000", "修改成功");
+			if (${coder.classDeclare}Service.update(${coder.classDeclare})>0) {
+				return new Message("200000");
+			} else {
+				return new Message("200001");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException(-010002, "修改数据异常！");
+			throw new BusinessException("-200001");
+		}
+	}
+	
+		/**
+	 * ${coder.title}修改
+	 * 
+	 * @param ${coder.classDeclare}
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/delete.do")
+	@ResponseBody
+	public Message delete(@RequestParam("${coder.idName}") String ${coder.idName}, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			if (${coder.classDeclare}Service.delete(${coder.idName})>0) {
+				return new Message("300000");
+			} else{
+				return new Message("300001");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("-300001");
 		}
 	}
 	
@@ -84,10 +113,10 @@ public class ${coder.className}Controller extends BaseController {
 	public ${coder.className} get${coder.className}ById(@RequestParam("${coder.idName}") String ${coder.idName}, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			return ${coder.functionName}Service.findById(${coder.idName});
+			return ${coder.functionName}Service.getById(${coder.idName});
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException(-010003, "查询出错！");
+			throw new BusinessException("-400001");
 		}
 	}
 	
