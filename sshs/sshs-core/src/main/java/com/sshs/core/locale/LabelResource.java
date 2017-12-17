@@ -37,9 +37,7 @@ public class LabelResource {
 			try {
 				value = new String(this.privateResource.getString(name).getBytes("ISO-8859-1"), "UTF-8");
 			} catch (MissingResourceException e) {
-
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -37,10 +37,10 @@ public class Freemarker {
 	 * 
 	 * @param templateFileName
 	 */
-	public static void print(String templateFileName, Map<String, Object> root) throws Exception {
+	public static void print(String templateFileName, Map<String, Object> root, String encoding) throws Exception {
 		try {
 			// 通过Template可以将模板文件输出到相应的流
-			Template temp = getFreemarkerTemplate(templateFileName);
+			Template temp = getFreemarkerTemplate(templateFileName, encoding);
 			temp.process(root, new PrintWriter(System.out));
 		} catch (TemplateException e) {
 			e.printStackTrace();
@@ -54,11 +54,11 @@ public class Freemarker {
 	 * 
 	 * @param ftlName
 	 */
-	public static Template getFreemarkerTemplate(String templateFileName) throws Exception {
+	public static Template getFreemarkerTemplate(String templateFileName, String encoding) throws Exception {
 		try {
 			// 通过Freemaker的Configuration读取相应的ftl
 			Configuration cfg = new Configuration();
-			cfg.setEncoding(Locale.CHINA, "utf-8");
+			cfg.setEncoding(Locale.CHINA, encoding);
 			// 设定去哪里读取相应的ftl模板文件
 			cfg.setDirectoryForTemplateLoading(Configure.getClassPathFileDir(templateFileName));
 			// 在模板文件目录中找到名称为name的文件
@@ -79,19 +79,20 @@ public class Freemarker {
 	 *            传入的map
 	 * @return text 结果文本
 	 */
-	public static String printFreemarkerString(String templateFileName, Map<String, Object> paramMap) throws Exception {
+	public static String printFreemarkerString(String templateFileName, Map<String, Object> paramMap, String encoding)
+			throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream = null;
 		OutputStreamWriter out = null;
 		String text = "";
 		try {
 			byteArrayOutputStream = new ByteArrayOutputStream();
 			out = new OutputStreamWriter(byteArrayOutputStream);
-			Template template = getFreemarkerTemplate(templateFileName);
+			Template template = getFreemarkerTemplate(templateFileName, encoding);
 			// 模版输出
 			template.process(paramMap, out);
 			out.flush();
 			out.close();
-			text = byteArrayOutputStream.toString("UTF-8");
+			text = byteArrayOutputStream.toString(encoding);
 		} catch (TemplateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -127,8 +128,8 @@ public class Freemarker {
 	 * @param filePath
 	 *            输出前的文件上部路径
 	 */
-	public static void printFreemarkerFile(String templateFileName, String outFileName, Map<String, Object> paramMap)
-			throws Exception {
+	public static void printFreemarkerFile(String templateFileName, String outFileName, Map<String, Object> paramMap,
+			String encoding) throws Exception {
 		try {
 			File file = new File(outFileName);
 			// 判断有没有父路径，就是判断文件整个路径是否存在
@@ -136,9 +137,11 @@ public class Freemarker {
 				// 不存在就全部创建
 				file.getParentFile().mkdirs();
 			}
-			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
-			Template template = getFreemarkerTemplate(templateFileName);
+			Writer out = null;
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding));
+			Template template = getFreemarkerTemplate(templateFileName, "UTF-8");
 			// 模版输出
+			template.setOutputEncoding(encoding);
 			template.process(paramMap, out);
 			out.flush();
 			out.close();

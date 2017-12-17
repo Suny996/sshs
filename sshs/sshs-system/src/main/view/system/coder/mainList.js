@@ -7,7 +7,7 @@ define(function(require) {
 	//进入生成明细页面
 	Model.showRunPage = function(row) {
 		if (row["coderFlag"] == 1) {
-			bootbox.confirm("代码已生成，需要重新生成吗？", function(result) {
+			$.confirm("代码已生成，需要重新生成吗？", function(result) {
 				if (result) {
 					runCoder1(row["tableName"]);
 				}

@@ -1,9 +1,10 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
 	id="query${coder.className}Form" style="height: 44px;" class="form-inline">
 	<#list coder.fields as field>
-		<input type="text" name="${field.propertyName}" />
+		<#if field.searchFlag=="true">
+			<input type="text" name="${field.propertyName}" />
+		</#if>
 	</#list>
-
 	<div type="buttonGroup">
 		<button type="query"></button>
 		<button type="reset"></button>
@@ -16,7 +17,9 @@
 			<tr>
 				<th type="column" rowNumber="true" />
 				<#list coder.fields as field>
-					<th type="column" field="${field.propertyName}" />
+					<#if field.listFlag=="true">
+						<th type="column" field="${field.propertyName}" />
+					</#if>
 				</#list> 
 				<th type="column" field="handle"><button text="edit"
 						action=Model.showEditPage class=" icon-laptop"></button></th>

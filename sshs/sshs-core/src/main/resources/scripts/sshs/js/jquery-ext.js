@@ -130,11 +130,17 @@ $.extend({
 			url : url,
 			data : JSON.stringify(data),
 			success : function(result) {
-				bootbox.alert(result["code"] + "" + result["msg"]);
+				$.alert(result["code"] + "" + result["msg"]);
 			},
 			error : function(resutl) {
-				bootbox.alert(result["code"] + "" + result["msg"]);
+				$.alert(result["code"] + "" + result["msg"]);
 			}
 		});
+	},
+	alert : function(msg) {
+		bootbox.alert(msg);
+	},
+	confirm : function(msg, callback) {
+		bootbox.confirm(msg, callback);
 	}
 });

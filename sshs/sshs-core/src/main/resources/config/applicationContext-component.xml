@@ -19,6 +19,7 @@
 	<bean id="buttonSubmit" class="com.sshs.core.view.component.taglib.ButtonSubmitTag" />
 	<bean id="buttonReset" class="com.sshs.core.view.component.taglib.ButtonResetTag" />
 	<bean id="buttonQuery" class="com.sshs.core.view.component.taglib.ButtonQueryTag" />
+	<bean id="buttonReturn" class="com.sshs.core.view.component.taglib.ButtonReturnTag" />
 	
 	<bean id="tableBootstrap" class="com.sshs.core.view.component.taglib.TableBootstrapTag" />
 	<bean id="thColumn" class="com.sshs.core.view.component.taglib.ThColumnTag" />

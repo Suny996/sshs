@@ -1,5 +1,6 @@
 package com.sshs.core.message;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -47,7 +48,13 @@ public class Message {
 			locale = request.getLocale();
 		}
 		ResourceBundle resource = ResourceBundle.getBundle("i18n/messages", locale);
-		return resource.getString(code);
+		try {
+			String message = new String(resource.getString(code).getBytes("ISO-8859-1"), "UTF-8");
+			return message;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return code;
+		}
 	}
 
 	public String getCode() {

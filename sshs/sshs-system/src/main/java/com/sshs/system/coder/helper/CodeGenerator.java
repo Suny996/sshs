@@ -28,7 +28,8 @@ import com.sshs.system.coder.model.Column;
 public class CodeGenerator {
 	public static void generate(Coder coder) throws Exception {
 		CodeGenerator.processProperties(coder);
-		String xml = Freemarker.printFreemarkerString("/template/coder/config.xml", CodeGenerator.toMap(coder));
+		String xml = Freemarker.printFreemarkerString("/template/coder/config.xml", CodeGenerator.toMap(coder),
+				"UTF-8");
 		Document document = null;
 		SAXReader reader = null;
 		reader = new SAXReader();
@@ -42,6 +43,10 @@ public class CodeGenerator {
 			String packageName = element.element("packageName").getText();
 			String className = element.element("className").getText();
 			String templateFileName = element.element("template").getText();
+			String encoding = element.elementText("encoding");
+			if (StringUtils.isEmpty(encoding)) {
+				encoding = root.attributeValue("encoding");
+			}
 			String outFileName = "";
 			if ("view".equalsIgnoreCase(packageName)) {
 				outFileName = Configure.getProperty("coder.path.view", "d:/coder/view") + "/" + coder.getModelName()
@@ -53,7 +58,7 @@ public class CodeGenerator {
 			}
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".ftl")) {
 				Freemarker.printFreemarkerFile("/template/coder/" + templateFileName, outFileName,
-						CodeGenerator.toMap(coder));
+						CodeGenerator.toMap(coder), encoding);
 			}
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".vm")) {
 				Freemarker.printVelocityFile("/template/coder/" + templateFileName, outFileName,
@@ -229,7 +234,8 @@ public class CodeGenerator {
 			if ("1".equals(column.getPrimaryKeyFlag())) {
 				coder.setIdName(column.getPropertyName());
 			}
-			//System.out.println(column.getPropertyName() + "=====>>>>>" + column.getRequiredFlag());
+			// System.out.println(column.getPropertyName() + "=====>>>>>" +
+			// column.getRequiredFlag());
 		}
 	}
 }
