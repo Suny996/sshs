@@ -120,7 +120,6 @@
 			<classifier>jdk15</classifier>
 		</dependency>
 
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

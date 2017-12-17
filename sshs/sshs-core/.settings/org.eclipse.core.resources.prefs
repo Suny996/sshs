@@ -1,6 +1,9 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/config/configure.properties=UTF-8
+encoding//src/main/resources/i18n/labels_zh_CN.properties=UTF-8
+encoding//src/main/resources/i18n/messages_zh_CN.properties=UTF-8
 encoding//src/main/resources/scripts/justep/comp.min.css=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8
