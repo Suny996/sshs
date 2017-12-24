@@ -40,6 +40,14 @@ public interface CoderDao extends Mapper<Coder> {
 	int delete(String dictId);
 
 	/**
+	 * 删除
+	 * 
+	 * @param tableName
+	 * @return
+	 */
+	int deleteByTableName(String tableName);
+
+	/**
 	 * 根据主键查询
 	 * 
 	 * @param dictId

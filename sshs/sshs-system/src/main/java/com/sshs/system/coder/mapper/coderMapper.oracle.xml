@@ -49,17 +49,6 @@
 		#{updDate}
 	</sql>
 
-	<!-- 新增 -->
-	<insert id="save" parameterType="Coder">
-		insert into
-		<include refid="tableName"></include>
-		(
-		<include refid="Field"></include>
-		) values (
-		<include refid="FieldValue"></include>
-		)
-	</insert>
-
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="Page" resultType="Page">
 		select
@@ -69,39 +58,6 @@
 		where
 		CREATECODE_ID = #{CREATECODE_ID}
 	</select>
-
-	<!-- 列表 -->
-	<select id="datalistPage" parameterType="Page" resultType="Page">
-		select
-		<include refid="Field"></include>
-		from
-		<include refid="tableName"></include>
-		where
-		1=1
-		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 检索 -->
-			and (
-			TITLE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-			or
-			OBJECTNAME
-			LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-			or
-			TABLENAME LIKE
-			CONCAT(CONCAT('%', #{pd.keywords}),'%')
-			)
-		</if>
-		order by CREATETIME desc
-	</select>
-
-	<!-- 列表(主表) -->
-	<select id="listFa" resultType="Page">
-		select
-		<include refid="Field"></include>
-		from
-		<include refid="tableName"></include>
-		where
-		FHTYPE = 'fathertable'
-	</select>
-
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from
@@ -113,21 +69,31 @@
 			#{item}
 		</foreach>
 	</delete>
-
+	<!-- 根据表面删除 -->
+	<delete id="deleteByTableName" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		TABLE_NAME = #{tableName}
+	</delete>
 	<!-- 代码生成-查询表信息 -->
 	<select id="findDbTableForPageList" parameterType="Page"
-		resultType="DbTable">
-		SELECT A.TABLE_NAME,
+		resultType="Coder">
+		SELECT C.CODER_ID,A.TABLE_NAME,
 		B.COMMENTS AS TABLE_COMMENT,
-		CASE WHEN C.TABLE_NAME
-		IS NOT NULL THEN '1' ELSE '0' END AS CODER_FLAG
-		FROM USER_TABLES A,
+		NVL(C.CODER_FLAG,'0') AS CODER_FLAG,TITLE,MODEL_NAME,MODEL_NAME_CN,
+		PACKAGE_NAME,CLASS_NAME,FUNCTION_NAME
+		FROM
+		USER_TABLES A,
 		USER_TAB_COMMENTS B,
-		(SELECT DISTINCT TABLE_NAME , '1' AS CODER_FLAG
+		(SELECT CODER_ID,TITLE,MODEL_NAME,MODEL_NAME_CN,
+		PACKAGE_NAME,CLASS_NAME,FUNCTION_NAME,TABLE_NAME,TABLE_COMMENT
+		, '1' AS
+		CODER_FLAG
 		FROM SYS_CODER) C
-		WHERE A.TABLE_NAME = B.TABLE_NAME(+) AND A.TABLE_NAME
-		=
-		C.TABLE_NAME(+)
+		WHERE A.TABLE_NAME =
+		B.TABLE_NAME(+) AND
+		A.TABLE_NAME = C.TABLE_NAME(+)
 		<if test="variables.tableName != null and variables.tableName != ''">
 			AND A.TABLE_NAME LIKE LIKED(#{variables.tableName})
 		</if>
@@ -136,7 +102,7 @@
 			LIKED(#{variables.tableComment})
 		</if>
 		<if test="variables.coderFlag != null and variables.coderFlag != ''">
-			AND C.CODER_FLAG =#{variables.coderFlag}
+			AND NVL (C.CODER_FLAG, '0')  = #{variables.coderFlag}
 		</if>
 		<if test="orderBy != null and orderBy != ''">
 			ORDER BY ${orderBy}
@@ -145,7 +111,7 @@
 			ORDER BY A.TABLE_NAME
 		</if>
 	</select>
-	 
+
 	<!-- 代码生成-查询列信息 -->
 	<select id="findColumnAll" parameterType="Map" resultType="Column">
 		SELECT A.COLUMN_ID,
@@ -157,11 +123,15 @@
 		A.DATA_LENGTH AS COLUMN_SIZE,
 		A.DATA_SCALE AS COLUMN_SCALE,
 		A.DATA_DEFAULT AS DEFAULT_VALUE,
-		CASE WHEN A.NULLABLE = 'N' THEN '1'
-		ELSE '0' END AS REQUIRED_FLAG,
-		CASE WHEN D.COLUMN_NAME IS NOT NULL THEN
+		CASE WHEN D.COLUMN_NAME IS NOT NULL
+		THEN
 		'1' ELSE '0' END
-		AS PRIMARY_KEY_FLAG
+		AS PRIMARY_KEY_FLAG,
+		CASE WHEN A.NULLABLE = 'N'  AND D.COLUMN_NAME IS NULL
+		THEN 'on'
+		ELSE 'off' END AS REQUIRED_FLAG,
+		'on' AS SEARCH_FLAG,'on' AS
+		LIST_FLAG,'on' AS MODIFY_FLAG,'on' AS ADD_FLAG
 		FROM USER_TAB_COLUMNS A,
 		USER_TAB_COMMENTS B,
 		USER_COL_COMMENTS C,

@@ -35,7 +35,7 @@ comment on column SYS_MENU.MENU_CODE
 comment on column SYS_MENU.MENU_NAME
   is '菜单名称';
 comment on column SYS_MENU.MENU_TYPE
-  is '菜单类型:0-节点，1-功能';
+  is '菜单类型';
 comment on column SYS_MENU.MENU_URL
   is '菜单路径URL';
 comment on column SYS_MENU.PARENT_MENU_ID

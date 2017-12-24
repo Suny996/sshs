@@ -59,7 +59,12 @@ public class SelectTag extends BaseTag implements Component {
 						text.append(
 								"<optgroup label=\"" + value + "\" data-subtext=\"" + desc + "\" class=\"get-class\">");
 					} else {
-						text.append("<option value=\"" + key + "\">" + key + " " + value + "</option>");
+						if (StringUtils.isNotEmpty(this.defaultValue) && key.equals(this.defaultValue)) {
+							text.append(
+									"<option value=\"" + key + "\" selected=true>" + key + " " + value + "</option>");
+						} else {
+							text.append("<option value=\"" + key + "\">" + key + " " + value + "</option>");
+						}
 					}
 				}
 			}

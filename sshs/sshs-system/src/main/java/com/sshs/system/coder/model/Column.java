@@ -103,12 +103,12 @@ public class Column implements Serializable {
 	/**
 	 * 修改是否显示
 	 */
-	private boolean modifyFlag;
+	private String modifyFlag;
 
 	/**
 	 * 修改是否只读
 	 */
-	private boolean modifyFlag1;
+	private String modifyFlag1;
 
 	/**
 	 * 编辑组件类型
@@ -148,7 +148,7 @@ public class Column implements Serializable {
 		this.columnId = columnId;
 	}
 
-	public void setModifyFlag1(boolean modifyFlag1) {
+	public void setModifyFlag1(String modifyFlag1) {
 		this.modifyFlag1 = modifyFlag1;
 	}
 
@@ -298,11 +298,11 @@ public class Column implements Serializable {
 		this.listFlag = listFlag;
 	}
 
-	public boolean isModifyFlag() {
+	public String getModifyFlag() {
 		return modifyFlag;
 	}
 
-	public void setModifyFlag(boolean modifyFlag) {
+	public void setModifyFlag(String modifyFlag) {
 		this.modifyFlag = modifyFlag;
 	}
 
@@ -322,7 +322,7 @@ public class Column implements Serializable {
 		this.addDefault = addDefault;
 	}
 
-	public boolean isModifyFlag1() {
+	public String getModifyFlag1() {
 		return modifyFlag1;
 	}
 

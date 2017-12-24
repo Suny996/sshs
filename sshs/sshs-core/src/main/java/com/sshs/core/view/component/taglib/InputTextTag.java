@@ -27,8 +27,11 @@ public class InputTextTag extends BaseTag implements Component {
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
-
-		text.append("<input type=\"text\" class=\"x-edit form-control \" id=\"" + this.getId() + "\" name=\""
+		String xedit = "";
+		if (!this.hasAddon()) {
+			xedit = this.xeditClass;
+		}
+		text.append("<input type=\"text\" class=\"" + xedit + " form-control \" id=\"" + this.getId() + "\" name=\""
 				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\" " + element.attributes() + "/>");
 
 		text.append(super.forTagEnd());

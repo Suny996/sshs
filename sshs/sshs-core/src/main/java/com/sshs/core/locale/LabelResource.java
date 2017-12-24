@@ -29,9 +29,10 @@ public class LabelResource {
 	 * 获取label
 	 * 
 	 * @param name
+	 * @param defaultName
 	 * @return
 	 */
-	public String getLabel(String name) {
+	public String getLabel(String name, String defaultName) {
 		String value = null;
 		if (this.privateResource != null) {
 			try {
@@ -50,9 +51,19 @@ public class LabelResource {
 			}
 		}
 		if (value == null) {
-			value = name;
+			value = defaultName;
 		}
 		return value;
+	}
+
+	/**
+	 * 获取label
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public String getLabel(String name) {
+		return this.getLabel(name, name);
 	}
 
 	public Locale getLocale() {

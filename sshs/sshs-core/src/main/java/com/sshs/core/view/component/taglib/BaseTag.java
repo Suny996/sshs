@@ -37,6 +37,10 @@ public abstract class BaseTag extends TagSupport {
 	public String labelStyle;
 	public String placeholder = "";
 	public String required = "false";
+	public String defaultValue;
+	public String preAddon;
+	public String postAddon;
+	public String xeditClass = "xedit";
 
 	public String value;
 
@@ -70,6 +74,45 @@ public abstract class BaseTag extends TagSupport {
 		label = labelResource.getLabel(label);
 		text.append("<label for=\"" + id + "\" class=\"x-label x-right control-label\"	style=\"white-space:nowrap;\">"
 				+ label + ":" + getRequiredHtml() + "</label>\n");
+		if (this.hasAddon()) {
+			text.append("<div class=\"x-edit input-group\">");
+		}
+		if (StringUtils.isNotEmpty(this.preAddon)) {
+			if (this.preAddon.startsWith("select")) {
+				String defaultAddonValue = "";
+				if (this.preAddon.indexOf("select.") >= 0) {
+					defaultAddonValue = this.preAddon.substring(this.preAddon.indexOf('.') + 1,
+							this.preAddon.indexOf(','));
+				} else {
+					defaultAddonValue = this.preAddon.substring(this.preAddon.indexOf(',') + 1,
+							this.preAddon.indexOf(',', this.preAddon.indexOf(',') + 1));
+				}
+
+				String optionStr = this.preAddon.substring(this.preAddon.indexOf(',') + 1);
+				String[] options = optionStr.split(",");
+				text.append("<div class=\"input-group-btn\" style=\"width:1%;\">");
+				text.append(
+						"<button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" "
+								+ " aria-expanded=\"false\">");
+				text.append("	<span id=\"" + this.id + "preAddonSelectBtn\" style=\"padding-right:3px;\">"
+						+ this.labelResource.getLabel("addon.select." + defaultAddonValue, defaultAddonValue)
+						+ "</span><span class=\"caret\"></span>");
+				text.append("</button>");
+				text.append("<ul class=\"dropdown-menu\">");
+				for (String option : options) {
+					text.append("<li><a href=\"javascript:$('#" + this.id + "preAddonSelectBtn').text('"
+							+ this.labelResource.getLabel("addon.select." + option, option) + "');$('#" + this.id
+							+ "').attr('preAddonValue','" + option + "');\">"
+							+ this.labelResource.getLabel("addon.select." + option, option) + "</a></li>");
+				}
+				text.append("</ul>");
+				text.append("</div>");
+			} else {
+				text.append("<div class=\"input-group-addon\">");
+				text.append(this.getPreAddon());
+				text.append("</div>");
+			}
+		}
 		return text.toString();
 	}
 
@@ -80,9 +123,22 @@ public abstract class BaseTag extends TagSupport {
 	 */
 	public String forTagEnd() {
 		StringBuffer text = new StringBuffer();
-		// text.append("</div>\n");
+		if (this.hasAddon()) {
+			text.append("</div>\n");
+		}
 		text.append("</div>\n");
 		return text.toString();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasAddon() {
+		if (StringUtils.isNotEmpty(this.preAddon) || StringUtils.isNotEmpty(this.postAddon)) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -175,6 +231,30 @@ public abstract class BaseTag extends TagSupport {
 
 	public void setRequired(String required) {
 		this.required = required;
+	}
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	public String getPreAddon() {
+		return preAddon;
+	}
+
+	public void setPreAddon(String preAddon) {
+		this.preAddon = preAddon;
+	}
+
+	public String getPostAddon() {
+		return postAddon;
+	}
+
+	public void setPostAddon(String postAddon) {
+		this.postAddon = postAddon;
 	}
 
 	public String getColumns() {

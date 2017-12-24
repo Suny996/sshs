@@ -20,7 +20,6 @@ import com.sshs.core.util.Serializabler;
 import com.sshs.system.coder.helper.CodeGenerator;
 import com.sshs.system.coder.model.Coder;
 import com.sshs.system.coder.model.Column;
-import com.sshs.system.coder.model.DbTable;
 import com.sshs.system.coder.service.ICoderService;
 import com.sshs.system.coder.service.IDbTableService;
 
@@ -49,9 +48,9 @@ public class CoderController extends BaseController {
 	 */
 	@RequestMapping(value = "/getTableList.do")
 	@ResponseBody
-	public Page<DbTable> getTableList(@RequestBody Page<DbTable> page, HttpServletRequest request,
+	public Page<Coder> getTableList(@RequestBody Page<Coder> page, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		return dbTableService.findForPageList("com.sshs.system.coder.dao.CoderDao.findDbTableForPageList", page);
+		return coderService.findForPageList("com.sshs.system.coder.dao.CoderDao.findDbTableForPageList", page);
 	}
 
 	/**

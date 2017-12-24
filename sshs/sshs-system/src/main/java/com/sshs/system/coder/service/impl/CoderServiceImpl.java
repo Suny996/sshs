@@ -32,6 +32,7 @@ public class CoderServiceImpl extends BaseServiceImpl<Coder> implements ICoderSe
 	@Override
 	public int save(Coder coder) throws Exception {
 		// 新增一条数据
+		coderDao.deleteByTableName(coder.getTableName());
 		return coderDao.insert(coder);
 		// coderDao.save(coder);
 	}

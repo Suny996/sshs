@@ -206,6 +206,10 @@ public class ThColumnTag extends BaseTag implements Component {
 			text.append("<input type=\"checkbox\" class=\"form-switch form-control \" data-on-text=\""
 					+ labelResource.getLabel("switch.dataOnText" + labelText) + "\" data-off-text= \""
 					+ labelResource.getLabel("switch.dataOffText" + labelText) + "\" ");
+			
+			if(StringUtils.isNotEmpty(element.attr("defaultValue"))){
+				text.append(" defaultValue="+element.attr("defaultValue"));
+			}
 			break;
 		default:
 			text.append("<input type=\"text\" class=\"form-control\" ");

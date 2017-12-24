@@ -58,6 +58,9 @@ public class Coder implements Serializable {
 	private String systemUser;
 	@Transient
 	private String idName;
+	@Transient
+	private String coderFlag;
+	
 	/**
 	 * CRT_USER_CODE 创建人
 	 */
@@ -206,6 +209,14 @@ public class Coder implements Serializable {
 
 	public void setFunctionName(String functionName) {
 		this.functionName = functionName;
+	}
+
+	public String getCoderFlag() {
+		return coderFlag;
+	}
+
+	public void setCoderFlag(String coderFlag) {
+		this.coderFlag = coderFlag;
 	}
 
 	public String getCrtUserCode() {

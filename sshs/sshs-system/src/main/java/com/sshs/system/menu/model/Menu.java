@@ -14,7 +14,7 @@ import org.apache.ibatis.type.Alias;
 /** 
  * 系统管理->系统管理-菜单表bean Menu类
  * @author Suny
- * @date 2017/12/16
+ * @date 2017/12/24
  */
 @Alias("Menu")
 @Table(name="SYS_MENU")
@@ -46,7 +46,7 @@ public class Menu implements Serializable {
 	private String menuName;
 
     /**
-    * 菜单类型:0-节点，1-功能
+    * 菜单类型
     */
 	@Column(name="MENU_TYPE")
 	private String menuType;

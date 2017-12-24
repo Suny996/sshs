@@ -9,7 +9,7 @@ define(function(require) {
 		if (row["coderFlag"] == 1) {
 			$.confirm("代码已生成，需要重新生成吗？", function(result) {
 				if (result) {
-					runCoder1(row["tableName"]);
+					runCoder1(row);
 				}
 			});
 		} else {
@@ -17,10 +17,8 @@ define(function(require) {
 		}
 	};
 	//进入页面
-	var runCoder1 = function(tableName) {
-		$.showPage("system/coder/coder.w", {
-			"tableName" : tableName
-		});
+	var runCoder1 = function(row) {
+		$.showPage("system/coder/coder.w", row);
 	}
 	Model.handleRender = function(value, row, index) {
 		var text = "<button class='btn btn-link icon-laptop btnUpdate' onclick='javascript:Model.showRunPage(\""

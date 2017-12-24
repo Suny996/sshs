@@ -22,7 +22,7 @@ import com.sshs.system.menu.service.IMenuService;
  /** 
  * 系统管理->系统管理-菜单表controller类
  * @author Suny
- * @date 2017/12/16
+ * @date 2017/12/24
  */
 @Controller
 @RequestMapping(value="/system/menu")

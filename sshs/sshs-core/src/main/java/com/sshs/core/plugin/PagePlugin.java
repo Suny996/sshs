@@ -82,6 +82,7 @@ public class PagePlugin implements Interceptor {
 					String fhsql = sql;
 					// 记录统计
 					String countSql = "select count(0) from (" + fhsql + ")  tmp_count";
+					logger.debug("查询记录总数sql:"+countSql);
 					PreparedStatement countStmt = connection.prepareStatement(countSql);
 					BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
 							boundSql.getParameterMappings(), parameterObject);
@@ -191,6 +192,7 @@ public class PagePlugin implements Interceptor {
 			try {
 				IDialect dialect1 = (IDialect) Class.forName(dialect).newInstance();
 				pageSql = dialect1.getLimitString(sql, page.getOffset(), page.getLimit());
+				logger.debug("分页查询sql:" + pageSql);
 				return pageSql;
 			} catch (InstantiationException e) {
 				e.printStackTrace();

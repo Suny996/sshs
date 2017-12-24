@@ -1,8 +1,9 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
 	id="queryForm" style="height: 44px;" class="form-inline">
-	<input name="tableName" /> <input name="tableComment" /> <input
-		type="date" name="coderDate" /> <select name="coderFlag"
-		dictCode="YN"></select>
+	<input name="tableName" preAddon="select.like,=,!=,<,>,<=,>=,like,not like" /> 
+	<input name="tableComment" preAddon="select,=,!=,like,not like" />
+    <input	type="date" name="coderDate" /> 
+    <select name="coderFlag" defaultValue='0' dictCode="YN"/>
 
 	<div type="buttonGroup">
 		<button type="query"></button>
@@ -19,6 +20,9 @@
 				<th type="column" field="tableName" sortable=true />
 				<th type="column" field="tableComment" />
 				<th type="column" field="coderFlag" dictCode="YN" />
+				<th type="column" field="title" />
+				<th type="column" field="modelName" />
+				<th type="column" field="functionName" />
 				<th type="column" field="handle"><button text="generate"
 						action=Model.showRunPage class=" icon-laptop"></button></th>
 			</tr>
