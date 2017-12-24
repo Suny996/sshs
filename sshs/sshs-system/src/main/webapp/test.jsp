@@ -8,14 +8,16 @@
 <base href="http://localhost:8080/system/">
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script type="text/javascript" src="scripts/jquery/jquery.js">
+<script type="text/javascript"
+	src="scripts/jquery-3.2.1/jquery-3.2.1.js">
 	
 </script>
 
 <!-- Bootstrap -->
-<link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="scripts/bootstrap-3.3.7/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript"
-	src="scripts/bootstrap/js/bootstrap.min.js"></script>
+	src="scripts/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 
 <!-- bootstrap-table -->
 <link href="scripts/bootstrap-table/src/bootstrap-table.css"
@@ -67,7 +69,7 @@
 <link rel="stylesheet" type="text/css"
 	href="scripts/sshs/css/component.css">
 <!-- 自定义js ，扩展翻页table组件等 -->
-<script type="text/javascript" src="scripts/sshs/js/component.js"></script>
+<!-- <script type="text/javascript" src="scripts/sshs/js/component.js"></script> -->
 
 <!-- require -->
 <script type="text/javascript" src="scripts/requirejs/require.js"></script>
@@ -75,54 +77,48 @@
 
 </head>
 <body>
-	<form id="coderForm">
-		<div
-			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
-			<label for="870e9678a4e84a19b5e3a5da1fb7e448"
-				class="x-label x-right control-label" style="white-space: nowrap;">描述:</label>
-			<input type="text" class="x-edit form-control "
-				id="870e9678a4e84a19b5e3a5da1fb7e448" name="title" placeholder="描述"
-				type="text" name="title" />
+	<div class="col-lg-4">
+	
+		<div class="input-group"><label  class="x-label x-right control-label"	style="white-space:nowrap;">表名:</label>
+			<div class="input-group-btn">
+				<button type="button" 
+					class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					<span id="aaaaabtn" style="padding-right:3px;">等于</span><span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:$('#aaaaabtn').text(' 等于');">等于</a></li>
+					<li><a href="javascript:$('#aaaaabtn').text('不等于');">不等于</a></li>
+				</ul>
+			</div>
+			<!-- /btn-group -->
+			<input type="text" class="form-control" aria-label="...">
 		</div>
-		<div
-			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
-			<label for="c835a893e27e4074b9ce68714b251c7e"
-				class="x-label x-right control-label" style="white-space: nowrap;">模块名:</label>
-			<input type="text" class="x-edit form-control "
-				id="c835a893e27e4074b9ce68714b251c7e" name="modelName"
-				placeholder="模块名" type="text" name="modelName" />
-		</div>
-		<div
-			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
-			<label for="3b7c86ac55274969a796fa7639d82796"
-				class="x-label x-right control-label" style="white-space: nowrap;">模块名(中文):</label>
-			<input type="text" class="x-edit form-control "
-				id="3b7c86ac55274969a796fa7639d82796" name="modelNameCn"
-				placeholder="模块名(中文)" name="modelNameCn" />
-		</div>
-		<div
-			class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4">
-			<label for="0765d952390b42d8810a161517f1335b"
-				class="x-label x-right control-label" style="white-space: nowrap;">功能名称:</label>
-			<input type="text" class="x-edit form-control "
-				id="0765d952390b42d8810a161517f1335b" name="functionName"
-				placeholder="功能名称" name="functionName" />
-		</div>
-	</form>
-	<div
-		class="appearance x-button-edit col-xs-12 col-sm-12 col-md-6 col-lg-4">
-		<button class="x-btn btn btn-primary"
-			id="f6585f037a2c48c9af924d5911274671"
-			onclick="javascript:Model.runCoder();" accessKey="c" 
-			value="generate" >
-			<i class="linear linear-highlight"> </i>生成代码
-		</button>
-		<button type="reset" class="x-btn btn btn-danger"
-			id="3cd6c2b3d55546459659fd05c925ceb9" accessKey="r" type="reset">
-			<i class="linear linear-cross"> </i>重置
-		</button>
+		<!-- /input-group -->
 	</div>
+	<!-- /.col-lg-6 -->
 
+	<div class="col-lg-6">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default dropdown-toggle"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Action <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+				</ul>
+			</div>
+			<!-- /btn-group -->
+			<input type="text" class="form-control" aria-label="...">
+		</div>
+		<!-- /input-group -->
+	</div>
+	<!-- /.col-lg-6 -->
 </body>
 
 </html>
@@ -131,24 +127,11 @@
 <script type="text/javascript">
 	var _locale = {};
 	_locale["locale"] = "zh_CN";
-	bootbox.setLocale("zh_CN");
+	//bootbox.setLocale("zh_CN");
 </script>
 <script type="text/javascript">
-	var Model={runCoder:function(){
-		var data = $("#coderForm").getElementsJson({
-			//"fields" : $('#columnListTable').getDataEdited(true)
-		});
-		data["field"]="";//
-		alert(JSON.stringify($('#columnListTable').getDataEdited(false)));
-		$.sendRequest("system/coder/runCoder.do", data);
-	}};
-	/* require([ "/system/system/coder/coder.js.dw" ], function(model) {
-		model["params"] = {
-			"tableName" : "SYS_MENU"
-		};
-		if (typeof model.init === 'function') {
-			//model.init.apply(null);
-		}
-		Model = model;
-	});  */
+	function aaaa() {
+		alert($('#aaaaabtn').text());
+		$('#aaaaabtn').text('不等于');
+	}
 </script>

@@ -118,3 +118,44 @@ $.fn
 				return data1;
 			}
 		});
+
+/**
+ * 单元格渲染
+ */
+var _EditorRender = function(value, row, index,name,format) {
+	var editor= $(format);
+	editor.attr("index",index);
+	editor.attr("field",name);
+	if(!value && editor.attr("defaultValue")){
+		value =  editor.attr("defaultValue");
+	}
+	if(editor.is('input') && editor.attr("type")==="text"){
+		editor.attr("value",value);
+	}
+	
+	if(editor.is('input') && editor.attr("type")==="checkbox"){
+		if(editor.hasClass("form-switch")){
+			//editor.bootstrapSwitch("state", value=="on");
+			if(value == "on"){
+				value = true;
+			}
+			if(value == "off"){
+				value = false;
+			}
+		} 
+		editor.attr("checked",value);
+	}
+	
+	if(editor.is('select')){
+		var options= editor.filter("option");
+		options.each(function(option){
+			if(option.val()==value){
+				options.attr("selected",true);
+			}
+		});
+	}
+	if(editor.is('button')){
+		 editor.attr("onclick","javascript:"+editor.attr("action")+"("+JSON.stringify(row)+");");
+	}
+	return editor.get(0).outerHTML;
+};
