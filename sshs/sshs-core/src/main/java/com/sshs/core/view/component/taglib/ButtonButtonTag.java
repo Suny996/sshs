@@ -40,7 +40,7 @@ public class ButtonButtonTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.onclick)) {
 			text.append(" onclick=\"" + this.onclick + "\"");
 		}
-		text.append(" " + element.attributes() + ">");
+		text.append(getExtAttributesHtml() + ">");
 		if (StringUtils.isNotEmpty(this.icon)) {
 			text.append("<i class=\"" + this.icon + "\"> </i>");
 		}
@@ -54,6 +54,7 @@ public class ButtonButtonTag extends BaseTag implements Component {
 		text.append("</button>");
 		return text.toString();
 	}
+
 	@Override
 	public int doEndTag() throws JspException {
 		try {

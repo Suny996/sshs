@@ -58,7 +58,7 @@ public class InputDateTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.defaultAddonValue)) {
 			text.append(" preAddonValue='" + this.defaultAddonValue + "'  ");
 		}
-		text.append(element.attributes() + "/>");
+		text.append(getExtAttributesHtml() + "/>");
 
 		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()
 				+ "\",\"" + labelResource.getLocale() + "\"); </script>");

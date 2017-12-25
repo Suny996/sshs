@@ -38,7 +38,7 @@ public class InputTextTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.defaultAddonValue)) {
 			text.append(" preAddonValue='" + this.defaultAddonValue + "'  ");
 		}
-		text.append(element.attributes() + "/>");
+		text.append(getExtAttributesHtml() + "/>");
 		text.append(super.forTagEnd());
 		return text.toString();
 	}

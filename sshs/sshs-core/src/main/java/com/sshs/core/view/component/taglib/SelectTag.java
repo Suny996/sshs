@@ -38,7 +38,7 @@ public class SelectTag extends BaseTag implements Component {
 		text.append(this.forTagBefore(this.id));
 
 		text.append("<select type=\"text\" class=\"x-edit\" id=\"" + super.getId() + "\" name=\"" + super.getName()
-				+ "\" placeholder=\"" + super.getPlaceholder() + "\" " + element.attributes() + ">");
+				+ "\" placeholder=\"" + super.getPlaceholder() + "\" " + getExtAttributesHtml() + ">");
 		if (StringUtils.isEmpty(required) || !"false".equalsIgnoreCase(required)) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}

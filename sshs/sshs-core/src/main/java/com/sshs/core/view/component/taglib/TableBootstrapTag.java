@@ -42,7 +42,7 @@ public class TableBootstrapTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.uniqueId)) {
 			text.append(" data-unique-id=" + this.uniqueId + " ");
 		}
-		text.append(" " + element.attributes() + ">\n");
+		text.append(getExtAttributesHtml() + ">\n");
 		return text.toString();
 	}
 

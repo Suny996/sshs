@@ -21,7 +21,7 @@ public class ButtonGroupTag extends BaseTag implements Component {
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
-		text.append("<div class=\"appearance x-button-edit " + getColumnsClass(columns) + "\"" + element.attributes()
+		text.append("<div class=\"appearance x-button-edit " + getColumnsClass(columns) + "\"" + getExtAttributesHtml()
 				+ ">\n");
 		return text.toString();
 	}

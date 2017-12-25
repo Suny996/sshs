@@ -7,6 +7,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
 import com.sshs.core.locale.LabelResource;
@@ -313,11 +315,35 @@ public abstract class BaseTag extends TagSupport {
 		this.value = value;
 	}
 
+	/**
+	 * 生成 必输项标识
+	 * 
+	 * @return
+	 */
 	public String getRequiredHtml() {
 		if (StringUtils.isNotEmpty(required) && !"false".equalsIgnoreCase(required)) {
 			return "<span style=\"font-size:20;color:#FFA042;text-align:right; vertical-align:middle;\">*</span>";
 		} else {
 			return "";
 		}
+	}
+
+	/**
+	 * 处理附加的属性
+	 * 
+	 * @return
+	 */
+	public String getExtAttributesHtml() {
+		StringBuffer text = new StringBuffer(" ");
+		Attributes attrs = this.element.attributes();
+		if (attrs != null && attrs.size() > 0) {
+			for (Attribute attr : attrs) {
+				if (attr.getKey().startsWith("data-")) {
+					text.append(attr);
+					text.append(" ");
+				}
+			}
+		}
+		return text.toString();
 	}
 }

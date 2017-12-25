@@ -98,7 +98,7 @@ public class ThColumnTag extends BaseTag implements Component {
 				text.append(" data-formatter=\"" + this.formatter + "\"");
 			}
 		}
-		text.append(" " + element.attributes() + ">\n");
+		text.append(getExtAttributesHtml()+ ">\n");
 		return text.toString();
 	}
 
