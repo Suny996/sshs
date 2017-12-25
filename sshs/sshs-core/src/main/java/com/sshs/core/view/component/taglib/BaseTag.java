@@ -40,6 +40,7 @@ public abstract class BaseTag extends TagSupport {
 	public String defaultValue;
 	public String preAddon;
 	public String postAddon;
+	public String defaultAddonValue;
 	public String xeditClass = "xedit";
 
 	public String value;
@@ -53,6 +54,8 @@ public abstract class BaseTag extends TagSupport {
 		this.setId(UuidUtil.get32UUID());
 		this.labelResource = labelResource;
 		this.locale = labelResource.getLocale();
+		this.defaultAddonValue = null;
+		this.defaultValue = null;
 	}
 
 	@Override
@@ -83,9 +86,11 @@ public abstract class BaseTag extends TagSupport {
 				if (this.preAddon.indexOf("select.") >= 0) {
 					defaultAddonValue = this.preAddon.substring(this.preAddon.indexOf('.') + 1,
 							this.preAddon.indexOf(','));
+					this.defaultAddonValue = defaultAddonValue;
 				} else {
 					defaultAddonValue = this.preAddon.substring(this.preAddon.indexOf(',') + 1,
 							this.preAddon.indexOf(',', this.preAddon.indexOf(',') + 1));
+					this.defaultAddonValue = null;
 				}
 
 				String optionStr = this.preAddon.substring(this.preAddon.indexOf(',') + 1);

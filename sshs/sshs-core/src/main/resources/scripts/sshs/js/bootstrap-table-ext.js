@@ -13,8 +13,19 @@ $.fn
 				if (!params) {
 					params = {};
 				} else {
+					var operators = {};
+					for ( var name in params) {
+						var element = $("[name='" + name + "']");
+						if (element.attr("preAddonValue") && params[name]) {
+							operators[name] = element.attr("preAddonValue");
+							if (element.attr("preAddonValue").indexOf("like") >= 0) {
+								params[name] = "%" + params[name] + "%";
+							}
+						}
+					}
 					params = {
-						"variables" : params
+						"variables" : params,
+						"operators" : operators
 					};
 				}
 				$(this).bootstrapTable("destroy");
@@ -122,40 +133,41 @@ $.fn
 /**
  * 单元格渲染
  */
-var _EditorRender = function(value, row, index,name,format) {
-	var editor= $(format);
-	editor.attr("index",index);
-	editor.attr("field",name);
-	if(!value && editor.attr("defaultValue")){
-		value =  editor.attr("defaultValue");
+var _EditorRender = function(value, row, index, name, format) {
+	var editor = $(format);
+	editor.attr("index", index);
+	editor.attr("field", name);
+	if (!value && editor.attr("defaultValue")) {
+		value = editor.attr("defaultValue");
 	}
-	if(editor.is('input') && editor.attr("type")==="text"){
-		editor.attr("value",value);
+	if (editor.is('input') && editor.attr("type") === "text") {
+		editor.attr("value", value);
 	}
-	
-	if(editor.is('input') && editor.attr("type")==="checkbox"){
-		if(editor.hasClass("form-switch")){
-			//editor.bootstrapSwitch("state", value=="on");
-			if(value == "on"){
+
+	if (editor.is('input') && editor.attr("type") === "checkbox") {
+		if (editor.hasClass("form-switch")) {
+			// editor.bootstrapSwitch("state", value=="on");
+			if (value == "on") {
 				value = true;
 			}
-			if(value == "off"){
+			if (value == "off") {
 				value = false;
 			}
-		} 
-		editor.attr("checked",value);
+		}
+		editor.attr("checked", value);
 	}
-	
-	if(editor.is('select')){
-		var options= editor.filter("option");
-		options.each(function(option){
-			if(option.val()==value){
-				options.attr("selected",true);
+
+	if (editor.is('select')) {
+		var options = editor.filter("option");
+		options.each(function(option) {
+			if (option.val() == value) {
+				options.attr("selected", true);
 			}
 		});
 	}
-	if(editor.is('button')){
-		 editor.attr("onclick","javascript:"+editor.attr("action")+"("+JSON.stringify(row)+");");
+	if (editor.is('button')) {
+		editor.attr("onclick", "javascript:" + editor.attr("action") + "("
+				+ JSON.stringify(row) + ");");
 	}
 	return editor.get(0).outerHTML;
 };

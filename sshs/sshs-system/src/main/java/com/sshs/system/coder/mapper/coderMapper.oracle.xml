@@ -95,14 +95,19 @@
 		B.TABLE_NAME(+) AND
 		A.TABLE_NAME = C.TABLE_NAME(+)
 		<if test="variables.tableName != null and variables.tableName != ''">
-			AND A.TABLE_NAME LIKE LIKED(#{variables.tableName})
+			AND A.TABLE_NAME
+			<choose>
+				<when test="operators.tableName != null and operators.tableName != '' ">${operators.tableName}</when>
+				<otherwise> = </otherwise>
+			</choose>
+			upper(#{variables.tableName})
 		</if>
 		<if test="variables.tableComment != null and variables.tableComment != ''">
 			AND B.COMMENTS LIKE
 			LIKED(#{variables.tableComment})
 		</if>
 		<if test="variables.coderFlag != null and variables.coderFlag != ''">
-			AND NVL (C.CODER_FLAG, '0')  = #{variables.coderFlag}
+			AND NVL (C.CODER_FLAG, '0') = #{variables.coderFlag}
 		</if>
 		<if test="orderBy != null and orderBy != ''">
 			ORDER BY ${orderBy}
@@ -127,17 +132,22 @@
 		THEN
 		'1' ELSE '0' END
 		AS PRIMARY_KEY_FLAG,
-		CASE WHEN A.NULLABLE = 'N'  AND D.COLUMN_NAME IS NULL
+		CASE WHEN A.NULLABLE = 'N' AND
+		D.COLUMN_NAME IS NULL
 		THEN 'on'
 		ELSE 'off' END AS REQUIRED_FLAG,
-		'on' AS SEARCH_FLAG,'on' AS
+		'on' AS
+		SEARCH_FLAG,'on' AS
 		LIST_FLAG,'on' AS MODIFY_FLAG,'on' AS ADD_FLAG
-		FROM USER_TAB_COLUMNS A,
+		FROM
+		USER_TAB_COLUMNS A,
 		USER_TAB_COMMENTS B,
 		USER_COL_COMMENTS C,
-		(SELECT COL.COLUMN_NAME,
+		(SELECT
+		COL.COLUMN_NAME,
 		COL.TABLE_NAME
-		FROM USER_CONSTRAINTS CON, USER_CONS_COLUMNS COL
+		FROM USER_CONSTRAINTS CON,
+		USER_CONS_COLUMNS COL
 		WHERE
 		CON.CONSTRAINT_NAME = COL.CONSTRAINT_NAME
 		AND CON.CONSTRAINT_TYPE =

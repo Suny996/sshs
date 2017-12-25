@@ -3,6 +3,8 @@ package com.sshs.core.view.component.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.sshs.core.view.component.Component;
 
 /**
@@ -32,8 +34,11 @@ public class InputTextTag extends BaseTag implements Component {
 			xedit = this.xeditClass;
 		}
 		text.append("<input type=\"text\" class=\"" + xedit + " form-control \" id=\"" + this.getId() + "\" name=\""
-				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\" " + element.attributes() + "/>");
-
+				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"");
+		if (StringUtils.isNotEmpty(this.defaultAddonValue)) {
+			text.append(" preAddonValue='" + this.defaultAddonValue + "'  ");
+		}
+		text.append(element.attributes() + "/>");
 		text.append(super.forTagEnd());
 		return text.toString();
 	}

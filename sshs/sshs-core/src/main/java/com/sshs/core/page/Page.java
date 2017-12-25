@@ -56,6 +56,8 @@ public class Page<T> {
 	List<T> rows;
 	Map<String, Object> variables = new HashMap<String, Object>(20);
 	Map<String, Object> userdata = new HashMap<String, Object>(10);
+	Map<String, Object> operators = new HashMap<String, Object>(20);
+	
 
 	public Page() {
 		try {
@@ -191,6 +193,14 @@ public class Page<T> {
 
 	public void setUserdata(Map<String, Object> userdata) {
 		this.userdata = userdata;
+	}
+
+	public Map<String, Object> getOperators() {
+		return operators;
+	}
+
+	public void setOperators(Map<String, Object> operators) {
+		this.operators = operators;
 	}
 
 	public String getSort() {

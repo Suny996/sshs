@@ -75,31 +75,9 @@ public class PagePlugin implements Interceptor {
 				if (parameterObject == null) {
 					throw new NullPointerException("parameterObject尚未实例化！");
 				} else {
-					Connection connection = (Connection) ivk.getArgs()[0];
-					String sql = boundSql.getSql();
-					// String countSql = "select count(0) from (" + sql+ ") as
-					// tmp_count"; //记录统计
-					String fhsql = sql;
-					// 记录统计
-					String countSql = "select count(0) from (" + fhsql + ")  tmp_count";
-					logger.debug("查询记录总数sql:"+countSql);
-					PreparedStatement countStmt = connection.prepareStatement(countSql);
-					BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
-							boundSql.getParameterMappings(), parameterObject);
-					setParameters(countStmt, mappedStatement, countBS, parameterObject);
-					ResultSet rs = countStmt.executeQuery();
-					int count = 0;
-					if (rs.next()) {
-						count = rs.getInt(1);
-					}
-					rs.close();
-					countStmt.close();
 					// 参数就是Page实体
 					if (parameterObject instanceof Page) {
 						page = (Page<?>) parameterObject;
-						// page.setEntityOrField(true);
-						page.setTotalCount(count);
-						page.getUserdata().put("sys.count", count);
 					} else {
 						// 参数为某个实体，该实体拥有Page属性
 						Field pageField = ReflectHelper.getFieldByFieldName(parameterObject, "page");
@@ -109,14 +87,41 @@ public class PagePlugin implements Interceptor {
 								page = new Page();
 							}
 							// page.setEntityOrField(false);
-							page.setTotalCount(count);
-							page.getUserdata().put("sys.count", count);
 							// 通过反射，对实体对象设置分页对象
 							ReflectHelper.setValueByFieldName(parameterObject, "page", page);
 						} else {
 							throw new NoSuchFieldException(parameterObject.getClass().getName() + "不存在 page 属性！");
 						}
 					}
+					String sql = boundSql.getSql();
+					// 整理sql
+					// sql = sql.replaceAll("(?m)^\\s*$(\\n|\\r\\n)", "").replaceAll("[ ]+", " ");
+					sql = sql.replaceAll("(\\t|\\n|\\r\\n)", " ").replaceAll(" +", " ");
+					// String countSql = "select count(0) from (" + sql+ ") as
+					// tmp_count"; //记录统计
+					int count = 0;
+					if (page.getTotalCount() <= 0) {
+						String fhsql = sql;
+						// 记录统计
+						String countSql = "select count(0) from (" + fhsql + ")  tmp_count";
+						logger.debug("查询记录总数sql:" + countSql);
+						Connection connection = (Connection) ivk.getArgs()[0];
+						PreparedStatement countStmt = connection.prepareStatement(countSql);
+						BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
+								boundSql.getParameterMappings(), parameterObject);
+						setParameters(countStmt, mappedStatement, countBS, parameterObject);
+						ResultSet rs = countStmt.executeQuery();
+
+						if (rs.next()) {
+							count = rs.getInt(1);
+						}
+						rs.close();
+						countStmt.close();
+					} else {
+						count = page.getTotalCount();
+					}
+					page.setTotalCount(count);
+					page.getUserdata().put("sys.count", count);
 					String pageSql = generatePageSql(sql, page);
 					// 将分页sql语句反射回BoundSql.
 					ReflectHelper.setValueByFieldName(boundSql, "sql", pageSql);

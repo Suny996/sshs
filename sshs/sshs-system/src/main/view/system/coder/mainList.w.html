@@ -1,8 +1,8 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
 	id="queryForm" style="height: 44px;" class="form-inline">
-	<input name="tableName" preAddon="select.like,=,!=,<,>,<=,>=,like,not like" /> 
+	<input name="tableName" preAddon="select.like,=,!=,like,not like" /> 
 	<input name="tableComment" preAddon="select,=,!=,like,not like" />
-    <input	type="date" name="coderDate" /> 
+    <input	type="date" name="coderDate" preAddon="select,=,!=,<,>"/> 
     <select name="coderFlag" defaultValue='0' dictCode="YN"/>
 
 	<div type="buttonGroup">

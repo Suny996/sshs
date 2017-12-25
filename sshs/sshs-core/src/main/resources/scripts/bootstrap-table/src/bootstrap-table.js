@@ -2026,7 +2026,7 @@
 
 		data = calculateObjectValue(this.options, this.options.queryParams, [ params ], data);
 
-		data=$.extend({},params, data, query || {}); // mod by Suny 2017-10-12
+		data=$.extend({},params, data, query || {},{totalCount:this.options.totalRows}); // mod by Suny 2017-10-12
 
 		// false to stop request
 		if (data === false) {

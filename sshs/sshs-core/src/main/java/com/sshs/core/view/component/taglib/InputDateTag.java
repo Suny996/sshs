@@ -48,10 +48,17 @@ public class InputDateTag extends BaseTag implements Component {
 	public String forEndTag() {
 		StringBuffer text = new StringBuffer();
 		text.append(this.forTagBefore(this.id));
-
-		text.append("<input type=\"text\" class=\"x-edit date form-control\" id=\"" + this.getId() + "\" name=\""
-				+ this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
-				+ this.getPlaceholder() + "\" " + element.attributes() + "/>");
+		String xedit = "";
+		if (!this.hasAddon()) {
+			xedit = this.xeditClass;
+		}
+		text.append("<input type=\"text\" class=\"" + xedit + "  date form-control\" id=\"" + this.getId()
+				+ "\" name=\"" + this.getName() + "\" data-date-format=\"" + this.getFormat() + "\"  placeholder=\""
+				+ this.getPlaceholder() + "\" ");
+		if (StringUtils.isNotEmpty(this.defaultAddonValue)) {
+			text.append(" preAddonValue='" + this.defaultAddonValue + "'  ");
+		}
+		text.append(element.attributes() + "/>");
 
 		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()
 				+ "\",\"" + labelResource.getLocale() + "\"); </script>");
