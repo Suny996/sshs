@@ -1,9 +1,9 @@
-<form type="condition" action="javascript:Model.btnQueryClick();"
-	id="queryForm" style="height: 44px;" class="form-inline">
-	<input name="tableName" preAddon="select.like,=,!=,like,not like" /> 
+<form type="condition" action="javascript:Model.btnQueryClick();" id="queryForm" style="height: 44px;" class="form-inline" customise=true>
+	<input name="title" preAddon="select.like,=,!=,like,not like" ignore=true />
+	<input name="tableName" preAddon="select.like,=,!=,like,not like" />
 	<input name="tableComment" preAddon="select,=,!=,like,not like" />
-    <input	type="date" name="coderDate" preAddon="select,=,!=,<,>"/> 
-    <select name="coderFlag" defaultValue='0' dictCode="YN"/>
+	<input type="date" name="coderDate" preAddon="select,=,!=,<,>" />
+	<select name="coderFlag" defaultValue='0' dictCode="YN" />
 
 	<div type="buttonGroup">
 		<button type="query"></button>
@@ -12,8 +12,7 @@
 
 </form>
 <div id="content">
-	<table type="bootstrap" id="mainListTable" pagination=true
-		url="system/coder/getTableList.do">
+	<table type="bootstrap" id="mainListTable" pagination=true url="system/coder/getTableList.do">
 		<thead>
 			<tr>
 				<th type="column" rowNumber="true" />
@@ -23,8 +22,9 @@
 				<th type="column" field="title" />
 				<th type="column" field="modelName" />
 				<th type="column" field="functionName" />
-				<th type="column" field="handle"><button text="generate"
-						action=Model.showRunPage class=" icon-laptop"></button></th>
+				<th type="column" field="handle">
+					<button text="generate" action=Model.showRunPage class=" icon-laptop"></button>
+				</th>
 			</tr>
 		</thead>
 	</table>

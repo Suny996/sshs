@@ -15,7 +15,7 @@ import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.UuidUtil;
 
 /**
- * 表单普通输入域标签
+ * 基础标签/组件
  * 
  * @author Suny
  * @date 2017-10-17
@@ -45,6 +45,8 @@ public abstract class BaseTag extends TagSupport {
 	public String defaultAddonValue;
 	public String xeditClass = "xedit";
 
+	public String ignore;
+
 	public String value;
 
 	@Named("class")
@@ -72,7 +74,12 @@ public abstract class BaseTag extends TagSupport {
 	 */
 	public String forTagBefore(String id) {
 		StringBuffer text = new StringBuffer();
-		text.append("<div class=\"appearance x-label-edit x-label30 " + getColumnsClass(columns) + "\">\n");
+		text.append("<div class=\"appearance x-label-edit x-label30 " + getColumnsClass(columns) + "\"");
+		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
+			text.append(" style=\"display:none;\"");
+		}
+		text.append(" name=\"" + this.name + "-Container\"");
+		text.append(">\n");
 		if (StringUtils.isEmpty(label)) {
 			label = this.name;
 		}
@@ -101,15 +108,16 @@ public abstract class BaseTag extends TagSupport {
 				text.append(
 						"<button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" "
 								+ " aria-expanded=\"false\">");
-				text.append("	<span id=\"" + this.id + "preAddonSelectBtn\" style=\"padding-right:3px;\">"
+				text.append("	<span id=\"" + this.id + "preAddonSelectBtn\" elementId=\"" + this.id
+						+ "\" style=\"padding-right:3px;\">"
 						+ this.labelResource.getLabel("addon.select." + defaultAddonValue, defaultAddonValue)
 						+ "</span><span class=\"caret\"></span>");
 				text.append("</button>");
 				text.append("<ul class=\"dropdown-menu\">");
 				for (String option : options) {
-					text.append("<li><a href=\"javascript:$('#" + this.id + "preAddonSelectBtn').text('"
+					text.append("<li><a href=\"javascript:$('span[elementId=\\'" + this.id + "\\']').text('"
 							+ this.labelResource.getLabel("addon.select." + option, option) + "');$('#" + this.id
-							+ "').attr('preAddonValue','" + option + "');\">"
+							+ "').attr('preAddonValue','" + option + "');\" elementId=\"" + this.id + "\">"
 							+ this.labelResource.getLabel("addon.select." + option, option) + "</a></li>");
 				}
 				text.append("</ul>");
@@ -313,6 +321,30 @@ public abstract class BaseTag extends TagSupport {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getDefaultAddonValue() {
+		return defaultAddonValue;
+	}
+
+	public void setDefaultAddonValue(String defaultAddonValue) {
+		this.defaultAddonValue = defaultAddonValue;
+	}
+
+	public String getXeditClass() {
+		return xeditClass;
+	}
+
+	public void setXeditClass(String xeditClass) {
+		this.xeditClass = xeditClass;
+	}
+
+	public String getIgnore() {
+		return ignore;
+	}
+
+	public void setIgnore(String ignore) {
+		this.ignore = ignore;
 	}
 
 	/**
