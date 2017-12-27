@@ -29,13 +29,16 @@ $.fn.extend({
 		var array = this.serializeArray();
 		$(array).each(function() {
 			var value = null;
-			if (this.value) {
-				value = this.value;
-			}
-			if (serializeObj[this.name]) {
-				serializeObj[this.name] += ';' + value;
-			} else {
-				serializeObj[this.name] = value;
+			var ignore = $("[name='" + this.name + "']").attr("ignore");
+			if (!ignore || ignore != "true") {
+				if (this.value) {
+					value = this.value;
+				}
+				if (serializeObj[this.name]) {
+					serializeObj[this.name] += ';' + value;
+				} else {
+					serializeObj[this.name] = value;
+				}
 			}
 		});
 		return serializeObj;

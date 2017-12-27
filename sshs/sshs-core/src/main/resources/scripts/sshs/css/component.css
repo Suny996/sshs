@@ -6,3 +6,12 @@
   padding: 0.5em;
   text-align:left;
 }
+
+.doublebox-container {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 3%;
+	padding: 10px 10px;
+	border: 1px solid #ddd;
+	background: #fff;
+}

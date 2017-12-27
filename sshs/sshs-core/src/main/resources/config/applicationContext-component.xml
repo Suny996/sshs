@@ -23,4 +23,5 @@
 	
 	<bean id="tableBootstrap" class="com.sshs.core.view.component.taglib.TableBootstrapTag" />
 	<bean id="thColumn" class="com.sshs.core.view.component.taglib.ThColumnTag" />
+	<bean id="formCondition" class="com.sshs.core.view.component.taglib.FormConditionTag" />
 </beans>
