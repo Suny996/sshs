@@ -15,6 +15,7 @@ public class LabelResource {
 	ResourceBundle pubResource = null;
 	ResourceBundle privateResource = null;
 	Locale locale = new Locale("zh", "CN");
+	String pageId="";
 
 	public LabelResource(Locale locale, ResourceBundle pubResource, ResourceBundle privateResource) {
 		super();
@@ -72,5 +73,13 @@ public class LabelResource {
 
 	public void setLocale(Locale locale) {
 		this.locale = locale;
+	}
+
+	public String getPageId() {
+		return pageId;
+	}
+
+	public void setPageId(String pageId) {
+		this.pageId = pageId;
 	}
 }

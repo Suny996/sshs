@@ -285,6 +285,7 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			logger.error("label文件未找到！！！");
 		}
 		LabelResource labelResource = new LabelResource(locale, pubResource, privateResource);
+		labelResource.setPageId(request.getRequestURI());
 		// 处理视图内容
 		String text = "";
 		Map<String, String[]> parameters = request.getParameterMap();
@@ -295,10 +296,12 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 				+ "		}  }); </script>";
 
 		if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
-			text = ViewResolver.resolve(input, labelResource, viewJspTemplate, request.getParameter("_pageType"),privateJs)
+			text = ViewResolver
+					.resolve(input, labelResource, viewJspTemplate, request.getParameter("_pageType"), privateJs)
 					.replaceAll("\\&lt;\\%", "\\<\\%").replaceAll("\\%\\&gt;", "\\%\\>");
 		} else {
-			text = ViewResolver.resolve(input, labelResource, viewHtmlTemplate, request.getParameter("_pageType"),privateJs);
+			text = ViewResolver.resolve(input, labelResource, viewHtmlTemplate, request.getParameter("_pageType"),
+					privateJs);
 		}
 		return text;
 	}

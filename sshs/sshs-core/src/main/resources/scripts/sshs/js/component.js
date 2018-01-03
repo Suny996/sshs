@@ -42,7 +42,7 @@ $(document).ready(function() {
 	
 });
 /**
- * 查询条件自定义tab处理
+ * 自定义查询条件tab切换处理
  * 
  * @returns
  */
@@ -73,6 +73,70 @@ $(function() {
 	});
 });
 
+/**
+ * 添加自定义查询条件方法
+ */
+var _addCustomise = function(tabs,selects){
+	var selection = selects.find("#bootstrap-duallistbox-selected-list_doublebox");
+	var showElements=[];
+	if(selection.is("select")){
+	   var options = selection.children();
+	   if(options.length<=0){
+		   $.alert("必须选择查询条件！");
+		   return;
+	   }
+	   for(var i=0;i<options.length;i++){
+			 showElements.push(options[i].value);
+		}
+	}
+	var name = $("#customisetabName").val();
+	if(!name){
+		 $.alert("名称不能为空！");
+		 return;
+	}
+	$.ajax({
+		type : "post",
+		cache : false,
+		async : false,
+		dataType : "json",
+		contentType : "application/json",
+		url : "core/custmise/save.do",
+		data : JSON.stringify({"customiseName":name,"fieldContents":JSON.stringify(showElements),"pageId":tabs.attr("pageId")}),
+		success : function(result) {
+			$.alert(result["code"] + "" + result["msg"]+",请刷新页面查看效果！");
+			 $("#"+ selects.attr("dialog")).modal('hide');
+		},
+		error : function(resutl) {
+			$.alert(result["code"] + "" + result["msg"]);
+		}
+	});
+};
+
+/**
+ * 删除自定义查询条件方法
+ */
+var _delCustomise = function(customiseId,customiseName){
+	$.confirm("确定要删除查询条件["+customiseName+"]吗？" ,function(ok){
+		if(ok){
+			$.ajax({
+				type : "post",
+				cache : false,
+				async : false,
+				dataType : "json",
+				contentType : "application/json",
+				url : "core/custmise/delete.do",
+				data : JSON.stringify({"customiseId":customiseId}),
+				success : function(result) {
+					$.alert(result["code"] + "" + result["msg"]+",请刷新页面查看效果！");
+					 $("#"+ selects.attr("dialog")).modal('hide');
+				},
+				error : function(resutl) {
+					$.alert(result["code"] + "" + result["msg"]);
+				}
+			});
+		}
+	});	
+};
 /**
  * 数据字典项翻译-table渲染用
  */
