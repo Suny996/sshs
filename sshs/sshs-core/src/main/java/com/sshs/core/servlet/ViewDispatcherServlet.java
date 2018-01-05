@@ -285,15 +285,17 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 			logger.error("label文件未找到！！！");
 		}
 		LabelResource labelResource = new LabelResource(locale, pubResource, privateResource);
-		labelResource.setPageId(request.getRequestURI());
+		labelResource.setPageId(request.getRequestURI().replaceAll("\\/", "").replaceAll("\\.", ""));
 		// 处理视图内容
 		String text = "";
 		Map<String, String[]> parameters = request.getParameterMap();
 		JSONObject params = formatParameters(parameters);
-		String privateJs = "<script type=\"text/javascript\">var Model;\r\n require([ \"" + request.getContextPath()
-				+ viewFileName + ".js.dw\" ], function(model) {\r\n" + "model[\"params\"]=" + params
+		String privateJs = "<script type=\"text/javascript\">var Model;\r\n try {require([\"scripts/sshs/js/document-ready.js\", \""
+				+ request.getContextPath() + viewFileName + ".js.dw\" ], function(comp,model) {\r\n"
+				+ " if(comp){ comp.init(\"#" + labelResource.getPageId() + "\");}\r\n "
+				+ "if(model) {model[\"params\"]=" + params
 				+ ";\n  Model = model;\r\n if (typeof model.init === 'function') {\r\n" + "	model.init.apply(null);\r\n"
-				+ "		}  }); </script>";
+				+ "		} } }); }catch(e){}</script>";
 
 		if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
 			text = ViewResolver

@@ -21,7 +21,6 @@ import org.jsoup.select.Elements;
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.ReflectHelper;
 import com.sshs.core.util.SpringUtil;
-import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.Component;
 
 /**
@@ -95,14 +94,15 @@ public class ViewResolver {
 			Document doc = Jsoup.parse(input, "UTF-8", "", parser);
 
 			StringBuffer headText = new StringBuffer();
-			StringBuffer bodyText = new StringBuffer();
+			StringBuffer bodyText = new StringBuffer(
+					"<div id=\"" + labelResource.getPageId() + "\" type=\"page\" style=\"width:100%;height:100%;\">");
 			Elements bodys = doc.getElementsByTag("body");
 			if (bodys != null && bodys.size() > 0) {
 				for (Element e : bodys) {
 					bodyText.append(resolveBody(e, labelResource));
 				}
 			}
-			bodyText.append(privateJs);// 加载私有js文件
+			bodyText.append("</div>" + privateJs);// 加载私有js文件
 			if (!VIEW_PAGE_TYPE_BODY.equalsIgnoreCase(pageType)) {
 				Elements heads = doc.getElementsByTag("head");
 				if (heads != null && heads.size() > 0) {
@@ -110,10 +110,7 @@ public class ViewResolver {
 						headText.append(resolveHead(e));
 					}
 				}
-				text = viewTemplate.replace("<!--_PageHeader-->", headText)
-						.replace("<!--_PageBody-->",
-								"<div id=\"" + UuidUtil.get32UUID() + "\" type=\"page\" class=\"#container-fluid\">"
-										+ bodyText + "</div>")
+				text = viewTemplate.replace("<!--_PageHeader-->", headText).replace("<!--_PageBody-->", bodyText)
 						.replace("<!--_PageFooter-->", "").replace("<!--_PageException-->", "")
 						.replaceAll("\\$\\{locale\\}", labelResource.getLocale().toString());
 			} else {
