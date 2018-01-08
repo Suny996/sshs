@@ -3,6 +3,8 @@ package com.sshs.core.view.component.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.sshs.core.view.component.Component;
 
 /**
@@ -21,8 +23,11 @@ public class ButtonGroupTag extends BaseTag implements Component {
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
-		text.append("<div class=\"appearance x-button-edit " + getColumnsClass(columns) + "\"" + getExtAttributesHtml()
-				+ ">\n");
+		text.append("<div class=\"appearance x-button-edit " + getColumnsClass(columns) + "\"");
+		if (StringUtils.isNotEmpty(this.style)) {
+			text.append(" style=\"" + this.style + "\" ");
+		}
+		text.append(getExtAttributesHtml() + ">\n");
 		return text.toString();
 	}
 

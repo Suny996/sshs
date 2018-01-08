@@ -40,10 +40,14 @@ public class ButtonButtonTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.onclick)) {
 			text.append(" onclick=\"" + this.onclick + "\"");
 		}
+		if (StringUtils.isNotEmpty(this.style)) {
+			text.append(" style=\"" + this.style + "\" ");
+		}
 		text.append(getExtAttributesHtml() + ">");
 		if (StringUtils.isNotEmpty(this.icon)) {
 			text.append("<i class=\"" + this.icon + "\"> </i>");
 		}
+		
 		return text.toString();
 	}
 

@@ -1,8 +1,8 @@
 <form type="condition" action="javascript:Model.btnQueryClick();"
-	id="query${coder.className}Form" style="height: 44px;" class="form-inline">
+	id="query${coder.className}Form" style="height: 44px;" class="form-inline" customise=true>
 	<#list coder.fields as field>
 		<#if field.searchFlag=="true">
-			<input type="text" name="${field.propertyName}" />
+			<input type="text" name="${field.propertyName}" <#if field_index gte 10 > ignore=true </#if>   preAddon="select.like,=,!=,like,not like" />
 		</#if>
 	</#list>
 	<div type="buttonGroup">
@@ -11,8 +11,14 @@
 	</div>
 </form>
 <div id="content">
+    <div class="btn-toolbar" role="toolbar" aria-label="..." id="${coder.classDeclare}toolbar">
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-plus" value="add" onclick="Model.add();"></button>
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-minus" value="delete" onclick="Model.bdelete();"></button>
+		</div>
+	</div>
 	<table type="bootstrap" id="${coder.classDeclare}ListTable" pagination=true
-		url="${coder.modelName}/${coder.functionName}/getPageList.do">
+		url="${coder.modelName}/${coder.functionName}/getPageList.do" data-toolbar="${coder.classDeclare}toolbar">
 		<thead>
 			<tr>
 				<th type="column" rowNumber="true" />

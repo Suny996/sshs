@@ -13,7 +13,7 @@ define(function(require) {
 				}
 			});
 		} else {
-			runCoder1(row["tableName"]);
+			runCoder1(row);
 		}
 	};
 	//进入页面

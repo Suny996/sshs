@@ -43,7 +43,7 @@ public class ${coder.className}Controller extends BaseController {
 	@ResponseBody
 	public Message save(@RequestBody ${coder.className} ${coder.classDeclare}, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			if(menuService.save(${coder.classDeclare})>0){
+			if(${coder.classDeclare}Service.save(${coder.classDeclare})>0){
 				return new Message("100000");
 			} else {
 			    return new Message("100001");

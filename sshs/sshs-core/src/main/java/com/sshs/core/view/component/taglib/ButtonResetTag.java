@@ -48,6 +48,9 @@ public class ButtonResetTag extends BaseTag implements Component {
 		if (StringUtils.isNotEmpty(this.accessKey)) {
 			text.append(" accessKey=\"" + this.accessKey + "\"");
 		}
+		if (StringUtils.isNotEmpty(this.style)) {
+			text.append(" style=\"" + this.style + "\" ");
+		}
 		text.append(getExtAttributesHtml() + ">");
 		if (StringUtils.isNotEmpty(this.icon)) {
 			text.append("<i class=\"" + this.icon + "\"> </i>");

@@ -38,13 +38,25 @@ public class SelectTag extends BaseTag implements Component {
 		text.append(this.forTagBefore(this.id));
 
 		text.append("<select type=\"select2\" class=\"x-edit\" id=\"" + super.getId() + "\" name=\"" + super.getName()
-				+ "\" placeholder=\"" + super.getPlaceholder() + "\" ");
-		
+				+ "\" placeholder=\"" + labelResource.getLabel(this.getPlaceholder()) + "\" ");
+
 		if (StringUtils.isNotEmpty(this.label)) {
-			text.append(" label='" + this.label + "'  ");
+			text.append(" label='" + labelResource.getLabel(this.label) + "'  ");
 		}
+
+		if (StringUtils.isNotEmpty(this.required) && !"false".equalsIgnoreCase(this.required)) {
+			text.append(" required=true");
+		}
+
+		if (StringUtils.isNotEmpty(this.readOnly) && !"false".equalsIgnoreCase(this.readOnly)) {
+			text.append(" readOnly=true");
+		}
+
 		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
-			text.append(" ignore=" + this.ignore);
+			text.append(" ignore=true ");
+		}
+		if (StringUtils.isNotEmpty(this.style)) {
+			text.append(" style=\"" + this.style + "\" ");
 		}
 		text.append(" " + getExtAttributesHtml() + ">");
 

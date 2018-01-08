@@ -34,15 +34,24 @@ public class InputTextTag extends BaseTag implements Component {
 			xedit = this.xeditClass;
 		}
 		text.append("<input type=\"text\" class=\"" + xedit + " form-control \" id=\"" + this.getId() + "\" name=\""
-				+ this.getName() + "\" placeholder=\"" + this.getPlaceholder() + "\"");
+				+ this.getName() + "\" placeholder=\"" + labelResource.getLabel(this.getPlaceholder()) + "\"");
 		if (StringUtils.isNotEmpty(this.defaultAddonValue)) {
 			text.append(" preAddonValue='" + this.defaultAddonValue + "'  ");
 		}
 		if (StringUtils.isNotEmpty(this.label)) {
 			text.append(" label='" + this.label + "'  ");
 		}
+		if (StringUtils.isNotEmpty(this.required) && !"false".equalsIgnoreCase(this.required)) {
+			text.append(" required=true");
+		}
+		if (StringUtils.isNotEmpty(this.readOnly) && !"false".equalsIgnoreCase(this.readOnly)) {
+			text.append(" readOnly=true");
+		}
 		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
-			text.append(" ignore=" + this.ignore);
+			text.append(" ignore=true");
+		}
+		if (StringUtils.isNotEmpty(this.style)) {
+			text.append(" style=\"" + this.style + "\" ");
 		}
 		text.append(getExtAttributesHtml() + "/>");
 		text.append(super.forTagEnd());

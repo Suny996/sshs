@@ -44,6 +44,7 @@ public abstract class BaseTag extends TagSupport {
 	public String postAddon;
 	public String defaultAddonValue;
 	public String xeditClass = "xedit";
+	public String readOnly ;
 
 	public String ignore;
 
@@ -345,6 +346,14 @@ public abstract class BaseTag extends TagSupport {
 
 	public void setIgnore(String ignore) {
 		this.ignore = ignore;
+	}
+
+	public String getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(String readOnly) {
+		this.readOnly = readOnly;
 	}
 
 	/**
