@@ -194,6 +194,10 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 				request.getRequestDispatcher(cachedView).forward(request, response);
 			}
 		} else {
+			if (uri.contains("outer//:")) {
+				response.sendRedirect(uri.substring(uri.indexOf("outer//:") + 8));
+				return;
+			}
 			super.doService(request, response);
 		}
 	}
@@ -224,7 +228,8 @@ public class ViewDispatcherServlet extends DispatcherServlet {
 		}
 
 		String cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
-		if (pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP)) {
+		if (!viewRequest.endsWith(".dw")
+				&& (pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP))) {
 			String text = doPageRequest(request, locale, view, viewFileName, pattern);
 			if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
 				pattern = REQUEST_PATTREN_JSP;
