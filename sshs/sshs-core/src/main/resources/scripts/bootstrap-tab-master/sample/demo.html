@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tab组件</title>
+</head>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/bootstrap-tab.css">
+
+<body>
+<div id="tabContainer"></div>
+</body>
+<script src="jquery/jquery-1.8.3.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-tab.js"></script>
+
+<script>
+    $("#tabContainer").tabs({
+        data: [{
+            id: 'home',
+            text: '百度一下',
+            url: "tab_first.html",
+            closeable: true
+        }, {
+            id: 'admineap',
+            text: 'AdminEAP',
+            url: "tab_second.html"
+        }, {
+            id: 'edit',
+            text: '编辑人员',
+            url: "tab_content.html",
+            closeable: true
+        }],
+        showIndex: 1,
+        loadAll: false
+    })
+
+    $("#tabContainer").data("tabs").addTab({id: 'test', text: 'addTab', closeable: true, url: 'tab_content.html'})
+</script>
+</html>
