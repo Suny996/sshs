@@ -8,7 +8,8 @@ import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.sshs.constant.Global;
 
@@ -19,7 +20,7 @@ import com.sshs.constant.Global;
  * @date 2017-10-23
  */
 public class Configure {
-	private static final Logger logger = Logger.getLogger(Configure.class);
+	private static final Log logger = LogFactory.getLog(Configure.class);
 	/**
 	 * 是否缓存视图文件配置项key
 	 */
@@ -33,7 +34,7 @@ public class Configure {
 	/**
 	 * 运行模式配置项目key
 	 */
-	public static final String CONFIGURE_RUNMOD_FLAG = "core.runMode";
+	public static final String CONFIGURE_RUNMOD_FLAG = "server.runMode";
 	/**
 	 * 运行模式配置项目run
 	 */
@@ -59,19 +60,19 @@ public class Configure {
 		InputStream in = null;
 		try {
 			/* 第一种，通过类加载器进行获取properties文件流- */
-			in = Configure.class.getClassLoader().getResourceAsStream("config/configure.properties");
+			in = Configure.class.getClassLoader().getResourceAsStream("config/application.properties");
 			props.load(in);
 
-			String runMode = props.getProperty("core.runMode");
+			String runMode = props.getProperty("server.runMode");
 			if (StringUtils.isNotEmpty(runMode)) {
 				in = Configure.class.getClassLoader()
-						.getResourceAsStream("config/configure-" + runMode.toLowerCase() + ".properties");
+						.getResourceAsStream("config/application-" + runMode.toLowerCase() + ".properties");
 				if (in != null) {
 					props.load(in);
 				}
 			}
 		} catch (FileNotFoundException e) {
-			logger.error("jdbc.properties文件未找到");
+			logger.error("application.properties文件未找到");
 		} catch (IOException e) {
 			logger.error("出现IOException");
 		} finally {
@@ -80,7 +81,7 @@ public class Configure {
 					in.close();
 				}
 			} catch (IOException e) {
-				logger.error("jdbc.properties文件流关闭出现异常");
+				logger.error("application.properties文件流关闭出现异常");
 			}
 		}
 		logger.info("加载properties文件内容完成...........");
@@ -107,10 +108,13 @@ public class Configure {
 	 * @return
 	 */
 	public static String getClasspath() {
-		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../")
+		String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")))
 				.replaceAll("file:/", "").replaceAll("%20", " ").trim();
 		if (path.indexOf(Global.CHARACTER_COLON) != 1) {
 			path = File.separator + path;
+		}
+		if (path != null && path.endsWith("/")) {
+			path = path.substring(0, path.length() - 1);
 		}
 		return path;
 	}

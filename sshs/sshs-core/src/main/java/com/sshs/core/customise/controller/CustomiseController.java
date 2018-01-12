@@ -6,7 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ import com.sshs.core.util.UuidUtil;
 @Controller
 @RequestMapping(value = "/core/custmise")
 public class CustomiseController extends BaseController {
-	Logger logger = Logger.getLogger(CustomiseController.class);
+	Log logger = LogFactory.getLog(CustomiseController.class);
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 

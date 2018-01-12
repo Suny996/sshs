@@ -6,7 +6,8 @@ import java.io.PrintStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
 
-	private static final Logger logger = Logger.getLogger(ExceptionHandler.class);
+	private static final Log logger = LogFactory.getLog(ExceptionHandler.class);
 
 	/**
 	 * 

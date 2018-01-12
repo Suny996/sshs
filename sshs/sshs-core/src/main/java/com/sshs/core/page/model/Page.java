@@ -8,10 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.type.Alias;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.sshs.constant.Global;
+import com.sshs.core.util.Configure;
 import com.sshs.core.util.ReflectHelper;
 
 /**
@@ -20,12 +19,10 @@ import com.sshs.core.util.ReflectHelper;
  * @author Suny
  * @date 2017年9月28日
  */
-@Alias("Page")
 public class Page<T> {
 	/**
 	 * 每页显示记录数
 	 */
-	@Value("${page.pageSize}")
 	private int pageSize;
 	/**
 	 * 总页数
@@ -60,12 +57,11 @@ public class Page<T> {
 	Map<String, Object> variables = new HashMap<String, Object>(20);
 	Map<String, Object> userdata = new HashMap<String, Object>(10);
 	Map<String, Object> operators = new HashMap<String, Object>(20);
+	
 
 	public Page() {
 		try {
-			if (this.pageSize == 0) {
-				this.pageSize = 10;
-			}
+			this.pageSize = Integer.parseInt(Configure.getProperty("page.pageSize", "10"));
 			this.limit = this.pageSize;
 		} catch (Exception e) {
 			e.printStackTrace();

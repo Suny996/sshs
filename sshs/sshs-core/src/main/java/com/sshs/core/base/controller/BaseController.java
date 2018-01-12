@@ -7,7 +7,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +26,7 @@ import com.sshs.core.util.UuidUtil;
 @Controller
 public abstract class BaseController {
 
-	protected Logger logger = Logger.getLogger(this.getClass());
+	protected Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * 得到ModelAndView
@@ -56,13 +57,13 @@ public abstract class BaseController {
 		return UuidUtil.get32UUID();
 	}
 
-	public static void logBefore(Logger logger, String interfaceName) {
+	public static void logBefore(Log logger, String interfaceName) {
 		logger.info("");
 		logger.info("start");
 		logger.info(interfaceName);
 	}
 
-	public static void logAfter(Logger logger) {
+	public static void logAfter(Log logger) {
 		logger.info("end");
 		logger.info("");
 	}

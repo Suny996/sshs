@@ -1,6 +1,7 @@
 package com.sshs.core.util;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SpringUtil implements ApplicationContextAware {
-	static Logger logger = Logger.getLogger(SpringUtil.class);
+	static Log logger = LogFactory.getLog(SpringUtil.class);
 	/**
 	 * Spring应用上下文环境
 	 */

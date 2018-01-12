@@ -1,13 +1,5 @@
 package com.sshs.system.dictionary.service.impl;
 
-import com.sshs.constant.Global;
-import com.sshs.core.base.service.impl.BaseServiceImpl;
-import com.sshs.core.page.Page;
-import com.sshs.core.util.DictionaryUtil;
-import com.sshs.system.dictionary.dao.DictionaryDao;
-import com.sshs.system.dictionary.model.Dictionary;
-import com.sshs.system.dictionary.model.DictionaryI18n;
-import com.sshs.system.dictionary.service.IDictionaryService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,6 +10,15 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
+import com.sshs.constant.Global;
+import com.sshs.core.base.service.impl.BaseServiceImpl;
+import com.sshs.core.page.Page;
+import com.sshs.core.util.DictionaryUtil;
+import com.sshs.system.dictionary.dao.DictionaryDao;
+import com.sshs.system.dictionary.model.Dictionary;
+import com.sshs.system.dictionary.model.DictionaryI18n;
+import com.sshs.system.dictionary.service.IDictionaryService;
 
 /**
  * 数据字典管理服务类 .

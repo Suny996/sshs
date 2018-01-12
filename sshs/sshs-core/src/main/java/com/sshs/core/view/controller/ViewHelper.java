@@ -1,10 +1,9 @@
-package com.sshs.core.servlet;
+package com.sshs.core.view.controller;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,11 +12,8 @@ import java.util.Map.Entry;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -25,6 +21,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.sshs.constant.Global;
@@ -40,10 +38,9 @@ import net.sf.json.JSONObject;
  * @author Suny
  * @date 2017-11-15
  */
-public class ViewDispatcherServlet extends HttpServlet {
+public class ViewHelper {
 
-	private static final long serialVersionUID = 1L;
-	Log logger = LogFactory.getLog(this.getClass());
+	private static final Log logger = LogFactory.getLog(ViewHelper.class);
 
 	/**
 	 * 页面请求后缀pattren
@@ -122,26 +119,19 @@ public class ViewDispatcherServlet extends HttpServlet {
 
 	/**
 	 * 
+	 */
+	static {
+		ViewHelper.init();
+	}
+
+	/**
+	 * 
 	 * servlet初始化
 	 * 
-	 * @param config
+	 * 
 	 */
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		// super.init(config);
-		// coreRunMode = Configure.getProperty(Configure.CONFIGURE_RUNMOD_FLAG,
-		// Configure.CONFIGURE_RUNMOD_RUN);
-		/*
-		 * if (Configure.CONFIGURE_CACHED_NOCACHE
-		 * .equalsIgnoreCase(Configure.getProperty(Configure.CONFIGURE_CACHED_FLAG))) {
-		 * viewCacheFlag = false; } else if
-		 * (!coreRunMode.equalsIgnoreCase(Configure.CONFIGURE_RUNMOD_RUN)) {
-		 * viewCacheFlag = false; }
-		 */
-		InputStream htmlTemplate = config.getServletContext().getResourceAsStream(VIEW_TEMPLATE_PATH_HTML);
-		if (htmlTemplate == null) {
-			htmlTemplate = this.getClass().getResourceAsStream(VIEW_TEMPLATE_PATH_HTML);
-		}
+	public static void init() {
+		InputStream htmlTemplate = ViewHelper.class.getResourceAsStream(VIEW_TEMPLATE_PATH_HTML);
 		if (htmlTemplate != null) {
 			try {
 				viewHtmlTemplate = IOUtils.toString(htmlTemplate, "UTF-8");
@@ -160,9 +150,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 		}
 	}
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public static Object doRequest(HttpServletRequest request) throws ServletException, IOException {
 		// 从后台代码获取国际化信息
 		String uri = request.getRequestURI();
 		if (uri.endsWith(REQUEST_PATTREN_PAGE) || uri.endsWith(REQUEST_PATTREN_JS)) {
@@ -199,22 +187,14 @@ public class ViewDispatcherServlet extends HttpServlet {
 				cachedView = CACHEDVIEW.get(viewRequest + locale);
 			}
 			if (StringUtils.isEmpty(cachedView)) {
-				doRequest(viewRequest, locale, request, response);
+				return doRequest(viewRequest, locale, request);
 			} else {
-				request.getRequestDispatcher(cachedView).forward(request, response);
+				// request.getRequestDispatcher(cachedView).forward(request);
+				return new ServletContextResource(request.getServletContext(), cachedView);
 			}
 		} else {
-			if (uri.contains("outer//:")) {
-				response.sendRedirect(uri.substring(uri.indexOf("outer//:") + 8));
-				return;
-			}
-			super.doGet(request, response);
+			return new ServletContextResource(request.getServletContext(), request.getServletPath());
 		}
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doGet(req, resp);
 	}
 
 	/**
@@ -225,10 +205,10 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void doRequest(String viewRequest, Locale locale, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public static Object doRequest(String viewRequest, Locale locale, HttpServletRequest request)
+			throws ServletException, IOException {
 		// 创建缓存文件路径
-		String filePath = Configure.getClasspath();//request.getServletContext().getRealPath("");
+		String filePath = Configure.getClasspath();// request.getServletContext().getRealPath("");
 
 		String viewFileName = getViewNameNoPattern(viewRequest);
 		String pattern = getViewNamePattern(viewRequest);
@@ -253,23 +233,22 @@ public class ViewDispatcherServlet extends HttpServlet {
 			if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
 				pattern = REQUEST_PATTREN_JSP;
 			}
-			if (!viewCacheFlag && !REQUEST_PATTREN_JSP.equalsIgnoreCase(pattern)) {
-				PrintWriter out = response.getWriter();
-				out.print(text);
-				out.close();
-				return;
-			} else {
-				cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
+			/*
+			 * if (!viewCacheFlag && !REQUEST_PATTREN_JSP.equalsIgnoreCase(pattern)) {
+			 * PrintWriter out = response.getWriter(); out.print(text); out.close(); return;
+			 * } else {
+			 */
+			cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
 
-				FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
-				CACHEDVIEW.put(viewRequest + locale, cachedView);
-				if (view != null) {
-					view.close();
-				}
-				// cachedView="system/coder/coder.w.html";
-				request.getRequestDispatcher(cachedView).forward(request, response);
+			FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
+			CACHEDVIEW.put(viewRequest + locale, cachedView);
+			if (view != null) {
+				view.close();
 			}
 			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
+			// cachedView="system/coder/coder.w.html";
+			// return new request.getRequestDispatcher(cachedView).forward(request);
+			// }
 		} else if (view != null) {
 			cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + pattern;
 			doResourceRequest(view, filePath + cachedView);
@@ -277,12 +256,12 @@ public class ViewDispatcherServlet extends HttpServlet {
 			if (view != null) {
 				view.close();
 			}
-			request.getRequestDispatcher(cachedView).forward(request, response);
+			// request.getRequestDispatcher(cachedView).forward(request);
 		}
 		if (view != null) {
 			view.close();
 		}
-
+		return new ClassPathResource(cachedView);
 	}
 
 	/**
@@ -297,8 +276,8 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected String doPageRequest(HttpServletRequest request, Locale locale, InputStream input, String viewFileName,
-			String pattern) throws ServletException, IOException {
+	protected static String doPageRequest(HttpServletRequest request, Locale locale, InputStream input,
+			String viewFileName, String pattern) throws ServletException, IOException {
 		if (input == null) {
 			throw new ServletException("请求的视图文件:[" + (viewFileName + pattern) + "]不存在！");
 		}
@@ -353,7 +332,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void doResourceRequest(InputStream input, String fileName) throws ServletException, IOException {
+	protected static void doResourceRequest(InputStream input, String fileName) throws ServletException, IOException {
 		if (input != null) {
 			OutputStream out = FileUtils.openOutputStream(new File(fileName));
 			IOUtils.copy(input, out);
@@ -367,7 +346,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @param viewName
 	 * @return
 	 */
-	private String getViewNameNoPattern(String viewName) {
+	private static String getViewNameNoPattern(String viewName) {
 		if (viewName.endsWith(REQUEST_PATTREN_PAGE)) {
 			return viewName.substring(0, viewName.lastIndexOf(REQUEST_PATTREN_PAGE));
 		} else if (viewName.endsWith(REQUEST_PATTREN_JS)) {
@@ -385,7 +364,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @param viewName
 	 * @return
 	 */
-	private String getViewNamePattern(String viewName) {
+	private static String getViewNamePattern(String viewName) {
 		if (viewName.endsWith(REQUEST_PATTREN_PAGE)) {
 			return viewPattern;
 		} else if (viewName.endsWith(REQUEST_PATTREN_JS)) {
@@ -403,7 +382,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @param viewName
 	 * @return
 	 */
-	private String getViewDir(String viewName) {
+	private static String getViewDir(String viewName) {
 		if (viewName != null && viewName.contains(Global.CHARACTER_SPRIT)) {
 			return viewName.substring(0, viewName.lastIndexOf(Global.CHARACTER_SPRIT));
 		} else {
@@ -417,7 +396,7 @@ public class ViewDispatcherServlet extends HttpServlet {
 	 * @param parameters
 	 * @return
 	 */
-	private JSONObject formatParameters(Map<String, String[]> parameters) {
+	private static JSONObject formatParameters(Map<String, String[]> parameters) {
 		JSONObject params = new JSONObject();
 		for (Entry<String, String[]> entry : parameters.entrySet()) {
 			String[] value = entry.getValue();

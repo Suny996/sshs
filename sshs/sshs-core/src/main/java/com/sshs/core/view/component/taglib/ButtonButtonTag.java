@@ -4,9 +4,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
 
 import com.sshs.core.util.UuidUtil;
-import com.sshs.core.view.component.Component;
+import com.sshs.core.view.component.ViewComponent;
 
 /**
  * 表单普通输入域组件/标签
@@ -15,7 +16,8 @@ import com.sshs.core.view.component.Component;
  * @date 2017-10-17
  * 
  */
-public class ButtonButtonTag extends BaseTag implements Component {
+@Component("buttonButton")
+public class ButtonButtonTag extends BaseTag implements ViewComponent {
 	/**
 	 * 输入域组件/标签
 	 */

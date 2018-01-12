@@ -13,7 +13,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
@@ -30,7 +31,7 @@ import freemarker.template.TemplateException;
  * @version
  */
 public class Freemarker {
-	private static final Logger logger = Logger.getLogger(Freemarker.class);
+	private static final Log logger = LogFactory.getLog(Freemarker.class);
 
 	/**
 	 * 打印到控制台(测试用)
@@ -57,7 +58,7 @@ public class Freemarker {
 	public static Template getFreemarkerTemplate(String templateFileName, String encoding) throws Exception {
 		try {
 			// 通过Freemaker的Configuration读取相应的ftl
-			Configuration cfg = new Configuration();
+			Configuration cfg = new Configuration(Configuration.getVersion());
 			cfg.setEncoding(Locale.CHINA, encoding);
 			// 设定去哪里读取相应的ftl模板文件
 			cfg.setDirectoryForTemplateLoading(Configure.getClassPathFileDir(templateFileName));

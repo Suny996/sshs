@@ -8,10 +8,11 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Component;
 
 import com.sshs.core.customise.model.Customise;
 import com.sshs.core.util.UuidUtil;
-import com.sshs.core.view.component.Component;
+import com.sshs.core.view.component.ViewComponent;
 
 /**
  * 表单查询条件组件/标签
@@ -20,7 +21,8 @@ import com.sshs.core.view.component.Component;
  * @date 2017-10-17
  * 
  */
-public class FormConditionTag extends BaseTag implements Component {
+@Component("formCondition")
+public class FormConditionTag extends BaseTag implements ViewComponent {
 	/**
 	 * 输入域组件/标签
 	 */

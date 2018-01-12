@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tk.mybatis.mapper.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * 说明：反射工具
@@ -166,7 +166,7 @@ public class ReflectHelper {
 	 * @return
 	 */
 	public static String capitalName(String name) {
-		if (StringUtil.isNotEmpty(name)) {
+		if (StringUtils.isNotEmpty(name)) {
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 		}
 		return name;

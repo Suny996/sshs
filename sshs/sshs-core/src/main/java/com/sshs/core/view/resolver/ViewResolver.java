@@ -10,7 +10,8 @@ import java.lang.reflect.Method;
 import javax.inject.Named;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,7 +22,7 @@ import org.jsoup.select.Elements;
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.ReflectHelper;
 import com.sshs.core.util.SpringUtil;
-import com.sshs.core.view.component.Component;
+import com.sshs.core.view.component.ViewComponent;
 
 /**
  * @see 解析view
@@ -33,7 +34,7 @@ public class ViewResolver {
 	/**
 	 * logger
 	 */
-	private static Logger logger = Logger.getLogger(ViewResolver.class);
+	private static Log logger = LogFactory.getLog(ViewResolver.class);
 
 	/**
 	 * body
@@ -166,10 +167,10 @@ public class ViewResolver {
 			}
 		}
 		Object bean = SpringUtil.getComponent(name + ReflectHelper.capitalName(type));
-		Component component = null;
+		ViewComponent component = null;
 		// start
-		if (bean != null && bean instanceof Component) {
-			component = (Component) bean;
+		if (bean != null && bean instanceof ViewComponent) {
+			component = (ViewComponent) bean;
 			try {
 				initComponent(component, element, labelResource);
 			} catch (Exception e1) {
@@ -207,7 +208,7 @@ public class ViewResolver {
 	 * @return
 	 */
 
-	private static Element initComponent(Component component, Element element, LabelResource labelResource) {
+	private static Element initComponent(ViewComponent component, Element element, LabelResource labelResource) {
 		component.init(labelResource);
 		Element e = element.clone();
 		Field[] fields = component.getClass().getFields();

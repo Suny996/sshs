@@ -10,10 +10,11 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import com.sshs.constant.Global;
 import com.sshs.core.util.DictionaryUtil;
-import com.sshs.core.view.component.Component;
+import com.sshs.core.view.component.ViewComponent;
 import com.sshs.core.view.resolver.ViewResolver;
 
 import net.sf.json.JSONArray;
@@ -25,7 +26,8 @@ import net.sf.json.JSONArray;
  * @date 2017-10-17
  * 
  */
-public class ThColumnTag extends BaseTag implements Component {
+@Component("thColumn")
+public class ThColumnTag extends BaseTag implements ViewComponent {
 	/**
 	 * bootstrapTable表格组件/标签
 	 */
@@ -98,7 +100,7 @@ public class ThColumnTag extends BaseTag implements Component {
 				text.append(" data-formatter=\"" + this.formatter + "\"");
 			}
 		}
-		text.append(getExtAttributesHtml()+ ">\n");
+		text.append(getExtAttributesHtml() + ">\n");
 		return text.toString();
 	}
 
@@ -206,9 +208,9 @@ public class ThColumnTag extends BaseTag implements Component {
 			text.append("<input type=\"checkbox\" class=\"form-switch form-control \" data-on-text=\""
 					+ labelResource.getLabel("switch.dataOnText" + labelText) + "\" data-off-text= \""
 					+ labelResource.getLabel("switch.dataOffText" + labelText) + "\" ");
-			
-			if(StringUtils.isNotEmpty(element.attr("defaultValue"))){
-				text.append(" defaultValue="+element.attr("defaultValue"));
+
+			if (StringUtils.isNotEmpty(element.attr("defaultValue"))) {
+				text.append(" defaultValue=" + element.attr("defaultValue"));
 			}
 			break;
 		default:
