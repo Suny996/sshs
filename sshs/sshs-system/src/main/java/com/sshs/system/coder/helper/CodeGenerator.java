@@ -28,7 +28,7 @@ import com.sshs.system.coder.model.Column;
 public class CodeGenerator {
 	public static void generate(Coder coder) throws Exception {
 		CodeGenerator.processProperties(coder);
-		String xml = Freemarker.printFreemarkerString("/template/coder/config.xml", CodeGenerator.toMap(coder),
+		String xml = Freemarker.printFreemarkerString("/templates/coder/config.xml", CodeGenerator.toMap(coder),
 				"UTF-8");
 		Document document = null;
 		SAXReader reader = null;
@@ -57,11 +57,11 @@ public class CodeGenerator {
 						+ className;
 			}
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".ftl")) {
-				Freemarker.printFreemarkerFile("/template/coder/" + templateFileName, outFileName,
+				Freemarker.printFreemarkerFile("/templates/coder/" + templateFileName, outFileName,
 						CodeGenerator.toMap(coder), encoding);
 			}
 			if (templateFileName != null && templateFileName.toLowerCase().endsWith(".vm")) {
-				Freemarker.printVelocityFile("/template/coder/" + templateFileName, outFileName,
+				Freemarker.printVelocityFile("/templates/coder/" + templateFileName, outFileName,
 						CodeGenerator.toMap(coder));
 			}
 		}

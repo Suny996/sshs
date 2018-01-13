@@ -101,10 +101,10 @@ public class CoderController extends BaseController {
 
 			CodeGenerator.generate(coder);
 			coderService.save(coder);
-			return new Message("0000", "成功！");
+			return new Message("000000");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException("-10001");
+			throw new BusinessException("-100001");
 		}
 	}
 
