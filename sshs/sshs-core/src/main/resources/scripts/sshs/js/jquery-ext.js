@@ -123,9 +123,9 @@ $.extend({
 	/**
 	 * 发送数据请求到后台，并执行对应服务
 	 */
-	sendRequest : function(url, data) {
+	sendRequest : function(url, data,type) {
 		$.ajax({
-			type : "post",
+			type : type?type:"post",
 			cache : false,
 			async : false,
 			dataType : "json",
@@ -139,6 +139,12 @@ $.extend({
 				$.alert(result["code"] + "" + result["msg"]);
 			}
 		});
+	},
+	/**
+	 * 保存数据到后台
+	 */
+	save : function(url, data) {
+		$.sendRequest(url,data,"patch");
 	},
 	alert : function(msg) {
 		bootbox.alert(msg);

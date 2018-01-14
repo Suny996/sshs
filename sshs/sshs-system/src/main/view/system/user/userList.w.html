@@ -1,0 +1,103 @@
+<form type="condition" action="javascript:Model.btnQueryClick();"
+	id="queryUserForm" style="height: 44px;" class="form-inline" customise=true>
+			<input type="text" name="userId"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userCode"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userName"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userNameEn"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userNamePy"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userNameFr"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgCode"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="postNo"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userSex"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="nationality"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="ethnic"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="nativePlace"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="birthPlace"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="birthDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="idDecimal"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="photoId"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="joinDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="status"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="tellerId"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="residentialAddress"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="mobilePhone"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="remark"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="password"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="salt"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="onlineStatus"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="ipAddr"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="userTheme"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="pdCount"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="pdModtime"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="pdLocktime"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="lastSignonTime"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="lastSignoutTime"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="legalOrg"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtUserCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtOrgCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updUserCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updOrgCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+	<div type="buttonGroup">
+		<button type="query"></button>
+		<button type="reset"></button>
+	</div>
+</form>
+<div id="content">
+    <div class="btn-toolbar" role="toolbar" aria-label="..." id="usertoolbar">
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-plus" value="add" onclick="Model.add();"></button>
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-minus" value="delete" onclick="Model.bdelete();"></button>
+		</div>
+	</div>
+	<table type="bootstrap" id="userListTable" pagination=true
+		url="system/user/getPageList.do" data-toolbar="usertoolbar">
+		<thead>
+			<tr>
+				<th type="column" rowNumber="true" />
+						<th type="column" field="userId" />
+						<th type="column" field="userCode" />
+						<th type="column" field="userName" />
+						<th type="column" field="userNameEn" />
+						<th type="column" field="userNamePy" />
+						<th type="column" field="userNameFr" />
+						<th type="column" field="orgCode" />
+						<th type="column" field="postNo" />
+						<th type="column" field="userSex" />
+						<th type="column" field="nationality" />
+						<th type="column" field="ethnic" />
+						<th type="column" field="nativePlace" />
+						<th type="column" field="birthPlace" />
+						<th type="column" field="birthDate" />
+						<th type="column" field="idDecimal" />
+						<th type="column" field="photoId" />
+						<th type="column" field="joinDate" />
+						<th type="column" field="status" />
+						<th type="column" field="tellerId" />
+						<th type="column" field="residentialAddress" />
+						<th type="column" field="mobilePhone" />
+						<th type="column" field="remark" />
+						<th type="column" field="password" />
+						<th type="column" field="salt" />
+						<th type="column" field="onlineStatus" />
+						<th type="column" field="ipAddr" />
+						<th type="column" field="userTheme" />
+						<th type="column" field="pdCount" />
+						<th type="column" field="pdModtime" />
+						<th type="column" field="pdLocktime" />
+						<th type="column" field="lastSignonTime" />
+						<th type="column" field="lastSignoutTime" />
+						<th type="column" field="legalOrg" />
+						<th type="column" field="crtUserCode" />
+						<th type="column" field="crtOrgCode" />
+						<th type="column" field="crtDate" />
+						<th type="column" field="updUserCode" />
+						<th type="column" field="updOrgCode" />
+						<th type="column" field="updDate" />
+				<th type="column" field="handle"><button text="edit"
+						action=Model.showEditPage class=" icon-laptop"></button></th>
+			</tr>
+		</thead>
+	</table>
+</div>

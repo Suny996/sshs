@@ -1,0 +1,123 @@
+<form type="condition" action="javascript:Model.btnQueryClick();"
+	id="queryOrgForm" style="height: 44px;" class="form-inline" customise=true>
+			<input type="text" name="orgId"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgCode"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgName"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgBrief"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="parentOrgCode"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgCategory"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgLevel"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgGrade"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="pathName"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="status"    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="country"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="email"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="officeAddr"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="post"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="tel"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="contact"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgFiNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgPayNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgCreditNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgPermitNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgRegNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgIdNumber"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgTaxNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgCreateDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgStartDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgEndDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orgHeader"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="nodeNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="higherMngOrg"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="isLeaf"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="busiStatus"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="areaCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="orders"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="ownLine"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="verNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="applyStatus"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="operType"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="operRelaId"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="applyEmpNo"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="applyDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="applyReason"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="processInstanceId"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="remark"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtUserCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtOrgCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="crtDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updUserCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updOrgCode"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+			<input type="text" name="updDate"  ignore=true    preAddon="select.like,=,!=,like,not like" />
+	<div type="buttonGroup">
+		<button type="query"></button>
+		<button type="reset"></button>
+	</div>
+</form>
+<div id="content">
+    <div class="btn-toolbar" role="toolbar" aria-label="..." id="orgtoolbar">
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-plus" value="add" onclick="Model.add();"></button>
+			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-minus" value="delete" onclick="Model.bdelete();"></button>
+		</div>
+	</div>
+	<table type="bootstrap" id="orgListTable" pagination=true
+		url="system/org/pageList.do" data-toolbar="orgtoolbar">
+		<thead>
+			<tr>
+				<th type="column" rowNumber="true" />
+						<th type="column" field="orgId" />
+						<th type="column" field="orgCode" />
+						<th type="column" field="orgName" />
+						<th type="column" field="orgBrief" />
+						<th type="column" field="parentOrgCode" />
+						<th type="column" field="orgCategory" />
+						<th type="column" field="orgLevel" />
+						<th type="column" field="orgGrade" />
+						<th type="column" field="pathName" />
+						<th type="column" field="status" />
+						<th type="column" field="country" />
+						<th type="column" field="email" />
+						<th type="column" field="officeAddr" />
+						<th type="column" field="post" />
+						<th type="column" field="tel" />
+						<th type="column" field="contact" />
+						<th type="column" field="orgFiNo" />
+						<th type="column" field="orgPayNo" />
+						<th type="column" field="orgCreditNo" />
+						<th type="column" field="orgPermitNo" />
+						<th type="column" field="orgRegNo" />
+						<th type="column" field="orgIdNumber" />
+						<th type="column" field="orgTaxNo" />
+						<th type="column" field="orgCreateDate" />
+						<th type="column" field="orgStartDate" />
+						<th type="column" field="orgEndDate" />
+						<th type="column" field="orgHeader" />
+						<th type="column" field="nodeNo" />
+						<th type="column" field="higherMngOrg" />
+						<th type="column" field="isLeaf" />
+						<th type="column" field="busiStatus" />
+						<th type="column" field="areaCode" />
+						<th type="column" field="orders" />
+						<th type="column" field="ownLine" />
+						<th type="column" field="verNo" />
+						<th type="column" field="applyStatus" />
+						<th type="column" field="operType" />
+						<th type="column" field="operRelaId" />
+						<th type="column" field="applyEmpNo" />
+						<th type="column" field="applyDate" />
+						<th type="column" field="applyReason" />
+						<th type="column" field="processInstanceId" />
+						<th type="column" field="remark" />
+						<th type="column" field="crtUserCode" />
+						<th type="column" field="crtOrgCode" />
+						<th type="column" field="crtDate" />
+						<th type="column" field="updUserCode" />
+						<th type="column" field="updOrgCode" />
+						<th type="column" field="updDate" />
+				<th type="column" field="handle"><button text="edit"
+						action=Model.edit class=" icon-laptop"></button></th>
+			</tr>
+		</thead>
+	</table>
+</div>

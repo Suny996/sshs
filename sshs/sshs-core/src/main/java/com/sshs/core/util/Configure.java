@@ -24,7 +24,7 @@ public class Configure {
 	/**
 	 * 是否缓存视图文件配置项key
 	 */
-	public static final String CONFIGURE_CACHED_FLAG = "view.cached";
+	public static final String CONFIGURE_CACHED_FLAG = "core.view.cached";
 
 	/**
 	 * 是否缓存视图文件配置项no Cache
@@ -34,7 +34,7 @@ public class Configure {
 	/**
 	 * 运行模式配置项目key
 	 */
-	public static final String CONFIGURE_RUNMOD_FLAG = "server.runMode";
+	public static final String CONFIGURE_RUNMOD_FLAG = "core.server.runMode";
 	/**
 	 * 运行模式配置项目run
 	 */
@@ -47,7 +47,7 @@ public class Configure {
 	/**
 	 * 视图模板文件路径配置项目key
 	 */
-	public static final String CONFIGURE_VIEW_TEMPLATE_HTML = "view.html.template.path";
+	public static final String CONFIGURE_VIEW_TEMPLATE_HTML = "core.view.html.template.path";
 
 	private static Properties props;
 	static {
@@ -63,7 +63,7 @@ public class Configure {
 			in = Configure.class.getClassLoader().getResourceAsStream("config/application.properties");
 			props.load(in);
 
-			String runMode = props.getProperty("server.runMode");
+			String runMode = props.getProperty("core.server.runMode");
 			if (StringUtils.isNotEmpty(runMode)) {
 				in = Configure.class.getClassLoader()
 						.getResourceAsStream("config/application-" + runMode.toLowerCase() + ".properties");

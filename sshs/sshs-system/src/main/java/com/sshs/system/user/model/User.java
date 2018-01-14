@@ -1,13 +1,12 @@
 package com.sshs.system.user.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Column;
 
 import org.apache.ibatis.type.Alias;
 

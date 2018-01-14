@@ -36,21 +36,29 @@ $(document).ready(function(){
 	
 	var ul = $('#sidebar > ul');
 	
-	$('#sidebar > a').click(function(e)
+	$('#sidebar >ul>li> a').click(function(e)
 	{
-		e.preventDefault();
-		var sidebar = $('#sidebar');
-		if(sidebar.hasClass('open'))
+		var m = e.currentTarget;
+		$('#sidebar >ul>li').removeClass("active")
+		if(!$(m).parent().hasClass('active'))
 		{
-			sidebar.removeClass('open');
-			ul.slideUp(250);
-		} else 
-		{
-			sidebar.addClass('open');
-			ul.slideDown(250);
-		}
+			$(m).parent().addClass('active');
+		}  
 	});
-	
+	$('#sidebar > a').click(function(e)
+			{
+				e.preventDefault();
+				var sidebar = $('#sidebar');
+				if(sidebar.hasClass('open'))
+				{
+					sidebar.removeClass('open');
+					ul.slideUp(250);
+				} else 
+				{
+					sidebar.addClass('open');
+					ul.slideDown(250);
+				}
+			});
 	// === Resize window related === //
 	$(window).resize(function()
 	{

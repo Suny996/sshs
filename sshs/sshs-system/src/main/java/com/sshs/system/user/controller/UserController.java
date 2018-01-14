@@ -4,7 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ import com.sshs.system.user.service.IUserService;
 @Controller
 @RequestMapping(value="/system/user")
 public class UserController extends BaseController {
-	Logger logger = Logger.getLogger(UserController.class);
+	Log logger = LogFactory.getLog(UserController.class);
 	@Resource(name="userService")
 	private IUserService userService;
 	
