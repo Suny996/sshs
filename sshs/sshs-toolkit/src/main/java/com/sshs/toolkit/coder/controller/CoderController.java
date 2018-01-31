@@ -37,7 +37,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/toolkit/coder")
 public class CoderController extends BaseController {
 	Log logger = LogFactory.getLog(CoderController.class);
-	
+
 	private final ICoderService coderService;
 
 	@Autowired
