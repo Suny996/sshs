@@ -11,6 +11,12 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.sshs.core.handler.TestWebSocketHander;
 
+/**
+ * websocket配置
+ * 
+ * @author Suny
+ * @date 2018-01-23
+ */
 @Configuration
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {

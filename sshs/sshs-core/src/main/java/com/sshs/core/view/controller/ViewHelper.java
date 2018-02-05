@@ -208,7 +208,7 @@ public class ViewHelper {
 	public static Object doRequest(String viewRequest, Locale locale, HttpServletRequest request)
 			throws ServletException, IOException {
 		// 创建缓存文件路径
-		String filePath = Configure.getClasspath();// request.getServletContext().getRealPath("");
+		String filePath = Configure.getClasspath();
 
 		String viewFileName = getViewNameNoPattern(viewRequest);
 		String pattern = getViewNamePattern(viewRequest);
@@ -227,8 +227,7 @@ public class ViewHelper {
 		}
 
 		String cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
-		if (!viewRequest.endsWith(".dw")
-				&& (pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP))) {
+		if ((pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP))) {
 			String text = doPageRequest(request, locale, view, viewFileName, pattern);
 			if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
 				pattern = REQUEST_PATTREN_JSP;

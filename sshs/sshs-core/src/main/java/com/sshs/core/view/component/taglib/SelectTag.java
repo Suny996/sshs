@@ -9,6 +9,7 @@ import javax.servlet.jsp.JspWriter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.sshs.constant.Global;
 import com.sshs.core.util.DictionaryUtil;
 import com.sshs.core.view.component.ViewComponent;
 
@@ -46,15 +47,15 @@ public class SelectTag extends BaseTag implements ViewComponent {
 			text.append(" label='" + labelResource.getLabel(this.label) + "'  ");
 		}
 
-		if (StringUtils.isNotEmpty(this.required) && !"false".equalsIgnoreCase(this.required)) {
+		if (StringUtils.isNotEmpty(this.required) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.required)) {
 			text.append(" required=true");
 		}
 
-		if (StringUtils.isNotEmpty(this.readOnly) && !"false".equalsIgnoreCase(this.readOnly)) {
+		if (StringUtils.isNotEmpty(this.readOnly) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.readOnly)) {
 			text.append(" readOnly=true");
 		}
 
-		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
+		if (StringUtils.isNotEmpty(this.ignore) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.ignore)) {
 			text.append(" ignore=true ");
 		}
 		if (StringUtils.isNotEmpty(this.style)) {
@@ -62,7 +63,7 @@ public class SelectTag extends BaseTag implements ViewComponent {
 		}
 		text.append(" " + getExtAttributesHtml() + ">");
 
-		if (StringUtils.isEmpty(required) || !"false".equalsIgnoreCase(required)) {
+		if (StringUtils.isEmpty(required) || !Global.CHARACTER_FALSE.equalsIgnoreCase(required)) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}
 		if (StringUtils.isNotEmpty(this.getDictCode())) {

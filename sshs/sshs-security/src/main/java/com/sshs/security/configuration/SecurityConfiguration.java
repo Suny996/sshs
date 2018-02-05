@@ -1,9 +1,13 @@
 package com.sshs.security.configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,8 +20,9 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.util.StringUtils;
 
 import com.sshs.security.auth.SshsAuthenticationProvider;
+import com.sshs.security.filter.CsrfFilter;
 import com.sshs.security.metadata.SecurityMetadataSource;
-import com.sshs.security.service.SecurityUserService;
+import com.sshs.security.service.SecurityUserServiceImpl;
 
 /**
  * Created by Administrator on 2017/3/8.
@@ -27,7 +32,7 @@ import com.sshs.security.service.SecurityUserService;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Resource
-	private SecurityUserService securityUserService;
+	private SecurityUserServiceImpl securityUserService;
 	@Resource
 	private SecurityMetadataSource securityMetadataSource;
 	// @Resource
@@ -54,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		if (StringUtils.isEmpty(loginPage) && StringUtils.isEmpty(mainPage)) {
-			http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
+			http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
 		} else {
 			FormLoginConfigurer<HttpSecurity> fl = http.csrf().disable().authorizeRequests().antMatchers("/login*")
 					.permitAll().anyRequest().authenticated().and().formLogin();
@@ -85,4 +90,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		SessionRegistry sessionRegistry = new SessionRegistryImpl();
 		return sessionRegistry;
 	}
+	/**
+	 * csrf过滤拦截器
+	 */
+	/*
+	 * @Bean public FilterRegistrationBean csrfFilterRegistrationBean() {
+	 * FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+	 * filterRegistrationBean.setFilter(new CsrfFilter());
+	 * filterRegistrationBean.setOrder(2); filterRegistrationBean.setEnabled(true);
+	 * filterRegistrationBean.addUrlPatterns("/*"); Map<String, String>
+	 * initParameters = new HashMap(); initParameters.put("excludes", "/login/*");
+	 * initParameters.put("isOpen", "true");
+	 * filterRegistrationBean.setInitParameters(initParameters); return
+	 * filterRegistrationBean; }
+	 */
 }

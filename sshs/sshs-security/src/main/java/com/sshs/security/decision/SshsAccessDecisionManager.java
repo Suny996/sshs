@@ -15,42 +15,54 @@ import org.springframework.stereotype.Component;
 
 /**
  * 判断当前用户拥有的权限的id是否可以匹配url需要的权限
+ * 
+ * @author Suny
+ * @date 2018-01-23
  */
 @Component
 public class SshsAccessDecisionManager implements AccessDecisionManager {
-    //如果没有猜错，configAttributes中保存的是url需要的权限的id
-    @Override
-    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        if(configAttributes.size() == 0){
-        	throw new AccessDeniedException("没有权限,拒绝访问!");
-          //  return;
-        }
-        Iterator<ConfigAttribute> ite = configAttributes.iterator();
-        while(ite.hasNext()){
-            ConfigAttribute ca = ite.next();
-            String needRole = (ca).getAttribute();
-            if ("ROLE_LOGIN".equals(needRole)) {
-                if (authentication instanceof AnonymousAuthenticationToken) {
-                    throw new BadCredentialsException("未登录");
-                } else
-                    return;
-            }
-            for (GrantedAuthority ga:authentication.getAuthorities()){
-                if(needRole.equals(ga.getAuthority())){
-                    return;
-                }
-            }
-        }
-        throw new AccessDeniedException("没有权限,拒绝访问!");
-    }
+	/**
+	 * 如果没有猜错，configAttributes中保存的是url需要的权限的id
+	 * 
+	 * @param authentication
+	 * @param object
+	 * @param configAttributes
+	 * @throws AccessDeniedException
+	 * @throws InsufficientAuthenticationException
+	 */
+	@Override
+	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
+			throws AccessDeniedException, InsufficientAuthenticationException {
+		if (configAttributes.size() == 0) {
+			throw new AccessDeniedException("没有权限,拒绝访问!");
+		}
+		Iterator<ConfigAttribute> ite = configAttributes.iterator();
+		while (ite.hasNext()) {
+			ConfigAttribute ca = ite.next();
+			String needRole = (ca).getAttribute();
+			if ("ROLE_LOGIN".equals(needRole)) {
+				if (authentication instanceof AnonymousAuthenticationToken) {
+					throw new BadCredentialsException("未登录");
+				} else {
+					return;
+				}
+			}
+			for (GrantedAuthority ga : authentication.getAuthorities()) {
+				if (needRole.equals(ga.getAuthority())) {
+					return;
+				}
+			}
+		}
+		throw new AccessDeniedException("没有权限,拒绝访问!");
+	}
 
-    @Override
-    public boolean supports(ConfigAttribute configAttribute) {
-        return false;
-    }
+	@Override
+	public boolean supports(ConfigAttribute configAttribute) {
+		return false;
+	}
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return false;
-    }
+	@Override
+	public boolean supports(Class<?> aClass) {
+		return false;
+	}
 }

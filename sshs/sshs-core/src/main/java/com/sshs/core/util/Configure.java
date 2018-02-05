@@ -113,7 +113,7 @@ public class Configure {
 		if (path.indexOf(Global.CHARACTER_COLON) != 1) {
 			path = File.separator + path;
 		}
-		if (path != null && path.endsWith("/")) {
+		if (path != null && path.endsWith(Global.CHARACTER_SPRIT)) {
 			path = path.substring(0, path.length() - 1);
 		}
 		return path;

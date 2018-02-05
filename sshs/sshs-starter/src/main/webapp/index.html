@@ -1,0 +1,13 @@
+<html>
+<script type="text/javascript">
+	var ws = new WebSocket('ws://localhost:8080/rawwebsocket');
+	ws.onmessage = function(event) {
+		alert(event.data);
+	};
+
+	function send(txt) {
+		ws.send(txt);
+	}
+</script>
+<button onclick="send(new Date())">Send</button>
+</html>

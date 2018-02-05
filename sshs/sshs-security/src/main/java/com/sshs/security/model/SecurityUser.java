@@ -17,7 +17,17 @@ public class SecurityUser extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// 继承了User类之后，多出了一个构造方法
+	/**
+	 * 继承了User类之后，多出了一个构造方法
+	 * 
+	 * @param username
+	 * @param password
+	 * @param enabled
+	 * @param accountNonExpired
+	 * @param credentialsNonExpired
+	 * @param accountNonLocked
+	 * @param authorities
+	 */
 	public SecurityUser(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {

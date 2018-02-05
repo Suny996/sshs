@@ -26,25 +26,29 @@ public class Global {
 	 * 字符-下划线
 	 */
 	public static final String CHARACTER_UNDERLINE = "_";
-	
+
 	/**
 	 * 字符-杠
 	 */
 	public static final String CHARACTER_STICK = "-";
-	
+
 	/**
 	 * 字符-点
 	 */
 	public static final String CHARACTER_DOT = ".";
-	
+
 	/**
-	 * 字符-点
+	 * 字符-冒号
 	 */
 	public static final String CHARACTER_COLON = ":";
-	
+
 	/**
 	 * 字符-斜杠
 	 */
 	public static final String CHARACTER_SPRIT = "/";
 
+	/**
+	 * false
+	 */
+	public static final String CHARACTER_FALSE = "false";
 }

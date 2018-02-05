@@ -19,13 +19,19 @@ import org.springframework.stereotype.Component;
 import com.sshs.core.message.Message;
 import com.sshs.security.model.SecurityUser;
 import com.sshs.security.password.PasswordEncoderFactory;
-import com.sshs.security.service.SecurityUserService;
+import com.sshs.security.service.SecurityUserServiceImpl;
 
+/**
+ * 自定义验证类
+ * 
+ * @author Suny
+ * @date 2018-01-19
+ */
 @Component
 public class SshsAuthenticationProvider implements AuthenticationProvider {
 	private final static Log log = LogFactory.getLog(SshsAuthenticationProvider.class);
 	@Resource
-	private SecurityUserService securityUserService;
+	private SecurityUserServiceImpl securityUserService;
 
 	@Value("${login.password.encoder:}")
 	private String encoder;

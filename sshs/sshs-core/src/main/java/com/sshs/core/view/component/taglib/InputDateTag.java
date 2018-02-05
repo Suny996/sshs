@@ -8,6 +8,7 @@ import javax.servlet.jsp.JspWriter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.sshs.constant.Global;
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.view.component.ViewComponent;
 
@@ -63,22 +64,22 @@ public class InputDateTag extends BaseTag implements ViewComponent {
 		if (StringUtils.isNotEmpty(this.label)) {
 			text.append(" label='" + labelResource.getLabel(this.label) + "'  ");
 		}
-		
-		if (StringUtils.isNotEmpty(this.required) && !"false".equalsIgnoreCase(this.required)) {
+
+		if (StringUtils.isNotEmpty(this.required) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.required)) {
 			text.append(" required=true");
 		}
-		
-		if (StringUtils.isNotEmpty(this.readOnly) && !"false".equalsIgnoreCase(this.readOnly)) {
+
+		if (StringUtils.isNotEmpty(this.readOnly) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.readOnly)) {
 			text.append(" readOnly=true ");
 		}
-		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
+		if (StringUtils.isNotEmpty(this.ignore) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.ignore)) {
 			text.append(" ignore=true ");
 		}
-		
+
 		if (StringUtils.isNotEmpty(this.style)) {
 			text.append(" style=\"" + this.style + "\" ");
 		}
-		
+
 		text.append(getExtAttributesHtml() + "/>");
 
 		text.append("<script type=\"text/javascript\">_InitDatePicker(\"" + this.getId() + "\",\"" + this.getFormat()

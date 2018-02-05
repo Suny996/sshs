@@ -7,6 +7,13 @@ import java.util.Map;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.sshs.constant.Global;
+
+/**
+ * 
+ * @author Suny
+ *
+ */
 public class TestWebSocketHander {
 	static Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
 
@@ -20,7 +27,7 @@ public class TestWebSocketHander {
 
 	public static void replayAllMember(TextMessage message, WebSocketSession session) {
 		System.out.println("Received: " + message.getPayload());
-		if (message.getPayload().startsWith("n:")) {
+		if (message.getPayload().startsWith(Global.CHARACTER_COLON)) {
 			session.getAttributes().put("name", message.getPayload().substring(2));
 			return;
 		}

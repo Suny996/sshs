@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Component;
 
+import com.sshs.constant.Global;
 import com.sshs.core.customise.model.Customise;
 import com.sshs.core.util.UuidUtil;
 import com.sshs.core.view.component.ViewComponent;
@@ -42,7 +43,7 @@ public class FormConditionTag extends BaseTag implements ViewComponent {
 	@Override
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
-		if (StringUtils.isNotEmpty(this.customise) && !"false".equalsIgnoreCase(this.customise)) {
+		if (StringUtils.isNotEmpty(this.customise) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.customise)) {
 			text.append("<ul class=\"nav nav-tabs\" contentId=\"" + this.id + "\" pageId=\""
 					+ this.labelResource.getPageId() + "\">");
 			text.append(

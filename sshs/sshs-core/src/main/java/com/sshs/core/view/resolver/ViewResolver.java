@@ -75,6 +75,11 @@ public class ViewResolver {
 	 * class
 	 */
 	public static final String VIEW_COMPONENT_CLASS = "class";
+	
+	/**
+	 * defaultValue
+	 */
+	public static final String CHARACTER_DEFAULTVALUE = "defaultValue";
 
 	/**
 	 * 解析视图
@@ -103,7 +108,8 @@ public class ViewResolver {
 					bodyText.append(resolveBody(e, labelResource));
 				}
 			}
-			bodyText.append("</div>" + privateJs);// 加载私有js文件
+			// 加载私有js文件
+			bodyText.append("</div>" + privateJs);
 			if (!VIEW_PAGE_TYPE_BODY.equalsIgnoreCase(pageType)) {
 				Elements heads = doc.getElementsByTag("head");
 				if (heads != null && heads.size() > 0) {

@@ -16,6 +16,8 @@ import com.sshs.security.service.PrivilegeService;
 
 /**
  * 获取当前url需要的权限
+ * @author Suny
+ * @date 2018-01-12
  */
 @Component
 public class SecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -47,7 +49,8 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 				configAttributes.add(ca);
 			}
 		} else {
-			configAttributes = SecurityConfig.createList("ROLE_LOGIN");//默认是登录即可访问
+			//默认是登录即可访问
+			configAttributes = SecurityConfig.createList("ROLE_LOGIN");
 		}
 		return configAttributes;
 	}

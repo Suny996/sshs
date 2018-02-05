@@ -11,8 +11,10 @@ import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
+import com.sshs.constant.Global;
 import com.sshs.core.locale.LabelResource;
 import com.sshs.core.util.UuidUtil;
+import com.sshs.core.view.resolver.ViewResolver;
 
 /**
  * 基础标签/组件
@@ -44,7 +46,7 @@ public abstract class BaseTag extends TagSupport {
 	public String postAddon;
 	public String defaultAddonValue;
 	public String xeditClass = "xedit";
-	public String readOnly ;
+	public String readOnly;
 
 	public String ignore;
 
@@ -76,7 +78,7 @@ public abstract class BaseTag extends TagSupport {
 	public String forTagBefore(String id) {
 		StringBuffer text = new StringBuffer();
 		text.append("<div class=\"appearance x-label-edit x-label30 " + getColumnsClass(columns) + "\"");
-		if (StringUtils.isNotEmpty(this.ignore) && !"false".equalsIgnoreCase(this.ignore)) {
+		if (StringUtils.isNotEmpty(this.ignore) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.ignore)) {
 			text.append(" style=\"display:none;\"");
 		}
 		text.append(" name=\"" + this.name + "-Container\"");
@@ -91,9 +93,9 @@ public abstract class BaseTag extends TagSupport {
 			text.append("<div class=\"x-edit input-group\">");
 		}
 		if (StringUtils.isNotEmpty(this.preAddon)) {
-			if (this.preAddon.startsWith("select")) {
+			if (this.preAddon.startsWith(ViewResolver.VIEW_COMPONENT_SELECT)) {
 				String defaultAddonValue = "";
-				if (this.preAddon.indexOf("select.") >= 0) {
+				if (this.preAddon.indexOf(ViewResolver.VIEW_COMPONENT_SELECT + Global.CHARACTER_DOT) >= 0) {
 					defaultAddonValue = this.preAddon.substring(this.preAddon.indexOf('.') + 1,
 							this.preAddon.indexOf(','));
 					this.defaultAddonValue = defaultAddonValue;
@@ -362,7 +364,7 @@ public abstract class BaseTag extends TagSupport {
 	 * @return
 	 */
 	public String getRequiredHtml() {
-		if (StringUtils.isNotEmpty(required) && !"false".equalsIgnoreCase(required)) {
+		if (StringUtils.isNotEmpty(required) && !Global.CHARACTER_FALSE.equalsIgnoreCase(required)) {
 			return "<span style=\"font-size:20;color:#FFA042;text-align:right; vertical-align:middle;\">*</span>";
 		} else {
 			return "";

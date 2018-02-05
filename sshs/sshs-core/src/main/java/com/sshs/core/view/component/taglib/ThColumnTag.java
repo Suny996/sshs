@@ -209,8 +209,8 @@ public class ThColumnTag extends BaseTag implements ViewComponent {
 					+ labelResource.getLabel("switch.dataOnText" + labelText) + "\" data-off-text= \""
 					+ labelResource.getLabel("switch.dataOffText" + labelText) + "\" ");
 
-			if (StringUtils.isNotEmpty(element.attr("defaultValue"))) {
-				text.append(" defaultValue=" + element.attr("defaultValue"));
+			if (StringUtils.isNotEmpty(element.attr(ViewResolver.CHARACTER_DEFAULTVALUE))) {
+				text.append(" defaultValue=" + element.attr(ViewResolver.CHARACTER_DEFAULTVALUE));
 			}
 			break;
 		default:
@@ -236,7 +236,7 @@ public class ThColumnTag extends BaseTag implements ViewComponent {
 		StringBuffer text = new StringBuffer();
 		text.append(
 				"<select type=\"text\" class=\" form-select2 x-edit\"  name=\"" + this.field + "\" width=\"100%\">");
-		if (StringUtils.isEmpty(required) || "false".equalsIgnoreCase(required)) {
+		if (StringUtils.isEmpty(required) || Global.CHARACTER_FALSE.equalsIgnoreCase(required)) {
 			text.append("<option value=\"\">" + labelResource.getLabel("select.nullOption") + "</option>");
 		}
 		if (StringUtils.isNotEmpty(element.attr(ViewResolver.VIEW_COMPONENT_PLISTKEY))) {

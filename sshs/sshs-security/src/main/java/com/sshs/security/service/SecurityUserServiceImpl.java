@@ -20,10 +20,7 @@ import com.sshs.security.model.SecurityUser;
  * @date 2018-01-02
  */
 @Component
-public class SecurityUserService implements UserDetailsService {
-	// 根据用户名查询数据库是否存在这个用户
-	// @Autowired
-	// private UserService userService;
+public class SecurityUserServiceImpl implements UserDetailsService { 
 	@Autowired
 	private PrivilegeService privilegeService;
 
@@ -41,7 +38,7 @@ public class SecurityUserService implements UserDetailsService {
 		// 查询一个user的所有的权限
 		List<Privilege> privilegeList = null;
 		try {
-			//privilegeList = privilegeService.findPrivilegeByUserId(userId);
+			privilegeList = privilegeService.findPrivilegeByUserId(userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
