@@ -131,6 +131,20 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	}
 
 	/**
+	 * 公共列表查询方法
+	 * 
+	 * @param sqlId
+	 * @param parameter
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findForList(String sqlId, Object parameter) throws Exception {
+		return (List<T>) sqlSessionTemplate.selectList(sqlId, parameter);
+	}
+
+	/**
 	 * 
 	 * @param object
 	 */

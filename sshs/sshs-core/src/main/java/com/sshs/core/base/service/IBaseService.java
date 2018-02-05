@@ -75,4 +75,14 @@ public interface IBaseService<T> {
 	 * @throws Exception
 	 */
 	Page<T> findForPageList(String sqlId, Page<T> page) throws Exception;
+
+	/**
+	 * 公共列表查询方法
+	 * 
+	 * @param sqlId
+	 * @param parameter
+	 * @return
+	 * @throws Exception
+	 */
+	List<T> findForList(String sqlId, Object parameter) throws Exception;
 }

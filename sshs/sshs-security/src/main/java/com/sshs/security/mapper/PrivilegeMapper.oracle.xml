@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sshs.security.privilege.PrivilegeDao">
+
+	<!-- 查询权限管理->安全管理-权限表-根据用户查询权限信息 -->
+	<select id="findPrivilegeListByUserId" parameterType="String"
+		resultType="Privilege">
+		SELECT
+		*
+		FROM
+		PRIVILEGE
+		WHERE USER_ID=#{userId}
+	</select>
+
+	<!-- 查询权限管理->安全管理-权限表-根据用户查询权限信息 -->
+	<select id="findPrivilegeListByUrl" parameterType="String"
+		resultType="Privilege">
+		SELECT
+		*
+		FROM
+		PRIVILEGE
+		WHERE URL=#{url}
+	</select>
+</mapper>

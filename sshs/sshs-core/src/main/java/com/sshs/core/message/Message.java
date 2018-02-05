@@ -39,6 +39,10 @@ public class Message {
 	}
 
 	public static String getMessage(String code) {
+		return getMessage(code, null);
+	}
+
+	public static String getMessage(String code, String defaultMessage) {
 		try {
 			Locale locale = null;
 			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -60,7 +64,11 @@ public class Message {
 			return message;
 		} catch (MissingResourceException e) {
 			logger.debug("message:[" + code + "]not found!");
-			return code;
+			if (defaultMessage != null) {
+				return defaultMessage;
+			} else {
+				return code;
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return code;
