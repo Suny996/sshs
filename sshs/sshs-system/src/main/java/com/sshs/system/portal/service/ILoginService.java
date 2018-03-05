@@ -12,7 +12,7 @@ public interface ILoginService {
 	/**
 	 * 登录
 	 * 
-	 * @param userName
+	 * @param name
 	 * @param password
 	 * @throws Exception
 	 * @return

@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +28,7 @@ import com.sshs.system.menu.service.IMenuService;
 @Controller
 @RequestMapping(value="/system/menu")
 public class MenuController extends BaseController {
-	//Logger logger = Logger.getLogger(MenuController.class);
+	Log logger = LogFactory.getLog(MenuController.class);
 	@Resource(name="menuService")
 	private IMenuService menuService;
 	

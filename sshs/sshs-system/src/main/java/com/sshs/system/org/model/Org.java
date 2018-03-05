@@ -14,7 +14,7 @@ import org.apache.ibatis.type.Alias;
 /** 
  * 系统管理->系统管理-机构表bean Org类
  * @author Suny
- * @date 2018/01/14
+ * @date 2018/01/17
  */
 @Alias("Org")
 @Table(name="SYS_ORG")

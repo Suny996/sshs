@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<base href="http://localhost:9090/">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="scripts/jquery-3.2.1/jquery-3.2.1.min.js">
+	
+</script>
+<!-- <script type="text/javascript"
+	src="scripts/jquery.serializeJSON-master/jquery.serializejson.js">
+	
+</script> -->
+
+<!-- Bootstrap -->
+<link href="scripts/bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript"
+	src="scripts/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+
+<!-- bootstrap-table -->
+<link href="scripts/bootstrap-table/src/bootstrap-table.css"
+	rel="stylesheet">
+<!-- bootstrap-table -->
+<script type="text/javascript"
+	src="scripts/bootstrap-table/src/bootstrap-table.js"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap-table/src/locale/bootstrap-table-zh_CN.js"></script>
+<!-- <script type="text/javascript"
+	src="scripts/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script> -->
+
+<!-- bootstrap-select -->
+<!-- <link rel="stylesheet"
+	href="scripts/bootstrap-select/dist/css/bootstrap-select.css"> -->
+<!-- bootstrap-select -->
+<!-- <script type="text/javascript"
+	src="scripts/bootstrap-select/dist/js/bootstrap-select.js"></script> -->
+<!-- <script type="text/javascript"
+	src="scripts/bootstrap-select/dist/js/i18n/defaults-zh_CN.js"></script> -->
+
+<!-- select2 bootstrap-->
+<link rel="stylesheet"
+	href="scripts/select2-master/dist/css/select2.css">
+<link rel="stylesheet"
+	href="scripts/select2-bootstrap-theme-master/dist/select2-bootstrap.css">
+<!-- select2 -->
+<script type="text/javascript"
+	src="scripts/select2-master/dist/js/select2-sshs.js"></script>
+<script type="text/javascript"
+	src="scripts/select2-master/dist/js/i18n/zh_CN.js"></script>
+
+<!-- bootstrap-datetimepicker -->
+<link rel="stylesheet"
+	href="scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<!-- bootstrap-datetimepicker -->
+<script type="text/javascript"
+	src="scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh_CN.js"
+	charset="UTF-8"></script>
+
+<!-- bootstrap paginator -->
+<script type="text/javascript"
+	src="scripts/bootstrap-paginator/build/bootstrap-paginator.min.js"></script>
+
+<!-- Jquery.easyUI -->
+<!-- <link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/themes/bootstrap/easyui.css">
+
+<link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="scripts/jquery-easyui/demo/demo.css">
+<script type="text/javascript" src="scripts/jquery-easyui/jquery.easyui.min.js"></script>
+ -->
+<!-- bootstrap-switch -->
+<link rel="stylesheet"
+	href="scripts/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.min.css">
+<script
+	src="scripts/bootstrap-switch-master/dist/js/bootstrap-switch.min.js"></script>
+ <!-- bootbox -->
+<script type="text/javascript" src="scripts/bootbox-master/bootbox.min.js"></script>
+
+<!-- doublebox-bootstrap -->
+<link href="scripts/doublebox-boostrap/css/doublebox-bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="scripts/doublebox-boostrap/js/doublebox-bootstrap.js"></script>
+
+<!-- 引用justep的样式表 -->
+<link href="scripts/justep/comp.min.css" rel="stylesheet">
+<!-- 自定义css样式 -->
+<link rel="stylesheet" type="text/css"
+	href="scripts/sshs/css/component.css">
+<!-- 自定义js ，扩展翻页table组件等 -->
+<script type="text/javascript" src="scripts/sshs/js/jquery-ext.js"></script>
+<script type="text/javascript" src="scripts/sshs/js/bootstrap-table-ext.js"></script>
+<script type="text/javascript" src="scripts/sshs/js/component.js"></script>
+
+<!-- require -->
+<script type="text/javascript" src="scripts/requirejs/require.js"></script>
+
+
+</head>
+<body>
+	<div id="systemcodermainListw" type="page" style="width:100%;height:100%;"><ul class="nav nav-tabs" contentId="queryForm" pageId="systemcodermainListw"><li class="active"><a href="#home" data-toggle="tab" class="tab-button-default"  contentId="queryForm" show-elements=[] >默认条件</a></li><li type="add"><a href="javascript:$('#Modal').modal('show');"  class="tab-button-add" contentId="queryForm" ><i class="glyphicon glyphicon-plus"></i></a></li></ul> <div id="Modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">	<span aria-hidden="true">&times;</span>	</button><h4 class="modal-title" id="ModalLabel">添加自定义查询</h4></div><div class="modal-body" style="height: 350px; overflow: visible;"><div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-12 col-lg-12" name="tabName-Container">
+<label for="customisetabName" class="x-label x-right control-label"	style="white-space:nowrap;">查询条件名称:</label>
+<input type="text" class="x-edit form-control " required=true id="customisetabName" name="customisetabName" placeholder="查询条件名称" label='查询条件名称'   /> 
+</div><div class="doublebox-container" dialog="Modal" contentId="queryForm"><select multiple="multiple" size="15" name="doublebox"  class="customiseBox">	</select>			</div>	</div><div class="modal-footer">	<button type="button" class="btn btn-primary" onclick="_addCustomise($('ul[contentId=\'queryForm\']'),$('.doublebox-container[contentId=\'queryForm\']'));">确定</button>	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>		</div>		</div>		<!-- /.modal-content -->	</div>	<!-- /.modal-dialog -->		</div>	<!-- /.modal --><form class="" id="queryForm" action="javascript:Model.btnQueryClick();" ><div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4" style="display:none;" name="title-Container">
+<label for="b57fa42497384bb6883ee6a509eb3621" class="x-label x-right control-label"	style="white-space:nowrap;">描述:</label>
+<div class="x-edit input-group"><div class="input-group-btn" style="width:1%;"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">	<span id="b57fa42497384bb6883ee6a509eb3621preAddonSelectBtn" elementId="b57fa42497384bb6883ee6a509eb3621" style="padding-right:3px;">包含</span><span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:$('span[elementId=\'b57fa42497384bb6883ee6a509eb3621\']').text('等于');$('#b57fa42497384bb6883ee6a509eb3621').attr('preAddonValue','=');" elementId="b57fa42497384bb6883ee6a509eb3621">等于</a></li><li><a href="javascript:$('span[elementId=\'b57fa42497384bb6883ee6a509eb3621\']').text('不等于');$('#b57fa42497384bb6883ee6a509eb3621').attr('preAddonValue','!=');" elementId="b57fa42497384bb6883ee6a509eb3621">不等于</a></li><li><a href="javascript:$('span[elementId=\'b57fa42497384bb6883ee6a509eb3621\']').text('包含');$('#b57fa42497384bb6883ee6a509eb3621').attr('preAddonValue','like');" elementId="b57fa42497384bb6883ee6a509eb3621">包含</a></li><li><a href="javascript:$('span[elementId=\'b57fa42497384bb6883ee6a509eb3621\']').text('不包含');$('#b57fa42497384bb6883ee6a509eb3621').attr('preAddonValue','not like');" elementId="b57fa42497384bb6883ee6a509eb3621">不包含</a></li></ul></div><input type="text" class=" form-control " id="b57fa42497384bb6883ee6a509eb3621" name="title" placeholder="描述" preAddonValue='like'   label='描述'   ignore=true /></div>
+</div>
+<div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4" name="tableName-Container">
+<label for="0390464f56874c58a1cabe00ab8d5ea7" class="x-label x-right control-label"	style="white-space:nowrap;">表名:</label>
+<div class="x-edit input-group"><div class="input-group-btn" style="width:1%;"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">	<span id="0390464f56874c58a1cabe00ab8d5ea7preAddonSelectBtn" elementId="0390464f56874c58a1cabe00ab8d5ea7" style="padding-right:3px;">包含</span><span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:$('span[elementId=\'0390464f56874c58a1cabe00ab8d5ea7\']').text('等于');$('#0390464f56874c58a1cabe00ab8d5ea7').attr('preAddonValue','=');" elementId="0390464f56874c58a1cabe00ab8d5ea7">等于</a></li><li><a href="javascript:$('span[elementId=\'0390464f56874c58a1cabe00ab8d5ea7\']').text('不等于');$('#0390464f56874c58a1cabe00ab8d5ea7').attr('preAddonValue','!=');" elementId="0390464f56874c58a1cabe00ab8d5ea7">不等于</a></li><li><a href="javascript:$('span[elementId=\'0390464f56874c58a1cabe00ab8d5ea7\']').text('包含');$('#0390464f56874c58a1cabe00ab8d5ea7').attr('preAddonValue','like');" elementId="0390464f56874c58a1cabe00ab8d5ea7">包含</a></li><li><a href="javascript:$('span[elementId=\'0390464f56874c58a1cabe00ab8d5ea7\']').text('不包含');$('#0390464f56874c58a1cabe00ab8d5ea7').attr('preAddonValue','not like');" elementId="0390464f56874c58a1cabe00ab8d5ea7">不包含</a></li></ul></div><input type="text" class=" form-control " id="0390464f56874c58a1cabe00ab8d5ea7" name="tableName" placeholder="表名" preAddonValue='like'   label='表名'   /></div>
+</div>
+<div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4" name="tableComment-Container">
+<label for="3c652151526045519417bee6b3ad0efa" class="x-label x-right control-label"	style="white-space:nowrap;">表描述:</label>
+<div class="x-edit input-group"><div class="input-group-btn" style="width:1%;"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">	<span id="3c652151526045519417bee6b3ad0efapreAddonSelectBtn" elementId="3c652151526045519417bee6b3ad0efa" style="padding-right:3px;">等于</span><span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:$('span[elementId=\'3c652151526045519417bee6b3ad0efa\']').text('等于');$('#3c652151526045519417bee6b3ad0efa').attr('preAddonValue','=');" elementId="3c652151526045519417bee6b3ad0efa">等于</a></li><li><a href="javascript:$('span[elementId=\'3c652151526045519417bee6b3ad0efa\']').text('不等于');$('#3c652151526045519417bee6b3ad0efa').attr('preAddonValue','!=');" elementId="3c652151526045519417bee6b3ad0efa">不等于</a></li><li><a href="javascript:$('span[elementId=\'3c652151526045519417bee6b3ad0efa\']').text('包含');$('#3c652151526045519417bee6b3ad0efa').attr('preAddonValue','like');" elementId="3c652151526045519417bee6b3ad0efa">包含</a></li><li><a href="javascript:$('span[elementId=\'3c652151526045519417bee6b3ad0efa\']').text('不包含');$('#3c652151526045519417bee6b3ad0efa').attr('preAddonValue','not like');" elementId="3c652151526045519417bee6b3ad0efa">不包含</a></li></ul></div><input type="text" class=" form-control " id="3c652151526045519417bee6b3ad0efa" name="tableComment" placeholder="表描述" label='表描述'   /></div>
+</div>
+<div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4" name="coderDate-Container">
+<label for="754f105719b6486abcf38e94d9eba4ba" class="x-label x-right control-label"	style="white-space:nowrap;">生成日期:</label>
+<div class="x-edit input-group"><div class="input-group-btn" style="width:1%;"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">	<span id="754f105719b6486abcf38e94d9eba4bapreAddonSelectBtn" elementId="754f105719b6486abcf38e94d9eba4ba" style="padding-right:3px;">等于</span><span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:$('span[elementId=\'754f105719b6486abcf38e94d9eba4ba\']').text('等于');$('#754f105719b6486abcf38e94d9eba4ba').attr('preAddonValue','=');" elementId="754f105719b6486abcf38e94d9eba4ba">等于</a></li><li><a href="javascript:$('span[elementId=\'754f105719b6486abcf38e94d9eba4ba\']').text('不等于');$('#754f105719b6486abcf38e94d9eba4ba').attr('preAddonValue','!=');" elementId="754f105719b6486abcf38e94d9eba4ba">不等于</a></li><li><a href="javascript:$('span[elementId=\'754f105719b6486abcf38e94d9eba4ba\']').text('小于');$('#754f105719b6486abcf38e94d9eba4ba').attr('preAddonValue','<');" elementId="754f105719b6486abcf38e94d9eba4ba">小于</a></li><li><a href="javascript:$('span[elementId=\'754f105719b6486abcf38e94d9eba4ba\']').text('大于');$('#754f105719b6486abcf38e94d9eba4ba').attr('preAddonValue','>');" elementId="754f105719b6486abcf38e94d9eba4ba">大于</a></li></ul></div><input type="text" class="  date form-control" id="754f105719b6486abcf38e94d9eba4ba" name="coderDate" data-date-format="yyyy-MM-dd"  placeholder="生成日期"  label='生成日期'   /><script type="text/javascript">_InitDatePicker("754f105719b6486abcf38e94d9eba4ba","yyyy-MM-dd","zh_CN"); </script></div>
+</div>
+<div class="appearance x-label-edit x-label30 col-xs-12 col-sm-12 col-md-6 col-lg-4" name="coderFlag-Container">
+<label for="b5468021f22845df9ed4bf3c54104727" class="x-label x-right control-label"	style="white-space:nowrap;">是否已生成:</label>
+<select type="select2" class="x-edit" id="b5468021f22845df9ed4bf3c54104727" name="coderFlag" placeholder="是否已生成"  label='是否已生成'    ><option value="">请选择...</option><option value="1">1 是</option><option value="0" selected=true>0 否</option></select></div>
+<div class="appearance x-button-edit col-xs-12 col-sm-12 col-md-6 col-lg-4" >
+<button type="submit" class="x-btn btn btn-primary" id="a55e22ac3513409dabc059366b0f6c69" accessKey="s" ><i class="linear linear-magnifier"> </i>查询</button><button type="reset" class="x-btn btn btn-danger" id="97e53d3494a142e98083ed4228152bdb" accessKey="r" ><i class="linear linear-cross"> </i>重置</button></div></form><div id="content">
+<table id="mainListTable" class="table table-bordered table-hover " data-url="system/coder/tableList.do" data-pagination=true  >
+<thead>
+<tr>
+<th data-field="" data-formatter=_RowNumber >
+序号</th><th data-field="tableName" data-sortable=true >
+表名</th><th data-field="tableComment" >
+表描述</th><th data-field="coderFlag" data-format="YN" data-formatter=_DictTranslate >
+是否已生成<script type="text/javascript">_DICTIONNARY["YN"]=[{"key":"1","value":"是","desc":"是","status":"1","zh_CN":"是","zh_CN_desc":"是","en_US":"yes","en_US_desc":"yes"},{"key":"0","value":"否","desc":"否","status":"1","zh_CN":"否","zh_CN_desc":"否","en_US":"no","en_US_desc":"no"}]; </script></th><th data-field="title" >
+描述</th><th data-field="modelName" >
+模块名</th><th data-field="functionName" >
+功能名称</th><th data-field="handle" data-format='<button name="handle"  class="btn btn-link  icon-laptop"  action=Model.showRunPage >生成代码</button>'  data-formatter=_EditorRender  >
+操作</th></tr>
+</thead>
+</table></div>
+</div><script type="text/javascript">var Model;
+ try {require(["scripts/sshs/js/document-ready.js", "/system/coder/mainList.js.dw" ], function(comp,model) {
+ if(comp){ comp.init("#systemcodermainListw");}
+ if(model) {model["params"]={};
+  Model = model;
+ if (typeof model.init === 'function') {
+	model.init.apply(null);
+		} } }); }catch(e){}</script>
+</body>
+
+</html>
+
+
+<script type="text/javascript">
+	var _locale = {};
+	_locale["locale"] = "zh_CN";
+	bootbox.setLocale("zh_CN");
+</script>
