@@ -1,15 +1,22 @@
 package com.sshs.security.model;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * 
+import javax.persistence.Table;
+
+ 
+/** 
+ * 安全管理-> 用户表bean User类
  * @author Suny
- * @date 2017/11/9.
+ * @date 2018/01/09
  */
+@Alias("SecurityUser")
+@Table(name="SEC_USER")
 public class SecurityUser extends User {
 
 	/**
@@ -32,5 +39,14 @@ public class SecurityUser extends User {
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+	}
+
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 */
+	public SecurityUser(String username, String password) {
+		super(username, password, true, true, true, true, new ArrayList<GrantedAuthority>());
 	}
 }

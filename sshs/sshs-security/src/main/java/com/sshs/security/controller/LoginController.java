@@ -23,9 +23,9 @@ public class LoginController {
 		return "error.html";
 	}
 
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping("/login.do")
 	public String login() {
-		return "/main.html";
+		return "/index.html";
 	}
 
 }

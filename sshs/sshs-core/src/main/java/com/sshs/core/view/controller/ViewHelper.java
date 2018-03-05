@@ -291,9 +291,13 @@ public class ViewHelper {
 			} else {
 				privateResourceName = Global.CHARACTER_SPRIT + privateResourceName;
 			}
-			privateResource = ResourceBundle.getBundle(privateResourceName, locale);
+			try {
+				privateResource = ResourceBundle.getBundle(privateResourceName, locale);
+			} catch (MissingResourceException e1) {
+				logger.warn("label文件未找到！！！");
+			}
 		} catch (Exception e) {
-			logger.error("label文件未找到！！！");
+			logger.warn("label文件未找到！！！");
 		}
 		LabelResource labelResource = new LabelResource(locale, pubResource, privateResource);
 		labelResource.setPageId(request.getRequestURI().replaceAll("\\/", "").replaceAll("\\.", ""));

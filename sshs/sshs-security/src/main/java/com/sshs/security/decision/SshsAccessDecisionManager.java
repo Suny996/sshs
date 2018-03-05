@@ -58,11 +58,11 @@ public class SshsAccessDecisionManager implements AccessDecisionManager {
 
 	@Override
 	public boolean supports(ConfigAttribute configAttribute) {
-		return false;
+		return true;
 	}
 
 	@Override
-	public boolean supports(Class<?> aClass) {
-		return false;
+	public boolean supports(Class<?> clazz) {
+		return true;
 	}
 }

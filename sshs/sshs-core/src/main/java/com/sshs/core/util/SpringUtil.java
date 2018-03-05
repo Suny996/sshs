@@ -54,7 +54,7 @@ public class SpringUtil implements ApplicationContextAware {
 		try {
 			object = applicationContext.getBean(name);
 		} catch (BeansException e) {
-			logger.error("获取Component[" + name + "]错误!" + e.getMessage());
+			logger.warn("获取Component[" + name + "]错误!" + e.getMessage());
 		}
 		return object;
 	}

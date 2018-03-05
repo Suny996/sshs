@@ -15,10 +15,10 @@ import com.sshs.security.model.Privilege;
 public class PrivilegeService extends BaseServiceImpl<Privilege> {
 
 	public List<Privilege> findPrivilegeByUserId(String userId) throws Exception {
-		return findForList("com.sshs.security.privilege.PrivilegeDao.findPrivilegeListByUserId", userId);
+		return findForList("com.sshs.security.dao.PrivilegeDao.findPrivilegeListByUserId", userId);
 	}
 
 	public List<Privilege> findPrivilegeByUrl(String url) throws Exception {
-		return findForList("com.sshs.security.privilege.PrivilegeDao.findPrivilegeListByUrl", url);
+		return findForList("com.sshs.security.dao.PrivilegeDao.findPrivilegeListByUrl", url);
 	}
 }

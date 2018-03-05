@@ -1,27 +1,28 @@
-package com.sshs.security.metadata;
+package com.sshs.security.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.sshs.security.model.Privilege;
-import com.sshs.security.service.PrivilegeService;
 
 /**
  * 获取当前url需要的权限
+ * 
  * @author Suny
  * @date 2018-01-12
  */
-@Component
-public class SecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-	@Autowired
+@Service
+public class SshsSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
+	@Resource
 	private PrivilegeService privilegeService;
 
 	@Override
@@ -48,10 +49,10 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 				ConfigAttribute ca = new SecurityConfig(p.getId());
 				configAttributes.add(ca);
 			}
-		} else {
-			//默认是登录即可访问
+		} /*else {
+			// 默认是登录即可访问
 			configAttributes = SecurityConfig.createList("ROLE_LOGIN");
-		}
+		}*/
 		return configAttributes;
 	}
 
@@ -62,6 +63,6 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return false;
+		return true;
 	}
 }

@@ -66,10 +66,10 @@ public class SshsAuthenticationProvider implements AuthenticationProvider {
 
 	public static void main(String[] args) {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactory.createDelegatingPasswordEncoder();
-		String encode = passwordEncoder.encode("password");
+		String encode = passwordEncoder.encode("000000");
 		log.info("bcrypt加密后的密码:" + encode);
-
-		log.info("bcrypt密码对比:" + passwordEncoder.matches("password", encode));
+		//"000000 bcrypt加密后的密码:$2a$10$Adv2Bz4PzCL5.kYUK6Wx8.YmN4BGIShRhD/T18Xhcmeidr9D3NqjC"
+		log.info("bcrypt密码对比:" + passwordEncoder.matches("000000", encode));
 		passwordEncoder = PasswordEncoderFactory.createDelegatingPasswordEncoder("MD5");
 		encode = passwordEncoder.encode("password");
 		log.info("MD5加密后的密码:" + encode);
