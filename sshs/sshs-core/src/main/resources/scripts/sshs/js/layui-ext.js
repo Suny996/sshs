@@ -44,7 +44,7 @@ $.fn
 							&& data[i].children.length > 0) {
 						ulHtml += '<a href="javascript:;">';
 						if (data[i].icon !== undefined && data[i].icon !== '') {
-							if (data[i].icon.indexOf('fa-') !== -1) {
+							/*if (data[i].icon.indexOf('fa-') !== -1) {
 								ulHtml += '<i class="fa ' + data[i].icon
 										+ '" aria-hidden="true" data-icon="'
 										+ data[i].icon + '"></i>';
@@ -52,7 +52,8 @@ $.fn
 								ulHtml += '<i class="layui-icon" data-icon="'
 										+ data[i].icon + '">' + data[i].icon
 										+ '</i>';
-							}
+							}*/
+							ulHtml += '<i class="'+ data[i].icon + '" data-icon="'+ data[i].children[j].icon + '" aria-hidden="true">&nbsp;</i>';
 						}
 						ulHtml += '<cite>' + data[i].title + '</cite>'
 						ulHtml += '</a>';
@@ -69,7 +70,7 @@ $.fn
 							
 							if (data[i].children[j].icon !== undefined
 									&& data[i].children[j].icon !== '') {
-								if (data[i].children[j].icon.indexOf('fa-') !== -1) {
+							/*	if (data[i].children[j].icon.indexOf('fa-') !== -1) {
 									ulHtml += '<i class="fa '
 											+ data[i].children[j].icon
 											+ '" data-icon="'
@@ -80,7 +81,8 @@ $.fn
 											+ data[i].children[j].icon
 											+ '">'
 											+ data[i].children[j].icon + '</i>';
-								}
+								}*/
+									ulHtml += '<i class="'+ data[i].children[j].icon + '" data-icon="'+ data[i].children[j].icon + '"  aria-hidden="true" >&nbsp;</i>';
 							}
 							ulHtml += '<cite>' + data[i].children[j].title
 									+ '</cite>';
@@ -96,14 +98,13 @@ $.fn
 						ulHtml += '<a href="' + dataUrl + '">';
 						
 						if (data[i].icon !== undefined && data[i].icon !== '') {
-							if (data[i].icon.indexOf('fa-') !== -1) {
+						/*	if (data[i].icon.indexOf('fa-') !== -1) {
 								ulHtml += '<i class="fa ' + data[i].icon
 										+ '" aria-hidden="true" data-icon="'
 										+ data[i].icon + '">&nbsp;</i>';
-							} else {
-								ulHtml += '<i class="'+ data[i].icon + '">'
-										+ '</i>';
-							}
+							} else {*/
+								ulHtml += '<i class="'+ data[i].icon + '" data-icon="'+  data[i].icon + '" aria-hidden="true"></i>';
+							//}
 						}
 						ulHtml += '<cite>' + data[i].title + '</cite>'
 						ulHtml += '</a>';
