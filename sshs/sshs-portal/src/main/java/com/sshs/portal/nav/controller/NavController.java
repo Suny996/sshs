@@ -52,12 +52,12 @@ public class NavController extends BaseController {
 			List<Nav> navs = new ArrayList<Nav>();
 			Nav nav1 = new Nav();
 			nav1.setTitle("系统管理");
-			nav1.setIcon("fa-cubes");
+			nav1.setIcon("fa fa-apple icon-paddng2");
 			nav1.setHref("javascript:$('#navtree').layuiLoad({code:'001'});");
 			navs.add(nav1);
 			Nav nav2 = new Nav();
 			nav2.setTitle("指标管理");
-			nav2.setIcon("fa-cogs");
+			nav2.setIcon("fa fa-android");
 			nav2.setHref("javascript:$('#navtree').layuiLoad({code:'002'});");
 			navs.add(nav2);
 			return Mono.justOrEmpty(navs);
@@ -82,7 +82,7 @@ public class NavController extends BaseController {
 			List<Nav> navs = new ArrayList<Nav>();
 			Nav nav1 = new Nav();
 			nav1.setTitle("系统管理");
-			nav1.setIcon("fa-cubes");
+			nav1.setIcon("fa fa-cubes");
 			nav1.setHref("");
 			navs.add(nav1);
 			Nav nav2 = new Nav();
