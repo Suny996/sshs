@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sshs.portal.nav.NavDao">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		SYS_MENU
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+				MENU_ID,
+				MENU_CODE,
+				MENU_NAME,
+				MENU_TYPE,
+				MENU_URL,
+				PARENT_MENU_ID,
+				IS_RELATIVE_PATH,
+				MENU_LEVEL,
+				MENU_SEQ,
+				MENU_ICON,
+				MENU_ICONA,
+				IS_VISIBLE,
+				OPEN_MODE,
+				MENU_TIP,
+				IS_START,
+				CRT_USER_CODE,
+				CRT_ORG_CODE,
+				CRT_DATE,
+				UPD_USER_CODE,
+				UPD_ORG_CODE,
+				UPD_DATE
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+				#{menuId},
+				#{menuCode},
+				#{menuName},
+				#{menuType},
+				#{menuUrl},
+				#{parentMenuId},
+				#{isRelativePath},
+				#{menuLevel},
+				#{menuSeq},
+				#{menuIcon},
+				#{menuIcona},
+				#{isVisible},
+				#{openMode},
+				#{menuTip},
+				#{isStart},
+				#{crtUserCode},
+				#{crtOrgCode},
+				#{crtDate},
+				#{updUserCode},
+				#{updOrgCode},
+				#{updDate}
+	</sql>
+	 
+    <!-- 分页查询系统管理->系统管理-菜单表-查询列信息 -->
+	<select id="findForPageList" parameterType="Page"
+		resultType="Menu">
+		SELECT  
+		<include refid="Field"></include>
+		FROM 
+		<include refid="tableName"></include>
+		WHERE 1=1
+			<if test="variables.menuId != null and variables.menuId != ''">
+				AND MENU_ID = #{variables.menuId}
+			</if>	
+			<if test="variables.menuCode != null and variables.menuCode != ''">
+				AND MENU_CODE = #{variables.menuCode}
+			</if>	
+			<if test="variables.menuName != null and variables.menuName != ''">
+				AND MENU_NAME = #{variables.menuName}
+			</if>	
+			<if test="variables.menuType != null and variables.menuType != ''">
+				AND MENU_TYPE = #{variables.menuType}
+			</if>	
+			<if test="variables.menuUrl != null and variables.menuUrl != ''">
+				AND MENU_URL = #{variables.menuUrl}
+			</if>	
+			<if test="variables.parentMenuId != null and variables.parentMenuId != ''">
+				AND PARENT_MENU_ID = #{variables.parentMenuId}
+			</if>	
+			<if test="variables.isRelativePath != null and variables.isRelativePath != ''">
+				AND IS_RELATIVE_PATH = #{variables.isRelativePath}
+			</if>	
+			<if test="variables.menuLevel != null and variables.menuLevel != ''">
+				AND MENU_LEVEL = #{variables.menuLevel}
+			</if>	
+			<if test="variables.menuSeq != null and variables.menuSeq != ''">
+				AND MENU_SEQ = #{variables.menuSeq}
+			</if>	
+			<if test="variables.menuIcon != null and variables.menuIcon != ''">
+				AND MENU_ICON = #{variables.menuIcon}
+			</if>	
+			<if test="variables.menuIcona != null and variables.menuIcona != ''">
+				AND MENU_ICONA = #{variables.menuIcona}
+			</if>	
+			<if test="variables.isVisible != null and variables.isVisible != ''">
+				AND IS_VISIBLE = #{variables.isVisible}
+			</if>	
+			<if test="variables.openMode != null and variables.openMode != ''">
+				AND OPEN_MODE = #{variables.openMode}
+			</if>	
+			<if test="variables.menuTip != null and variables.menuTip != ''">
+				AND MENU_TIP = #{variables.menuTip}
+			</if>	
+			<if test="variables.isStart != null and variables.isStart != ''">
+				AND IS_START = #{variables.isStart}
+			</if>	
+			<if test="variables.crtUserCode != null and variables.crtUserCode != ''">
+				AND CRT_USER_CODE = #{variables.crtUserCode}
+			</if>	
+			<if test="variables.crtOrgCode != null and variables.crtOrgCode != ''">
+				AND CRT_ORG_CODE = #{variables.crtOrgCode}
+			</if>	
+			<if test="variables.crtDate != null and variables.crtDate != ''">
+				AND CRT_DATE = #{variables.crtDate}
+			</if>	
+			<if test="variables.updUserCode != null and variables.updUserCode != ''">
+				AND UPD_USER_CODE = #{variables.updUserCode}
+			</if>	
+			<if test="variables.updOrgCode != null and variables.updOrgCode != ''">
+				AND UPD_ORG_CODE = #{variables.updOrgCode}
+			</if>	
+			<if test="variables.updDate != null and variables.updDate != ''">
+				AND UPD_DATE = #{variables.updDate}
+			</if>	
+	</select>
+</mapper>

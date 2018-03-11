@@ -95,6 +95,18 @@ $.fn.extend({
 		$.getJSON(url, param, function(data) {
 			$(this).putJsonElements(data);
 		});
+	},
+	/**
+	 * 从后台获取数据，并返回
+	 */
+	getData : function(url, param) {
+		var data1;
+		$.ajaxSettings.async = false;
+		$.getJSON(url, param, function(data) {
+			data1 = data;
+		});
+		$.ajaxSettings.async = true;
+		return data1;
 	}
 });
 
@@ -123,9 +135,9 @@ $.extend({
 	/**
 	 * 发送数据请求到后台，并执行对应服务
 	 */
-	sendRequest : function(url, data,type) {
+	sendRequest : function(url, data, type) {
 		$.ajax({
-			type : type?type:"post",
+			type : type ? type : "post",
 			cache : false,
 			async : false,
 			dataType : "json",
@@ -144,7 +156,7 @@ $.extend({
 	 * 保存数据到后台
 	 */
 	save : function(url, data) {
-		$.sendRequest(url,data,"patch");
+		$.sendRequest(url, data, "patch");
 	},
 	alert : function(msg) {
 		bootbox.alert(msg);

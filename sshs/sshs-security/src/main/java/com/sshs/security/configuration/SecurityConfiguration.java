@@ -27,14 +27,8 @@ import com.sshs.security.handle.LoginSuccessHandler;
 @SuppressWarnings("all")
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	//@Resource
-	//private SecurityUserServiceImpl securityUserService;
-	//@Resource
-	//private SecurityMetadataSource securityMetadataSource;
-	// @Resource
-	// private SshsAccessDecisionManager sshsAccessDecisionManager;
 	@Resource
-	 private SshsFilterSecurityInterceptor sshsFilterSecurityInterceptor;
+	private SshsFilterSecurityInterceptor sshsFilterSecurityInterceptor;
 	@Resource
 	private SshsAuthenticationProvider sshsAuthenticationProvider;// 自定义验证
 	@Value("${login.loginPage:}")
@@ -58,10 +52,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		if (StringUtils.isEmpty(loginPage)) {
 			http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
 		} else {
-			FormLoginConfigurer<HttpSecurity> fl = http
-					.csrf().disable().authorizeRequests().antMatchers("/login*", "/css/**", "/js/**", "/scripts/**",
-							"/images/**", "/img/**", "/webjars/**", "**/favicon.ico", "/index")
-					.permitAll().anyRequest().authenticated().and().formLogin();
+			FormLoginConfigurer<HttpSecurity> fl = http.csrf().disable().authorizeRequests()
+					.antMatchers("/login*", "/css/**", "/js/**", "/scripts/**", "/images/**", "/img/**", "/webjars/**",
+							"**/favicon.ico", "/index")
+					.permitAll().anyRequest().authenticated().and()
+					.addFilterBefore(sshsFilterSecurityInterceptor, FilterSecurityInterceptor.class).formLogin();
 			if (!StringUtils.isEmpty(loginPage)) {
 				fl = fl.loginPage(loginPage).loginProcessingUrl(loginProcessing).successHandler(loginSuccessHandler);
 				/*
@@ -70,14 +65,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			}
 			fl.permitAll().and().httpBasic();
 		}
-		http.addFilterBefore(sshsFilterSecurityInterceptor, FilterSecurityInterceptor.class);
 	}
 
-	/*@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// 这里是新增一个默认用户
-		auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN");
-	}*/
+	/*
+	 * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)
+	 * throws Exception { // 这里是新增一个默认用户
+	 * auth.inMemoryAuthentication().withUser("admin").password("password").roles(
+	 * "ADMIN"); }
+	 */
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -90,19 +85,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		SessionRegistry sessionRegistry = new SessionRegistryImpl();
 		return sessionRegistry;
 	}
-
-	/**
-	 * csrf过滤拦截器
-	 */
-	/*
-	 * @Bean public FilterRegistrationBean csrfFilterRegistrationBean() {
-	 * FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-	 * filterRegistrationBean.setFilter(new CsrfFilter());
-	 * filterRegistrationBean.setOrder(2); filterRegistrationBean.setEnabled(true);
-	 * filterRegistrationBean.addUrlPatterns("/*"); Map<String, String>
-	 * initParameters = new HashMap(); initParameters.put("excludes", "/login/*");
-	 * initParameters.put("isOpen", "true");
-	 * filterRegistrationBean.setInitParameters(initParameters); return
-	 * filterRegistrationBean; }
-	 */
 }
