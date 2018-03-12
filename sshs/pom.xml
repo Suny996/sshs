@@ -15,6 +15,7 @@
     <module>sshs-security</module>
     <module>sshs-task</module>
     <module>sshs-portal</module>
+    <module>sshs-test</module>
   </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
