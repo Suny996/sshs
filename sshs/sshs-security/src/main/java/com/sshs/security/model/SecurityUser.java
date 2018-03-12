@@ -1,22 +1,24 @@
 package com.sshs.security.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.Table;
+
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.Table;
-
- 
-/** 
+/**
  * 安全管理-> 用户表bean User类
+ * 
  * @author Suny
  * @date 2018/01/09
  */
 @Alias("SecurityUser")
-@Table(name="SEC_USER")
+@Table(name = "SEC_USER")
 public class SecurityUser extends User {
 
 	/**
@@ -48,5 +50,21 @@ public class SecurityUser extends User {
 	 */
 	public SecurityUser(String username, String password) {
 		super(username, password, true, true, true, true, new ArrayList<GrantedAuthority>());
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<String, Object> toMap() {
+		Map<String, Object> map = new HashMap<String, Object>(10);
+		map.put("username", this.getUsername());
+		map.put("password", this.getPassword());
+		map.put("enabled", this.isEnabled());
+		map.put("accountNonExpired", this.isAccountNonExpired());
+		map.put("credentialsNonExpired", this.isCredentialsNonExpired());
+		map.put("accountNonLocked", this.isAccountNonLocked());
+		map.put("authorities", this.getAuthorities());
+		return map;
 	}
 }

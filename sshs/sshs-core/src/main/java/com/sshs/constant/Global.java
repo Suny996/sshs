@@ -13,6 +13,11 @@ public class Global {
 	public static final String AUTH_LEVEL_TOP = "00";
 
 	/**
+	 * session存储用户标志
+	 */
+	public static final String USER = "user";
+	
+	/**
 	 * 数据字典类型为字典值时的dictType
 	 */
 	public static final String DICTIONARY_DICTTYPE_KEYVALUE = "3";

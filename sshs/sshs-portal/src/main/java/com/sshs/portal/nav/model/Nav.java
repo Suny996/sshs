@@ -38,6 +38,10 @@ public class Nav implements Serializable {
 	 * 链接
 	 */
 	private String href;
+	/**
+	 * 父节点code
+	 */
+	private String parent;
 
 	/**
 	 * 打开标志
@@ -100,5 +104,13 @@ public class Nav implements Serializable {
 			this.children = new ArrayList<Nav>();
 		}
 		this.children.add(nav);
+	}
+
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
 	}
 }

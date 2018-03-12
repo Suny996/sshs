@@ -1,5 +1,8 @@
 package com.sshs.security.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,8 +29,17 @@ public class BaseErrorController implements ErrorController {
 	}
 
 	@RequestMapping
-	public String error(HttpServletRequest request, HttpServletResponse response) {
-		return getErrorPath(response.getStatus());
-	}
+	public void error(HttpServletRequest request, HttpServletResponse response) {
+		// return getErrorPath(response.getStatus());
+		try {
+			PrintWriter out = response.getWriter();
+			out.print("<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<meta charset=\"UTF-8\">\n"
+					+ "<title>访问的页面不存在</title>\n" + "</head>\n" + "<body>系统错误：" + response.getStatus() + "</body>\n"
+					+ "</html>");
 
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

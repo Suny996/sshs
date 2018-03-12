@@ -11,8 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.sshs.constant.Global;
+import com.sshs.security.model.SecurityUser;
+
 /**
  * 登录成功后跳转处理及功能菜单数据组装类
+ * 
  * @author Suny
  *
  */
@@ -24,6 +28,16 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
+		// 登录成功后保存用户信息至session中 
+		try {
+			SecurityUser su = (SecurityUser) authentication.getPrincipal();
+			if (su != null) {
+				request.getSession().setAttribute(Global.USER, su.toMap());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		String targetUrl = determineTargetUrl(authentication);
 
 		if (response.isCommitted()) {
@@ -35,6 +49,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	/**
 	 * 可自定义登录成功后跳转到的首页
+	 * 
 	 * @param authentication
 	 * @return
 	 */
