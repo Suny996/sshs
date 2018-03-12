@@ -38,25 +38,14 @@ public class ViewController {
 	@RequestMapping("**/{viewName}.w")
 	public ResponseEntity<Object> getPage(@PathVariable String viewName, HttpServletRequest request) throws Exception {
 		try {
-			return new ResponseEntity<Object>(ViewHelper.doRequest(request), HttpStatus.OK);
+			Object view = ViewHelper.doRequest(request);
+			if (view == null) {
+				return new ResponseEntity<Object>(null, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Object>(view, HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	/**
-	 * 獲取表列表
-	 * 
-	 * @param response
-	 * @throws Exception
-	 */
-	@RequestMapping("**/{viewName}.dw")
-	public ResponseEntity<Object> getResource(@PathVariable String viewName, HttpServletRequest request)
-			throws Exception {
-		try {
-			return new ResponseEntity<Object>(ViewHelper.doRequest(request), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

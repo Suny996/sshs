@@ -225,40 +225,44 @@ public class ViewHelper {
 		if (view == null) {
 			view = request.getClass().getResourceAsStream(viewFileName + pattern);
 		}
-
-		String cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
-		if ((pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP))) {
-			String text = doPageRequest(request, locale, view, viewFileName, pattern);
-			if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
-				pattern = REQUEST_PATTREN_JSP;
-			}
-			/*
-			 * if (!viewCacheFlag && !REQUEST_PATTREN_JSP.equalsIgnoreCase(pattern)) {
-			 * PrintWriter out = response.getWriter(); out.print(text); out.close(); return;
-			 * } else {
-			 */
+		String cachedView = null;
+		if (view == null) {
+			cachedView = "/error/404" + Global.CHARACTER_UNDERLINE + locale + ".html";
+		} else {
 			cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
+			if ((pattern.endsWith(REQUEST_PATTREN_HTML) || pattern.endsWith(REQUEST_PATTREN_JSP))) {
+				String text = doPageRequest(request, locale, view, viewFileName, pattern);
+				if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
+					pattern = REQUEST_PATTREN_JSP;
+				}
+				/*
+				 * if (!viewCacheFlag && !REQUEST_PATTREN_JSP.equalsIgnoreCase(pattern)) {
+				 * PrintWriter out = response.getWriter(); out.print(text); out.close(); return;
+				 * } else {
+				 */
+				cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + Global.CHARACTER_UNDERLINE + locale + pattern;
 
-			FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
-			CACHEDVIEW.put(viewRequest + locale, cachedView);
+				FileUtils.writeStringToFile(new File(filePath + cachedView), text, "UTF-8");
+				CACHEDVIEW.put(viewRequest + locale, cachedView);
+				if (view != null) {
+					view.close();
+				}
+				logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
+				// cachedView="system/coder/coder.w.html";
+				// return new request.getRequestDispatcher(cachedView).forward(request);
+				// }
+			} else if (view != null) {
+				cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + pattern;
+				doResourceRequest(view, filePath + cachedView);
+				CACHEDVIEW.put(viewRequest + locale, cachedView);
+				if (view != null) {
+					view.close();
+				}
+				// request.getRequestDispatcher(cachedView).forward(request);
+			}
 			if (view != null) {
 				view.close();
 			}
-			logger.debug(">>>>>viewRequest:" + viewFileName + pattern + "  >>>>>view-text:" + text);
-			// cachedView="system/coder/coder.w.html";
-			// return new request.getRequestDispatcher(cachedView).forward(request);
-			// }
-		} else if (view != null) {
-			cachedView = VIEW_CACHED_PATH_PREFIX + viewFileName + pattern;
-			doResourceRequest(view, filePath + cachedView);
-			CACHEDVIEW.put(viewRequest + locale, cachedView);
-			if (view != null) {
-				view.close();
-			}
-			// request.getRequestDispatcher(cachedView).forward(request);
-		}
-		if (view != null) {
-			view.close();
 		}
 		return new ClassPathResource(cachedView);
 	}
