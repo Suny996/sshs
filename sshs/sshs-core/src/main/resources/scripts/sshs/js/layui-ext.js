@@ -44,7 +44,7 @@ $.fn.extend({
 				ulHtml += '<a href="javascript:;">';
 				if (data[i].icon !== undefined && data[i].icon !== '') {
 					ulHtml += '<i class="' + data[i].icon + '" data-icon="'
-							+ data[i].children[j].icon
+							+ data[i].icon
 							+ '" aria-hidden="true">&nbsp;</i>';
 				}
 				ulHtml += '<cite>' + data[i].title + '</cite>'
