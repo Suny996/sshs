@@ -44,7 +44,7 @@ public class FormConditionTag extends BaseTag implements ViewComponent {
 	public String forStartTag() {
 		StringBuffer text = new StringBuffer();
 		if (StringUtils.isNotEmpty(this.customise) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.customise)) {
-			text.append("<ul class=\"nav nav-tabs\" contentId=\"" + this.id + "\" pageId=\""
+			text.append("<ul class=\"nav nav-tabs nav-fix39\" contentId=\"" + this.id + "\" pageId=\""
 					+ this.labelResource.getPageId() + "\">");
 			text.append(
 					"<li class=\"active\"><a href=\"#home\" data-toggle=\"tab\" class=\"tab-button-default\"  contentId=\""

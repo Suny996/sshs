@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sshs.constant.Global;
 
+/**
+ * 错误路由控制controller
+ * 
+ * @author Suny
+ * @date 2018-003-12
+ */
 @Controller
 @RequestMapping(value = "error")
 public class BaseErrorController implements ErrorController {

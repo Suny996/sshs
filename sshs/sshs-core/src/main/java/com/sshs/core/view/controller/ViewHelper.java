@@ -312,9 +312,9 @@ public class ViewHelper {
 		String privateJs = "<script type=\"text/javascript\">var Model;\r\n try {require([\"scripts/sshs/js/document-ready.js\", \""
 				+ request.getContextPath() + viewFileName + ".js\" ], function(comp,model) {\r\n"
 				+ " if(comp){ comp.init(\"#" + labelResource.getPageId() + "\");}\r\n "
-				+ "if(model) {model[\"params\"]=" + params
-				+ ";\n  Model = model;\r\n if (typeof model.init === 'function') {\r\n" + "	model.init.apply(null);\r\n"
-				+ "		} } }); }catch(e){}</script>";
+				+ "if(model) {model[\"params\"]=" + params + ";\n model[\"_pageId\"]=\"" + labelResource.getPageId()
+				+ "\";\n Model = model;\r\n if (typeof model.init === 'function') {\r\n"
+				+ "	model.init.apply(null);\r\n" + "		} } }); }catch(e){}</script>";
 
 		if (text != null && text.contains(VIEW_CONTENT_KEYWORDS_JSP)) {
 			text = ViewResolver

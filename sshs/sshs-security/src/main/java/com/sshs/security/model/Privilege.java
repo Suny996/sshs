@@ -11,7 +11,6 @@ import org.apache.ibatis.type.Alias;
  * @date 2018/01/09
  */
 @Alias("Privilege")
-// @Table(name = "SEC_PRIVILEGE")
 public class Privilege implements Serializable {
 	/**
 	 * 
@@ -19,7 +18,6 @@ public class Privilege implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
-	// private String url;
 
 	public void setId(String id) {
 		this.id = id;
@@ -36,12 +34,4 @@ public class Privilege implements Serializable {
 	public String getName() {
 		return name;
 	}
-
-	/*public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}*/
 }

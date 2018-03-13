@@ -118,8 +118,11 @@ $.extend({
 		if (target) {
 			target.showPage(url, param);
 		} else {
-			$("div[type='page']").showPage(url, param);
-			// $("body").showPage(url, param);
+			if ($("#" + Model._pageId).length > 0) {
+				$("#" + Model._pageId).showPage(url, param);
+			} else {
+				$("div[type='page']").showPage(url, param);
+			}
 		}
 	},
 	/**
