@@ -6,7 +6,7 @@ import com.sshs.system.menu.model.Menu;
  /** 
  * 系统管理->系统管理-菜单表service接口
  * @author Suny
- * @date 2017/12/24
+ * @date 2018/03/13
  */
 public interface IMenuService extends IBaseService<Menu> {
 }

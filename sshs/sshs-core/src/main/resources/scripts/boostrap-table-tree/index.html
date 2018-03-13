@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/bootstrap.3.3.7.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/jquery.treegrid.min.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap3.3.7.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-treegrid.js"></script>
+    <script type="text/javascript" src="js/jquery.treegrid.min.js"></script>
+    <script>
+        $(function () {
+            var $table = $("#table");
+            $table.bootstrapTable({
+                url:'url/bootstrap_treegrid.json',
+                striped:true,
+                sidePagenation:'server',
+                idField:'id',
+                columns:[
+                    {
+                        field: 'ck',
+                        checkbox: true
+                    },{
+                        field:'name',
+                        title:'名称'
+                    },{
+                        field:'referred',
+                        title:'简称'
+                    },{
+                        field:'ddate',
+                        title:'日期'
+                    }
+                ],
+                treeShowField: 'name',
+                parentIdField: 'pid',
+                onLoadSuccess: function(data) {
+                    $table.treegrid({
+                        initialState: 'collapsed',//收缩
+                        treeColumn: 1,//指明第几列数据改为树形
+                        expanderExpandedClass: 'glyphicon glyphicon-triangle-bottom',
+                        expanderCollapsedClass: 'glyphicon glyphicon-triangle-right',
+                        onChange: function() {
+                            $table.bootstrapTable('resetWidth');
+                        }
+                    });
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <table id="table"></table>
+</body>
+</html>

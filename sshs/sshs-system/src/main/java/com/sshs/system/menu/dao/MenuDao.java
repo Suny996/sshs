@@ -7,7 +7,7 @@ import tk.mybatis.mapper.common.Mapper;
  /** 
  * 系统管理->系统管理-菜单表dao接口类
  * @author Suny
- * @date 2017/12/24
+ * @date 2018/03/13
  */
 public interface MenuDao extends Mapper<Menu> {
 }
