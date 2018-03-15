@@ -3,5 +3,6 @@ define(function(require) {
 	Model.init = function() {
 		$("#navbar").layuiLoad();
 	}
+	
 	return Model;
 });
