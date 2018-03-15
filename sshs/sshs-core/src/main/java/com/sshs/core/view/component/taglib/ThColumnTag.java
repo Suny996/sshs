@@ -40,6 +40,7 @@ public class ThColumnTag extends BaseTag implements ViewComponent {
 	public String dictCode;
 	public String width;
 	public String rowNumber;
+	public String checkbox;
 	String scripts = "";
 
 	@Override
@@ -48,6 +49,9 @@ public class ThColumnTag extends BaseTag implements ViewComponent {
 		text.append("<th data-field=\"" + this.field + "\"");
 		if (StringUtils.isNotEmpty(this.sortable)) {
 			text.append(" data-sortable=" + this.sortable);
+		}
+		if (StringUtils.isNotEmpty(this.checkbox)) {
+			text.append(" data-checkbox=\"" + this.checkbox + "\" ");
 		}
 		if (StringUtils.isNotEmpty(this.width)) {
 			text.append(" data-width=\"" + this.width + "\" ");
@@ -178,6 +182,14 @@ public class ThColumnTag extends BaseTag implements ViewComponent {
 
 	public void setWidth(String width) {
 		this.width = width;
+	}
+
+	public String getCheckbox() {
+		return checkbox;
+	}
+
+	public void setCheckbox(String checkbox) {
+		this.checkbox = checkbox;
 	}
 
 	public String getRowNumber() {

@@ -16,10 +16,12 @@
 			<button type="button" class="btn btn-default" icon="glyphicon glyphicon-minus" value="delete" onclick="Model.bdelete();"></button>
 		</div>
 	</div>
-	<table type="bootstrap" id="menuListTable" pagination=false url="system/menu/menuList.do"  data-tree-id="menuCode"  data-tree-field="menuName"  data-parent-field="parentMenuCode" data-toolbar="menutoolbar">
+	<table type="bootstrap" id="menuListTable" pagination=false url="system/menu/menuList.do" singleSelect=true treeId="menuCode" treeField="menuName"
+		parentField="parentMenuCode" treeFieldIndex=1 data-toolbar="menutoolbar">
 		<thead>
 			<tr>
-				<th type="column" field="menuName"  width ="250px"/>
+				<th type="column" field="table.checkbox" checkbox=true />
+				<th type="column" field="menuName" width="250px" />
 				<th type="column" field="menuCode" />
 				<th type="column" field="menuType" />
 				<th type="column" field="menuUrl" />
