@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import com.sshs.security.auth.SshsAuthenticationProvider;
 import com.sshs.security.filter.SshsFilterSecurityInterceptor;
+import com.sshs.security.handle.LoginFailureHandler;
 import com.sshs.security.handle.LoginSuccessHandler;
 
 /**
@@ -39,6 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	SessionRegistry sessionRegistry;
 	@Autowired
 	LoginSuccessHandler loginSuccessHandler;
+	@Autowired
+	LoginFailureHandler loginFailureHandler;
 	/*
 	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
 	 * Exception { //
@@ -58,7 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.permitAll().anyRequest().authenticated().and()
 					.addFilterBefore(sshsFilterSecurityInterceptor, FilterSecurityInterceptor.class).formLogin();
 			if (!StringUtils.isEmpty(loginPage)) {
-				fl = fl.loginPage(loginPage).loginProcessingUrl(loginProcessing).successHandler(loginSuccessHandler);
+				fl = fl.loginPage(loginPage).loginProcessingUrl(loginProcessing).successHandler(loginSuccessHandler)
+						.failureHandler(loginFailureHandler);
 				/*
 				 * if (!StringUtils.isEmpty(mainPage)) { fl = fl.defaultSuccessUrl(mainPage); }
 				 */

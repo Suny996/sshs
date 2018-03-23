@@ -4,11 +4,11 @@
 
 	<!-- 查询权限管理->安全管理-用户表-根据用户ID查询用户信息 -->
 	<select id="findSecurityUserByUserName" parameterType="String"
-		resultType="SecurityUser">
-		SELECT
-		*
-		FROM
-		sec_user
-		WHERE USERNAME=#{userName}
+	resultType="SecurityUser">
+	SELECT
+	USER_CODE AS USERNAME,PASSWORD
+	FROM
+	SYS_USER
+	WHERE USER_CODE=#{userName}
 	</select>
 </mapper>

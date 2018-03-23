@@ -3,8 +3,8 @@ var login = function(){
 		alert("用户名和密码不能为空！！");
 		return;
 	}
-	$("#loginForm").submit();
-	return;
+	//$("#loginForm").submit();
+	//return;
 	var data ={"username":$("#username").val(),"password":$("#password").val()};
 	$.ajax({
 		type : "post",
@@ -15,10 +15,11 @@ var login = function(){
 		url : "/login",
 		data : JSON.stringify(data),
 		success : function(result) {
-			$.alert(result["code"] + "" + result["msg"]);
+			//$.alert(result["code"] + "" + result["msg"]);
+			$("#message").html(result);
 		},
-		error : function(resutl) {
-			$.alert(result["code"] + "" + result["msg"]);
+		error : function(result) {
+			alert(result);
 		}
 	});
 };
