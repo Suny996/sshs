@@ -32,10 +32,10 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		if (StringUtil.isEmpty(defaultFailureUrl)) {
-			logger.debug("No failure URL set, sending 401 Unauthorized error");
+			logger.debug("没有设置defaultFailureUrl直接输出错误信息");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
-			out.print(exception.getMessage());
+			out.print("{\"code\":\"-000001\",\"message\":\"" + exception.getMessage() + "\"}");
 			out.close();
 		} else {
 			saveException(request, exception);

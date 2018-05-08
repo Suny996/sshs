@@ -1,6 +1,7 @@
 package com.sshs.security.handle;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		// 登录成功后保存用户信息至session中 
+		// 登录成功后保存用户信息至session中
 		try {
 			SecurityUser su = (SecurityUser) authentication.getPrincipal();
 			if (su != null) {
@@ -39,12 +40,10 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		}
 
 		String targetUrl = determineTargetUrl(authentication);
-
-		if (response.isCommitted()) {
-			System.out.println("Can't redirect");
-			return;
-		}
-		request.getRequestDispatcher(targetUrl).forward(request, response);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("{\"code\":\"000000\",\"message\":\"成功登录\",\"url\":\"" + targetUrl + "\"}");
+		out.close();
 	}
 
 	/**

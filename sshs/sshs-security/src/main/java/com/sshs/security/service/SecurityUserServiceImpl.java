@@ -28,11 +28,11 @@ public class SecurityUserServiceImpl extends BaseServiceImpl<SecurityUser> imple
 	private PrivilegeService privilegeService;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		SecurityUser userDetails = null;
 		try {
 			List<SecurityUser> list = findForList("com.sshs.security.dao.SecurityUserDao.findSecurityUserByUserName",
-					userName);
+					username);
 			if (list == null || list.isEmpty()) {
 				throw new UsernameNotFoundException(Message.getMessage("-010003", "用户不存在"));
 			}

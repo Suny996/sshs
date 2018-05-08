@@ -3,24 +3,27 @@ var login = function(){
 		alert("用户名和密码不能为空！！");
 		return;
 	}
-	//$("#loginForm").submit();
-	//return;
+	// $("#loginForm").submit();
+	// return;
 	var data ={"username":$("#username").val(),"password":$("#password").val()};
-	$.ajax({
-		type : "post",
-		cache : false,
-		async : false,
-		//dataType : "json",
-		contentType : "application/json",
-		url : "/login",
-		data : JSON.stringify(data),
-		success : function(result) {
-			//$.alert(result["code"] + "" + result["msg"]);
-			$("#message").html(result);
-		},
-		error : function(result) {
-			alert(result);
-		}
+	// alert(JSON.stringify(data));
+	$.ajax({ 
+				type: "POST",// 方法类型
+		        dataType: "json",// 预期服务器返回的数据类型
+		        url: "/login" , 
+		        async:false,
+		        data: $('#loginForm').serialize(), 
+				success : function(result) {
+					if(result["code"]==="000000"){
+						window.location.href=result["url"];
+					}else{
+						$("#message").html(result["message"]);
+					}
+					
+				},
+				error : function(result) {
+					$("#message").html(result);
+				}
 	});
 };
 
