@@ -4376,7 +4376,6 @@ S2.define('select2/dropdown/minimumResultsForSearch',[
 
   function MinimumResultsForSearch (decorated, $element, options, dataAdapter) {
     this.minimumResultsForSearch = options.get('minimumResultsForSearch');
-
     if (this.minimumResultsForSearch < 0) {
       this.minimumResultsForSearch = Infinity;
     }
@@ -5682,11 +5681,14 @@ S2.define('jquery.select2',[
 
     $.fn.select2 = function (options) {
       options = options || {};
-
+      //options = $.extend({minimumResultsForSearch:$(this).data("show-search")}, options);// add by  Suny 20180511 支持自定义是否显示搜索框
       if (typeof options === 'object') {
         this.each(function () {
-          var instanceOptions = $.extend(true, {}, options);
-
+        	var instanceOptions = $.extend(true, {}, options); 
+        	if($(this).data("show-search") == "false" || $(this).data("show-search") == "-1"){
+        		instanceOptions =  $.extend( {minimumResultsForSearch:-1}, options); 
+        	}
+        	 
           var instance = new Select2($(this), instanceOptions);
         });
 

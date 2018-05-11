@@ -29,6 +29,7 @@ public class SelectTag extends BaseTag implements ViewComponent {
 	private static final long serialVersionUID = 1L;
 
 	public String dictCode = "";
+	public String showSearch = "true";
 
 	@Override
 	public String forStartTag() {
@@ -58,6 +59,11 @@ public class SelectTag extends BaseTag implements ViewComponent {
 		if (StringUtils.isNotEmpty(this.ignore) && !Global.CHARACTER_FALSE.equalsIgnoreCase(this.ignore)) {
 			text.append(" ignore=true ");
 		}
+
+		if (StringUtils.isNotEmpty(this.showSearch) && Global.CHARACTER_FALSE.equalsIgnoreCase(this.showSearch)) {
+			text.append(" data-show-search='-1' ");
+		}
+
 		if (StringUtils.isNotEmpty(this.style)) {
 			text.append(" style=\"" + this.style + "\" ");
 		}
@@ -116,6 +122,14 @@ public class SelectTag extends BaseTag implements ViewComponent {
 
 	public void setDictCode(String dictCode) {
 		this.dictCode = dictCode;
+	}
+
+	public String getShowSearch() {
+		return showSearch;
+	}
+
+	public void setShowSearch(String showSearch) {
+		this.showSearch = showSearch;
 	}
 
 }

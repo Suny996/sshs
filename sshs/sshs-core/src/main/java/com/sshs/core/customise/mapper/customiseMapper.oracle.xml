@@ -51,7 +51,7 @@
 	</insert>
 	<!-- 自定义查询删除 -->
 	<delete id="delete" parameterType="com.sshs.core.customise.model.Customise">
-		delete 
+		delete from
 		<include refid="tableName"></include>
 		where customise_id=#{customiseId}
 	</delete>

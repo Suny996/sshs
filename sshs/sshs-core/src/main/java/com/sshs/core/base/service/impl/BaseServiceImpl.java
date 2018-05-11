@@ -26,6 +26,7 @@ import tk.mybatis.mapper.common.Mapper;
 public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	@Autowired
 	private Mapper<T> dao;
+	
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 

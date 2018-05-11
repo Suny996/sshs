@@ -1,5 +1,5 @@
---CORE层建表脚本-Oracle
---自定义查询信息表
+-- 建表脚本-Oracle
+-- 自定义查询信息表
 CREATE TABLE CORE_CUSTOMISE_QUERY(
   CUSTOMISE_ID  VARCHAR2 (32) NOT NULL,
   USER_CODE  VARCHAR2 (32),
