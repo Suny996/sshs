@@ -3,7 +3,7 @@
 create table ${coder.tableName}
 (
 <#list coder.fields as field>
-	${field.columnName}	${field.columnType}(${field.columnSize}),
+	${field.columnName}	${field.columnType} <#if (field.columnSize > 0)> (${field.columnSize}) </#if>,
 </#list>
 );
 -- Add comments to the table 

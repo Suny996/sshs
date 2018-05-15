@@ -49,8 +49,8 @@ public class CoderGenerator {
 			}
 			String outFileName = "";
 			if ("view".equalsIgnoreCase(packageName)) {
-				outFileName = Configure.getProperty("toolkit.coder.path.view", "d:/coder/view") + "/" + coder.getModelName()
-						+ "/" + coder.getFunctionName() + "/" + className;
+				outFileName = Configure.getProperty("toolkit.coder.path.view", "d:/coder/view") + "/"
+						+ coder.getModelName() + "/" + coder.getFunctionName() + "/" + className;
 			} else {
 				outFileName = Configure.getProperty("toolkit.coder.path.java", "d:/coder/java") + "/"
 						+ coder.getPackageName().replaceAll("\\.", "/") + "/" + packageName.replaceAll("\\.", "/") + "/"
@@ -103,8 +103,13 @@ public class CoderGenerator {
 	public static String getPropertyType(String dataType) {
 		String tmp = dataType.toLowerCase();
 		StringTokenizer st = new StringTokenizer(tmp);
-
-		return (String) map.get(st.nextToken());
+		tmp = st.nextToken();
+		String prop = (String) map.get(tmp);
+		if (StringUtils.isEmpty(prop) && tmp.contains("(")) {
+			tmp = tmp.substring(0, tmp.indexOf("(")).trim();
+			prop = (String) map.get(tmp);
+		}
+		return prop;
 	}
 
 	private static Map<String, String> modelMapping;
@@ -233,6 +238,9 @@ public class CoderGenerator {
 			column.setPropFuncName(ReflectHelper.capitalName(column.getPropertyName()));
 			if ("1".equals(column.getPrimaryKeyFlag())) {
 				coder.setIdName(column.getPropertyName());
+			}
+			if (column.getColumnSize() == null) {
+				column.setColumnSize(0);
 			}
 			// System.out.println(column.getPropertyName() + "=====>>>>>" +
 			// column.getRequiredFlag());

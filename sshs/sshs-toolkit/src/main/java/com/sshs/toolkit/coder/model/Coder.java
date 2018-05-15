@@ -18,7 +18,7 @@ import org.apache.ibatis.type.Alias;
  * @date 2017-11-10
  */
 @Alias("Coder")
-@Table(name = "SYS_CODER")
+@Table(name = "TOO_CODER")
 public class Coder implements Serializable {
 
 	/**

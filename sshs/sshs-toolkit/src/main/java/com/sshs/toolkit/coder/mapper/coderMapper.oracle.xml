@@ -4,7 +4,7 @@
 
 	<!--表名 -->
 	<sql id="tableName">
-		SYS_CODER
+		TOO_CODER
 	</sql>
 
 	<!-- 字段 -->
@@ -79,88 +79,91 @@
 	<!-- 代码生成-查询表信息 -->
 	<select id="findDbTableForPageList" parameterType="Page"
 		resultType="Coder">
-		SELECT C.CODER_ID,A.TABLE_NAME,
-		B.COMMENTS AS TABLE_COMMENT,
-		NVL(C.CODER_FLAG,'0') AS CODER_FLAG,TITLE,MODEL_NAME,MODEL_NAME_CN,
-		PACKAGE_NAME,CLASS_NAME,FUNCTION_NAME
+		SELECT DISTINCT
+		C.CODER_ID,
+		T.TABLE_NAME,
+		T.TABLE_COMMENT,
+		CASE
+		WHEN C.CODER_ID IS NULL
+		THEN '0'
+		ELSE '1'
+		END AS CODER_FLAG,
+		TITLE,
+		MODEL_NAME,
+		MODEL_NAME_CN,
+		PACKAGE_NAME,
+		CLASS_NAME,
+		FUNCTION_NAME
 		FROM
-		USER_TABLES A,
-		USER_TAB_COMMENTS B,
-		(SELECT CODER_ID,TITLE,MODEL_NAME,MODEL_NAME_CN,
-		PACKAGE_NAME,CLASS_NAME,FUNCTION_NAME,TABLE_NAME,TABLE_COMMENT
-		, '1' AS
-		CODER_FLAG
-		FROM SYS_CODER) C
-		WHERE A.TABLE_NAME =
-		B.TABLE_NAME(+) AND
-		A.TABLE_NAME = C.TABLE_NAME(+)
-		<if test="variables.tableName != null and variables.tableName != ''">
-			AND A.TABLE_NAME
+		V_TOO_TABLES T
+		LEFT JOIN
+		(SELECT
+		CODER_ID,
+		TITLE,
+		MODEL_NAME,
+		MODEL_NAME_CN,
+		PACKAGE_NAME,
+		CLASS_NAME,
+		FUNCTION_NAME,
+		TABLE_NAME,
+		TABLE_COMMENT,
+		'1' AS CODER_FLAG
+		FROM
+		TOO_CODER) C
+		ON
+		T.TABLE_NAME = C.TABLE_NAME
+		WHERE 1=1
+		<if
+			test="variables.tableName != null and variables.tableName != ''">
+			AND T.TABLE_NAME
 			<choose>
-				<when test="operators.tableName != null and operators.tableName != '' ">${operators.tableName}</when>
+				<when
+					test="operators.tableName != null and operators.tableName != '' ">${operators.tableName}</when>
 				<otherwise> = </otherwise>
 			</choose>
 			upper(#{variables.tableName})
 		</if>
-		<if test="variables.tableComment != null and variables.tableComment != ''">
-			AND B.COMMENTS LIKE
+		<if
+			test="variables.tableComment != null and variables.tableComment != ''">
+			AND T.TABLE_COMMENTS LIKE
 			LIKED(#{variables.tableComment})
 		</if>
-		<if test="variables.coderFlag != null and variables.coderFlag != ''">
-			AND NVL (C.CODER_FLAG, '0') = #{variables.coderFlag}
+		<if
+			test="variables.coderFlag != null and variables.coderFlag != ''">
+			AND ((C.CODER_ID IS NOT NULL AND '1' = #{variables.coderFlag} ) OR (C.CODER_ID IS
+			NULL AND '0' = #{variables.coderFlag}))
 		</if>
 		<if test="orderBy != null and orderBy != ''">
 			ORDER BY ${orderBy}
 		</if>
 		<if test="orderBy == null or orderBy == ''">
-			ORDER BY A.TABLE_NAME
+			ORDER BY T.TABLE_NAME
 		</if>
 	</select>
 
 	<!-- 代码生成-查询列信息 -->
-	<select id="findColumnAll" parameterType="Map" resultType="Column">
-		SELECT A.COLUMN_ID,
-		A.TABLE_NAME,
-		B.COMMENTS AS TABLE_COMMENT,
-		A.COLUMN_NAME,
-		C.COMMENTS AS COLUMN_COMMENT,
-		A.DATA_TYPE AS COLUMN_TYPE,
-		A.DATA_LENGTH AS COLUMN_SIZE,
-		A.DATA_SCALE AS COLUMN_SCALE,
-		A.DATA_DEFAULT AS DEFAULT_VALUE,
-		CASE WHEN D.COLUMN_NAME IS NOT NULL
-		THEN
-		'1' ELSE '0' END
-		AS PRIMARY_KEY_FLAG,
-		CASE WHEN A.NULLABLE = 'N' AND
-		D.COLUMN_NAME IS NULL
-		THEN 'on'
-		ELSE 'off' END AS REQUIRED_FLAG,
+	<select id="findColumnAll" parameterType="Map"
+		resultType="Column">
+		SELECT COLUMN_ID,
+		TABLE_NAME,
+		TABLE_COMMENT,
+		COLUMN_NAME,
+		COLUMN_COMMENT,
+		COLUMN_TYPE,
+		COLUMN_SIZE,
+		COLUMN_SCALE,
+		DEFAULT_VALUE,
+		PRIMARY_KEY_FLAG,
+		REQUIRED_FLAG,
 		'on' AS
 		SEARCH_FLAG,'on' AS
-		LIST_FLAG,'on' AS MODIFY_FLAG,'on' AS ADD_FLAG
-		FROM
-		USER_TAB_COLUMNS A,
-		USER_TAB_COMMENTS B,
-		USER_COL_COMMENTS C,
-		(SELECT
-		COL.COLUMN_NAME,
-		COL.TABLE_NAME
-		FROM USER_CONSTRAINTS CON,
-		USER_CONS_COLUMNS COL
-		WHERE
-		CON.CONSTRAINT_NAME = COL.CONSTRAINT_NAME
-		AND CON.CONSTRAINT_TYPE =
-		'P') D
-		WHERE A.TABLE_NAME = B.TABLE_NAME(+)
-		AND A.TABLE_NAME =
-		C.TABLE_NAME(+)
-		AND A.COLUMN_NAME = C.COLUMN_NAME(+)
-		AND A.TABLE_NAME =
-		D.TABLE_NAME(+)
-		AND A.COLUMN_NAME = D.COLUMN_NAME(+)
+		LIST_FLAG,'on' AS
+		MODIFY_FLAG,'on' AS
+		ADD_FLAG
+		FROM V_TOO_TABLES
+		WHERE 1=1
 		<if test="tableName != null and tableName != ''">
-			AND A.TABLE_NAME =#{tableName}
+			AND TABLE_NAME =#{tableName}
 		</if>
 		<if test="orderBy != null and orderBy != ''">
 			ORDER BY ${orderBy}
